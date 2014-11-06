@@ -31,7 +31,7 @@ namespace WordsAsap
         private System.Windows.Forms.NotifyIcon m_notifyIcon;
         IScheduler m_scheduler;
         IJobDetail m_job;
-        ModernDialog1 m_dialog;
+
 
         public MainWindow()
         {
@@ -91,18 +91,13 @@ namespace WordsAsap
 
                 Task.Factory.StartNew((x) =>
                 {
-                    Dispatcher.BeginInvoke(DispatcherPriority.Normal, new NextPrimeDelegate(() =>
-                    {
-                       
-                    }));
                    
                    
                     while (true)
                     {
                         Dispatcher.BeginInvoke(DispatcherPriority.Normal, new NextPrimeDelegate(() =>
                         {
-                            m_dialog.MinWidth = 100;
-                            m_dialog.ShowDialog();
+                            ModernDialog.ShowMessage("TODO: Displaye another word to learn", "word asap", MessageBoxButton.OK);
                         }));
                         Thread.Sleep(10000);
                     }
