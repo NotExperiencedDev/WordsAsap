@@ -2,12 +2,9 @@
 using System.ComponentModel;
 using System.Windows;
 
-
 namespace WordsAsap
 {
-    /// <summary>
-    /// Interaction logic for MainWindow.xaml
-    /// </summary>
+    
     public partial class MainWindow
     {
         private System.Windows.Forms.NotifyIcon _notifyIcon;

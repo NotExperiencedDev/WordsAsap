@@ -1,22 +1,21 @@
 using System.Timers;
-using System.Windows;
 using System.Windows.Threading;
-using FirstFloor.ModernUI.Windows.Controls;
 
 namespace WordsAsap
 {
     public class ShowWord
     {
-        public delegate MessageBoxResult ShowDialogDelegate();
-        private ShowDialogDelegate m_showDialog;
-        private Dispatcher _context;
-        private Timer _timer;
+        public delegate void ShowDialogDelegate();
+        private readonly ShowDialogDelegate _showDialog;
+        private readonly Dispatcher _context;
+        private readonly Timer _timer;
         private bool _paused;
+        private WordDialog _wordDialog;
 
         public ShowWord(int intervalInSeconds, Dispatcher context)
         {
             _context = context;
-            m_showDialog = ShowDialog;
+            _showDialog = ShowDialog;
             _timer = new Timer { Enabled = false, Interval = intervalInSeconds };
             _timer.Elapsed += OnElapsed;
         }
@@ -30,6 +29,10 @@ namespace WordsAsap
         public void Pause()
         {
             _paused = true;
+            if (_timer.Enabled)
+                _timer.Enabled = false;
+            if(_wordDialog != null && (_wordDialog.IsActive || _wordDialog.IsVisible))
+                _wordDialog.Close();
         }
 
         private void OnElapsed(object sender, ElapsedEventArgs e)
@@ -46,14 +49,18 @@ namespace WordsAsap
 
         public void Execute()
         {
-            _context.BeginInvoke(DispatcherPriority.Normal, m_showDialog);
+            _context.BeginInvoke(DispatcherPriority.Normal, _showDialog);
         }
 
-        private MessageBoxResult ShowDialog()
+        private void ShowDialog()
         {
-            var result = ModernDialog.ShowMessage("TODO: Display another word to learn", "word asap", MessageBoxButton.OK);
+            if(_wordDialog != null)
+                    _wordDialog.Close();
+                
+            _wordDialog = new WordDialog();
+            
+            _wordDialog.ShowDialog();
             _timer.Enabled = true;
-            return result;
         }
     }
 }
