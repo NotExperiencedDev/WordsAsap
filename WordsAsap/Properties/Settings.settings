@@ -11,5 +11,8 @@
     <Setting Name="SelectedFontSize" Type="FirstFloor.ModernUI.Presentation.FontSize" Scope="User">
       <Value Profile="(Default)">Large</Value>
     </Setting>
+    <Setting Name="WordDialogShowInterval" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">0</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

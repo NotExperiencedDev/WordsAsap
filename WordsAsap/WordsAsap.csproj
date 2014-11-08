@@ -69,6 +69,10 @@
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Pages\Settings\BehaviourViewModel.cs" />
+    <Compile Include="Pages\Settings\Behaviour.xaml.cs">
+      <DependentUpon>Behaviour.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Pages\WordPage.xaml.cs">
       <DependentUpon>WordPage.xaml</DependentUpon>
     </Compile>
@@ -86,6 +90,10 @@
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Pages\Settings\Behaviour.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Pages\WordPage.xaml">
       <SubType>Designer</SubType>

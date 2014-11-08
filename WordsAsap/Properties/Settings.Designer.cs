@@ -57,5 +57,17 @@ namespace WordsAsap.Properties {
                 this["SelectedFontSize"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public int WordDialogShowInterval {
+            get {
+                return ((int)(this["WordDialogShowInterval"]));
+            }
+            set {
+                this["WordDialogShowInterval"] = value;
+            }
+        }
     }
 }

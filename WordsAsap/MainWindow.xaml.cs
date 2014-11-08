@@ -24,8 +24,8 @@ namespace WordsAsap
                 Icon = new System.Drawing.Icon("acorn-7-16.ico")
             };
             _notifyIcon.Click += NotifyIcon_Click;
-            _showWord= new ShowWord(10000, Dispatcher);
-
+          
+            _showWord = new ShowWord(Properties.Settings.Default.WordDialogShowInterval, Dispatcher);
         }
 
         private void OnClose(object sender, CancelEventArgs args)

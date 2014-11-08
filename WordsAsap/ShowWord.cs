@@ -11,12 +11,16 @@ namespace WordsAsap
         private readonly Timer _timer;
         private bool _paused;
         private WordDialog _wordDialog;
-
-        public ShowWord(int intervalInSeconds, Dispatcher context)
+               
+        public ShowWord(int intervalInMinutes, Dispatcher context)
         {
+            var interval = intervalInMinutes * 60 * 1000;
+            if (System.Diagnostics.Debugger.IsAttached)
+                interval = 10 * 1000;
+
             _context = context;
             _showDialog = ShowDialog;
-            _timer = new Timer { Enabled = false, Interval = intervalInSeconds };
+            _timer = new Timer { Enabled = false, Interval = interval };
             _timer.Elapsed += OnElapsed;
         }
 
