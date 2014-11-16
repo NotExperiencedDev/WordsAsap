@@ -22,7 +22,7 @@ namespace WordsAsap
             mainWindow.IsTitleVisible = true;
             LoadSettings();
             mainWindow.Show();
-        }
+        }       
 
         private void LoadSettings()
         {
