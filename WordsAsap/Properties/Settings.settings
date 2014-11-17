@@ -14,5 +14,8 @@
     <Setting Name="WordDialogShowInterval" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">0</Value>
     </Setting>
+    <Setting Name="WordsCollectionStorage" Type="System.String" Scope="User">
+      <Value Profile="(Default)">WordsCollection.db3</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

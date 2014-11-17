@@ -79,10 +79,12 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="DatabaseHelper.cs" />
+    <Compile Include="WordsServices\WordsCollectionService.cs" />
     <Compile Include="Entities\Translation.cs" />
     <Compile Include="Entities\Word.cs" />
     <Compile Include="Entities\WordStatistics.cs" />
+    <Compile Include="WordsServices\IWordsCollectionService.cs" />
+    <Compile Include="WordsServices\IWordsCollectionServiceSettings.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
     </Compile>
@@ -108,6 +110,7 @@
       <DependentUpon>Resource.resx</DependentUpon>
     </Compile>
     <Compile Include="ShowWord.cs" />
+    <Compile Include="WordsSettings.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

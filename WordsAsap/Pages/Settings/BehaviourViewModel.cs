@@ -5,6 +5,7 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media;
+using WordsAsap.WordsServices;
 
 namespace WordsAsap.Pages.Settings
 {
@@ -14,12 +15,16 @@ namespace WordsAsap.Pages.Settings
     public class BehaviourViewModel
         : NotifyPropertyChanged
     {
+        IWordsCollectionSettingsService _settings;
         public BehaviourViewModel()
         {
-            WordDialogShowInterval = Properties.Settings.Default.WordDialogShowInterval;
+            _settings = SettingsServiceFactory.GetWordsAsapSettings();
+            WordDialogShowInterval = _settings.WordDialogShowInterval;
+            WordsCollectionStorage = _settings.CollectionStorage;
         }
 
         private int _wordDialogShowInterval;
+        private string _wordsCollectionStorageFile;
 
         public int WordDialogShowInterval
         {
@@ -30,6 +35,17 @@ namespace WordsAsap.Pages.Settings
                 OnPropertyChanged("WordDialogShowInterval");
             }
         }
+
+        public string WordsCollectionStorage
+        {
+            get { return _wordsCollectionStorageFile; }
+            set 
+            { 
+                _wordsCollectionStorageFile = value; 
+                OnPropertyChanged("WordsCollectionStorage"); 
+            }
+        }
+
       
         public ICommand UpCommand
         {
@@ -49,8 +65,8 @@ namespace WordsAsap.Pages.Settings
 
         private void SaveSettings(object o)
         {
-            Properties.Settings.Default.WordDialogShowInterval = WordDialogShowInterval;
-            Properties.Settings.Default.Save();
+            _settings.WordDialogShowInterval = WordDialogShowInterval;
+            _settings.CollectionStorage = WordsCollectionStorage;
             ModernDialog.ShowMessage("settings saved", "save settings", MessageBoxButton.OK);
         }
     }

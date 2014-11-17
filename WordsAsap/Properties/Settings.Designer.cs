@@ -69,5 +69,17 @@ namespace WordsAsap.Properties {
                 this["WordDialogShowInterval"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("WordsCollection.db3")]
+        public string WordsCollectionStorage {
+            get {
+                return ((string)(this["WordsCollectionStorage"]));
+            }
+            set {
+                this["WordsCollectionStorage"] = value;
+            }
+        }
     }
 }

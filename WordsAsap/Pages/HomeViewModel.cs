@@ -9,25 +9,24 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 using WordsAsap.Entities;
+using WordsAsap.WordsServices;
 
 namespace WordsAsap.Pages
 {
     public class HomeViewModel : NotifyPropertyChanged    
     {
+        private IWordsCollectionService _wordsCollectionService;
+        private Word _selectedWord;
         public string NewWord { get; set; }
         public string Translation { get; set; }
         public IList<Word> WordsCollection { get; set; }
         public IList<Translation> WordsTranslations { get; set; }
+
        
         public HomeViewModel()
         {
-             var sessionFactory = DatabaseHelper.CreateSessionFactory();
-
-             using (var session = sessionFactory.OpenSession())
-             {
-                 using (var transaction = session.BeginTransaction())
-                     WordsCollection = session.CreateCriteria<Word>().List<Word>();
-             }
+            _wordsCollectionService = WordsCollectionServiceFactory.CreateWordsCollectionService(SettingsServiceFactory.GetWordsAsapSettings());
+            WordsCollection = _wordsCollectionService.GetData<Word>();
         }
 
         public ICommand SaveSettingsCommand
@@ -37,28 +36,9 @@ namespace WordsAsap.Pages
 
         private void SaveSettings(object o)
         {
-            if (string.IsNullOrWhiteSpace(NewWord))
-                return;
-
-            var sessionFactory = DatabaseHelper.CreateSessionFactory();
-            using (var session = sessionFactory.OpenSession())
-            {
-                using (var transaction = session.BeginTransaction())
-                {
-                    var w = new Word();
-                    w.Value = NewWord.ToLower();
-                    var t = new Translation();
-                    w.Translations.Add(t);
-
-                    // save both stores, this saves everything else via cascading
-                    session.SaveOrUpdate(t);
-                    session.SaveOrUpdate(w);
-
-                    transaction.Commit();
-                    WordsCollection = session.CreateCriteria<Word>().List<Word>();
-                    OnPropertyChanged("WordsCollection");
-                }
-            }
+            _wordsCollectionService.AddWord(NewWord, Translation);
+            WordsCollection = _wordsCollectionService.GetData<Word>();
+            OnPropertyChanged("WordsCollection");
            
             ModernDialog.ShowMessage("settings saved", "save settings", MessageBoxButton.OK);
         }

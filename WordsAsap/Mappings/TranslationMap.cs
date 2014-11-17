@@ -19,7 +19,7 @@ namespace WordsAsap.Mappings
             HasManyToMany(x => x.WordsStoredIn)
               .Cascade.All()
               .Inverse()
-              .Table("Translations");
+              .Table("WordTranslations").AsSet();
         }
        
     }

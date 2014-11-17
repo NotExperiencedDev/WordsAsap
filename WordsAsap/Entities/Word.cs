@@ -13,6 +13,20 @@ namespace WordsAsap.Entities
         public virtual IList<Translation> Translations{get;set;}
         public virtual WordStatistics Statistics { get; set; }
 
+        public virtual string FirstTranslation
+        {
+            get
+            {
+                if(Translations != null)
+                {
+                    var first = Translations.FirstOrDefault();
+                    if (first != null)
+                        return first.Value;
+                }
+                return string.Empty;
+            }
+        }
+
         public Word()
         {
             Translations = new List<Translation>();
@@ -23,5 +37,7 @@ namespace WordsAsap.Entities
             translation.WordsStoredIn.Add(this);
             Translations.Add(translation);
         }
+
+        
     }
 }

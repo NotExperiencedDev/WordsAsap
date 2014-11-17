@@ -15,7 +15,7 @@ namespace WordsAsap.Mappings
             Id(x => x.Id);
             Map(x => x.Value).UniqueKey("unique_key_only_one_word");
             References(x => x.Statistics);
-            HasMany(x => x.Translations)              
+            HasManyToMany(x => x.Translations)
               .Cascade.All()
              .Table("WordTranslations");
         }
