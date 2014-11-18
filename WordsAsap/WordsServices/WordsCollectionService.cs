@@ -84,18 +84,51 @@ namespace WordsAsap.WordsServices
            
                 using (var transaction = _session.BeginTransaction())
                 {
-                    var w = new Word();
-                    w.Value = word.ToLower();
-                    var t = new Translation();
-                    t.Value = translation;
-                    w.Translations.Add(t);
-                    w.Translations.Add(t);
+                   
+                    var words = GetData<Word>().Where(x => x.Value.ToLower() == word.ToLower());
+                    if (words != null && words.Count() > 0)
+                    {
+                        var t = new Translation();
+                        t.Value = translation;
+                        foreach (var word1 in words)
+                        {
+                            word1.Translations.Add(t);
+                            _session.SaveOrUpdate(word1);
+                        }
+                        _session.SaveOrUpdate(t);
+                    }
+                    else
+                    {
+                        var w = new Word();
+                        w.CreationDate = DateTime.UtcNow;
+                        w.Value = word.ToLower();
+                        var t = new Translation();
+                        t.Value = translation;
+                        var s = new WordStatistics();
+                        _session.SaveOrUpdate(s);
+                        w.Statistics = s;                       
+                      
+                        w.Translations.Add(t);
+                        _session.SaveOrUpdate(w);
+                    }
+                   
                     // save both stores, this saves everything else via cascading
-                    _session.SaveOrUpdate(w);
+                   
 
                     transaction.Commit();
                 }
             
+        }
+
+        public void Update<T1>(T1 entity) where T1 : class
+        {
+            if (entity == null)
+                throw new ArgumentException("Entity to update cannot be null");
+            using (var transaction = _session.BeginTransaction())
+            {
+                _session.SaveOrUpdate(entity);
+                transaction.Commit();
+            }
         }
 
         public void Dispose()

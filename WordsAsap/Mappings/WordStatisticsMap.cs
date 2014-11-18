@@ -16,6 +16,7 @@ namespace WordsAsap.Mappings
              Map(x => x.CorrectAnswers);
              Map(x => x.WrongAnswers);
              Map(x => x.NumberOfDisplays);
+             Map(x => x.LastDisplayTime);
              References(x => x.Word);
         }
     }

@@ -1,5 +1,8 @@
+using System;
 using System.Timers;
 using System.Windows.Threading;
+using WordsAsap.Entities;
+using WordsAsap.WordsServices;
 
 namespace WordsAsap
 {
@@ -11,6 +14,8 @@ namespace WordsAsap
         private readonly Timer _timer;
         private bool _paused;
         private WordDialog _wordDialog;
+        private Random _random;
+        private IWordsCollectionService _wordsCollectionService;
                
         public ShowWord(int intervalInMinutes, Dispatcher context)
         {
@@ -22,6 +27,8 @@ namespace WordsAsap
             _showDialog = ShowDialog;
             _timer = new Timer { Enabled = false, Interval = interval };
             _timer.Elapsed += OnElapsed;
+            _random = new Random();
+            _wordsCollectionService = WordsCollectionServiceFactory.CreateWordsCollectionService(SettingsServiceFactory.GetWordsAsapSettings());
         }
 
         public void Resume()
@@ -65,6 +72,6 @@ namespace WordsAsap
             
             _wordDialog.ShowDialog();
             _timer.Enabled = true;
-        }
+        }       
     }
 }

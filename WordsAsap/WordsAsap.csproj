@@ -79,6 +79,7 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Pages\WordPageViewModel.cs" />
     <Compile Include="WordsServices\WordsCollectionService.cs" />
     <Compile Include="Entities\Translation.cs" />
     <Compile Include="Entities\Word.cs" />

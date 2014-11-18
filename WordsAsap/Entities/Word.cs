@@ -10,8 +10,9 @@ namespace WordsAsap.Entities
     {
         public virtual int Id{get;set;}
         public virtual string Value{get;set;}
-        public virtual IList<Translation> Translations{get;set;}
+        public virtual IList<Translation> Translations{get; protected set;}
         public virtual WordStatistics Statistics { get; set; }
+        public virtual DateTime CreationDate { get; set; }
 
         public virtual string FirstTranslation
         {

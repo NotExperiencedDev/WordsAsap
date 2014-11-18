@@ -10,6 +10,8 @@ namespace WordsAsap.WordsServices
     {
         IList<T> GetData<T>() where T: class;
         void AddWord(string word, string translation);
+
+        void Update<T1>(T1 entity) where T1:class;
     }
 
     public static class WordsCollectionServiceFactory
