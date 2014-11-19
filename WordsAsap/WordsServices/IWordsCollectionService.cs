@@ -1,4 +1,5 @@
-﻿using System;
+﻿using NHibernate.Criterion;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,10 +9,12 @@ namespace WordsAsap.WordsServices
 {
     public interface IWordsCollectionService
     {
-        IList<T> GetData<T>() where T: class;
+        IList<T> GetData<T>(ICriterion expression = null) where T: class;
         void AddWord(string word, string translation);
 
-        void Update<T1>(T1 entity) where T1:class;
+        void Update<T>(T entity) where T:class;
+
+        void Remove<T>(T entity) where T : class;
     }
 
     public static class WordsCollectionServiceFactory

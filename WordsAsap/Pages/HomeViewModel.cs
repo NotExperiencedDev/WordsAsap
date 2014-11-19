@@ -1,8 +1,11 @@
 ﻿using FirstFloor.ModernUI.Presentation;
 using FirstFloor.ModernUI.Windows.Controls;
 using NHibernate;
+using NHibernate.Criterion;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -16,31 +19,66 @@ namespace WordsAsap.Pages
     public class HomeViewModel : NotifyPropertyChanged    
     {
         private IWordsCollectionService _wordsCollectionService;
-        private Word _selectedWord;
+        
         public string NewWord { get; set; }
-        public string Translation { get; set; }
-        public IList<Word> WordsCollection { get; set; }
-        public IList<Translation> WordsTranslations { get; set; }
-
+        public ObservableCollection<TranslationItem> Translations { get; set; }
        
         public HomeViewModel()
         {
             _wordsCollectionService = WordsCollectionServiceFactory.CreateWordsCollectionService(SettingsServiceFactory.GetWordsAsapSettings());
-            WordsCollection = _wordsCollectionService.GetData<Word>();
+            Translations = new ObservableCollection<TranslationItem>();
+            Translations.Add(new TranslationItem { Translation = string.Empty });
         }
 
-        public ICommand SaveSettingsCommand
+       
+        public ICommand AddTranslationCommand
         {
-            get { return new RelayCommand(SaveSettings); }
+            get { return new RelayCommand(AddTranslation); }
         }
 
-        private void SaveSettings(object o)
+        private void AddTranslation(object obj)
         {
-            _wordsCollectionService.AddWord(NewWord, Translation);
-            WordsCollection = _wordsCollectionService.GetData<Word>();
-            OnPropertyChanged("WordsCollection");
+            Translations.Add(new TranslationItem());
+        }
+
+        public ICommand RemoveTranslationCommand
+        {
+            get { return new RelayCommand(RemoveTranslation); }
+        }
+
+        private void RemoveTranslation(object o)
+        {
+            var t = o as TranslationItem;
+            if (t != null)
+                Translations.Remove(t);
+        }
+
+        public ICommand SaveWordCommand
+        {
+            get { return new RelayCommand(SaveWord); }
+        }
+       
+
+
+        private void SaveWord(object o)
+        {
+            foreach (var t in Translations)
+            {
+                _wordsCollectionService.AddWord(NewWord, t.Translation);
+            }
            
-            ModernDialog.ShowMessage("settings saved", "save settings", MessageBoxButton.OK);
+            SimpleExpression e = Restrictions.Eq("Value", NewWord);
+            var reply = _wordsCollectionService.GetData<Word>(e);            
+
+            ModernDialog.ShowMessage("word updated", "save or update word", MessageBoxButton.OK);
+
+           
         }
+        
+    }
+
+    public class TranslationItem
+    {
+        public string Translation { get; set; }
     }
 }

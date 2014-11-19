@@ -2,6 +2,7 @@
 using FluentNHibernate.Cfg.Db;
 using NHibernate;
 using NHibernate.Cfg;
+using NHibernate.Criterion;
 using NHibernate.Tool.hbm2ddl;
 using System;
 using System.Collections.Generic;
@@ -65,12 +66,13 @@ namespace WordsAsap.WordsServices
             return _wordsCollectionService;
         }
 
-        public IList<T> GetData<T>() where T:class
+        public IList<T> GetData<T>(ICriterion expression = null) where T:class
         {
-          
-               // using (var transaction = session.BeginTransaction())
-                    return _session.CreateCriteria<T>().List<T>();
-            
+            var criteria = _session.CreateCriteria<T>();
+               if(expression != null)
+             criteria = criteria.Add(expression);
+
+            return criteria.List<T>();            
         }
 
         public void AddWord(string word, string translation)
@@ -120,7 +122,7 @@ namespace WordsAsap.WordsServices
             
         }
 
-        public void Update<T1>(T1 entity) where T1 : class
+        public void Update<T>(T entity) where T : class
         {
             if (entity == null)
                 throw new ArgumentException("Entity to update cannot be null");
@@ -128,6 +130,20 @@ namespace WordsAsap.WordsServices
             {
                 _session.SaveOrUpdate(entity);
                 transaction.Commit();
+                _session.Flush();
+            }
+        }
+
+        public void Remove<T>(T entity) where T : class
+        {
+            if(entity == null)
+                throw new ArgumentException("Entity to remove cannot be null");
+
+            using (var transaction = _session.BeginTransaction())
+            {
+                _session.Delete(entity);
+                transaction.Commit();
+                _session.Flush();
             }
         }
 

@@ -15,6 +15,7 @@
         <mui:LinkGroup DisplayName="">
             <mui:LinkGroup.Links>
                 <mui:Link DisplayName="home" Source="/Pages/Home.xaml" />
+                <mui:Link DisplayName="dictionary" Source="/Pages/DictionaryPage.xaml" />
             </mui:LinkGroup.Links>
         </mui:LinkGroup>
         <mui:LinkGroup DisplayName="settings" GroupKey="settings">
