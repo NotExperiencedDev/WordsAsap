@@ -42,6 +42,7 @@ namespace WordsAsap.Pages
         public Word WordToDisplay { get; set; }
 
         public bool ShowOtherTranslations { get; set; }
+        public bool ShowFirstTranslation { get { return !ShowOtherTranslations; } }
 
         public IList<Translation> Translations
         {
@@ -67,6 +68,7 @@ namespace WordsAsap.Pages
         {
             ShowOtherTranslations = !ShowOtherTranslations;
             OnPropertyChanged("ShowOtherTranslations");
+            OnPropertyChanged("ShowFirstTranslation");
         }
 
         public ICommand RemoveTranslationCommand
@@ -90,7 +92,8 @@ namespace WordsAsap.Pages
             ShowOtherTranslations = !ShowOtherTranslations;
             OnPropertyChanged("ShowOtherTranslations");
             ShowOtherTranslations = !ShowOtherTranslations;
-            OnPropertyChanged("ShowOtherTranslations"); 
+            OnPropertyChanged("ShowOtherTranslations");
+            OnPropertyChanged("ShowFirstTranslation");
         }
        
     }

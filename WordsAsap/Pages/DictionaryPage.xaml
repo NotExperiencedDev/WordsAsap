@@ -12,12 +12,95 @@
     </UserControl.DataContext>
     <UserControl.Resources>
         <BooleanToVisibilityConverter x:Key="VisibilityConverter" />
-        <Style TargetType="{x:Type mui:ModernButton}" x:Key="IconStyle">
-            <Setter Property="IconData" Value="F1 M 37.8516,39.5833L 52.1016,24.9375L 52.1016,35.2292L 37.8516,50.2708L 23.6016,35.2292L 23.6016,24.9375L 37.8516,39.5833 Z" />
-        </Style>
+       
     </UserControl.Resources>
-    <Grid>              
-        <ListView ItemsSource="{Binding WordsCollection}" x:Name="wordsList"  >
+    <Grid>
+
+        <ListView Margin="10" Name="wordsList" ItemsSource="{Binding WordsCollection}" >
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Header="Word" Width="120" >
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>     
+                                
+                                   <TextBlock Grid.Row="0" Text="{Binding WordToDisplay.Value}" 
+                                              VerticalAlignment="Top"
+                                              TextAlignment="Left" TextWrapping="NoWrap" />
+                                   
+                               
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                    <GridViewColumn Header="Translations" Width="280" >
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <StackPanel VerticalAlignment="Top">
+                                    <TextBlock Text="{Binding FirstTranslation}" VerticalAlignment="Top"
+                                               Visibility="{Binding ShowFirstTranslation, Converter={StaticResource VisibilityConverter}}"
+                                               />
+                                <ListView x:Name="lstvInternal" Grid.Column="1" Grid.Row="1"  ItemsSource="{Binding Translations}" 
+                                              Visibility="{Binding ShowOtherTranslations, Converter={StaticResource VisibilityConverter}}">
+                                    <ItemsControl.ItemTemplate>
+                                        <DataTemplate>
+                                            <Grid Margin="0,0,0,5">
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="170" />
+                                                    <ColumnDefinition Width="*" />
+                                                </Grid.ColumnDefinitions>
+
+                                                <TextBlock Text="{Binding Value}" Grid.Column="0" />
+                                                <mui:ModernButton Padding="1" Margin="1" Grid.Column="1"                                      
+                                      IconData="F1 M 26.9166,22.1667L 37.9999,33.25L 49.0832,22.1668L 53.8332,26.9168L 42.7499,38L 53.8332,49.0834L 49.0833,53.8334L 37.9999,42.75L 26.9166,53.8334L 22.1666,49.0833L 33.25,38L 22.1667,26.9167L 26.9166,22.1667 Z "
+                                          Command="{Binding ElementName=lstvInternal, Path=DataContext.RemoveTranslationCommand}" 
+                                          CommandParameter="{Binding}"
+                                       />
+
+                                            </Grid>
+                                        </DataTemplate>
+                                    </ItemsControl.ItemTemplate>
+                                </ListView>
+                                </StackPanel>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                    <GridViewColumn Header="" Width="50" >
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <mui:ModernButton Grid.Column="2" Padding="1" Margin="1" VerticalAlignment="Top"    Command="{Binding ShowOtherTranslationsCommand}"    >
+                                    <mui:ModernButton.Style>
+                                        <Style TargetType="mui:ModernButton">
+                                            <Setter Property="IconData" Value="F1 M 37.8516,39.5833L 52.1016,24.9375L 52.1016,35.2292L 37.8516,50.2708L 23.6016,35.2292L 23.6016,24.9375L 37.8516,39.5833 Z" />
+                                            <Style.Triggers>
+                                                <MultiDataTrigger>
+                                                    <MultiDataTrigger.Conditions>
+                                                        <Condition Binding="{Binding ElementName=lstvInternal, Path=Visibility}" Value="Visible" />
+                                                    </MultiDataTrigger.Conditions>
+                                                    <Setter Property="IconData" Value="F1 M 37.8516,35.625L 34.6849,38.7917L 23.6016,50.2708L 23.6016,39.9792L 37.8516,24.9375L 52.1016,39.9792L 52.1016,50.2708L 41.0182,38.7917L 37.8516,35.625 Z" />
+                                                </MultiDataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </mui:ModernButton.Style>
+                                </mui:ModernButton>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                    <GridViewColumn Header="Delete word" Width="50" >
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <mui:ModernButton Padding="1" Margin="1"  VerticalAlignment="Center"                                      
+                                      IconData="F1 M 26.9166,22.1667L 37.9999,33.25L 49.0832,22.1668L 53.8332,26.9168L 42.7499,38L 53.8332,49.0834L 49.0833,53.8334L 37.9999,42.75L 26.9166,53.8334L 22.1666,49.0833L 33.25,38L 22.1667,26.9167L 26.9166,22.1667 Z "
+                                          Command="{Binding ElementName=wordsList, Path=DataContext.RemoveWordCommand}" 
+                                          CommandParameter="{Binding}"
+                                       />
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                </GridView>
+            </ListView.View>
+        </ListView>
+        
+        
+        <!--<ListView ItemsSource="{Binding WordsCollection}" x:Name="wordsList"  >
             <ItemsControl.ItemTemplate>
                 <DataTemplate>
                     <Grid Margin="0,0,0,5">
@@ -83,6 +166,6 @@
                     </Grid>
                 </DataTemplate>
             </ItemsControl.ItemTemplate>
-        </ListView>
+        </ListView>-->
     </Grid>
 </UserControl>
