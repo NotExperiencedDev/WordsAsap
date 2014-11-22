@@ -15,6 +15,10 @@ namespace WordsAsap.Pages
 {
     public class WordViewModel : NotifyPropertyChanged
     {      
+        private IWordsCollectionService _wordsCollectionService;
+        public WordViewModel(){
+             _wordsCollectionService = WordsCollectionServiceFactory.CreateWordsCollectionService(SettingsServiceFactory.GetWordsAsapSettings());
+        }
 
         public virtual string FirstTranslation
         {
@@ -41,6 +45,26 @@ namespace WordsAsap.Pages
             get { return new RelayCommand((o) => { ShowOtherTranslations = !ShowOtherTranslations; OnPropertyChanged("ShowOtherTranslations"); }); }
         }
 
+        public ICommand RemoveTranslationCommand
+        {
+            get { return new RelayCommand(RemoveTranslation);}
+        }
+
+        private void RemoveTranslation(object o)
+        {
+            var translation = o as Translation;
+            if (translation == null)
+                return;
+
+            var r = ModernDialog.ShowMessage("do you really want to remove trnaslation?", "translation removing", MessageBoxButton.YesNo);
+            if (r == MessageBoxResult.No)
+                return;
+
+            //_wordsCollectionService.Remove<Translation>(translation);
+            WordToDisplay.Translations.Remove(translation);
+            _wordsCollectionService.Update<Word>(WordToDisplay);
+            OnPropertyChanged("WordToDisplay");
+        }
        
     }
 }

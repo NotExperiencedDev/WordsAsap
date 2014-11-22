@@ -1,4 +1,8 @@
-﻿using WordsAsap.Entities;
+﻿using System;
+
+using System.Windows;
+
+using WordsAsap.Entities;
 namespace WordsAsap
 {
     
@@ -14,7 +18,5 @@ namespace WordsAsap
         {
             DataContext = wordToShow;
         }
-
-      
-    }
+    }    
 }
