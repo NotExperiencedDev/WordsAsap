@@ -1,5 +1,6 @@
 ﻿using FirstFloor.ModernUI.Presentation;
 using FirstFloor.ModernUI.Windows.Controls;
+using Remotion.Linq.Collections;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -18,7 +19,9 @@ namespace WordsAsap.Pages
         private IWordsCollectionService _wordsCollectionService;
         public WordViewModel(){
              _wordsCollectionService = WordsCollectionServiceFactory.CreateWordsCollectionService(SettingsServiceFactory.GetWordsAsapSettings());
+             
         }
+              
 
         public virtual string FirstTranslation
         {
@@ -40,9 +43,30 @@ namespace WordsAsap.Pages
 
         public bool ShowOtherTranslations { get; set; }
 
-        public ICommand ShowTranslationsCommand
+        public IList<Translation> Translations
         {
-            get { return new RelayCommand((o) => { ShowOtherTranslations = !ShowOtherTranslations; OnPropertyChanged("ShowOtherTranslations"); }); }
+            get
+            {
+                if (WordToDisplay == null)
+                    return null;
+                return WordToDisplay.Translations;
+            }
+        }
+
+        public ICommand ShowOtherTranslationsCommand
+        {
+            get
+            {
+                return new RelayCommand(ShowOtherTranslationsManager);
+               
+            }
+        }
+
+
+        private void ShowOtherTranslationsManager(object o)
+        {
+            ShowOtherTranslations = !ShowOtherTranslations;
+            OnPropertyChanged("ShowOtherTranslations");
         }
 
         public ICommand RemoveTranslationCommand
@@ -60,10 +84,13 @@ namespace WordsAsap.Pages
             if (r == MessageBoxResult.No)
                 return;
 
-            //_wordsCollectionService.Remove<Translation>(translation);
             WordToDisplay.Translations.Remove(translation);
             _wordsCollectionService.Update<Word>(WordToDisplay);
-            OnPropertyChanged("WordToDisplay");
+            //hack: cannot figure it out how to refresh the view right now
+            ShowOtherTranslations = !ShowOtherTranslations;
+            OnPropertyChanged("ShowOtherTranslations");
+            ShowOtherTranslations = !ShowOtherTranslations;
+            OnPropertyChanged("ShowOtherTranslations"); 
         }
        
     }
