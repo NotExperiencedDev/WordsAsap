@@ -12,21 +12,26 @@
     </UserControl.DataContext>
     <UserControl.Resources>
         <BooleanToVisibilityConverter x:Key="VisibilityConverter" />
-       
+        <Style TargetType="ListViewItem">
+            <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+            <Setter Property="VerticalContentAlignment" Value="Top"/>
+        </Style>
     </UserControl.Resources>
     <Grid>
 
         <ListView Margin="10" Name="wordsList" ItemsSource="{Binding WordsCollection}" >
             <ListView.View>
                 <GridView>
-                    <GridViewColumn Header="Word" Width="120" >
+                    
+                    <GridViewColumn  Width="120" Header="Word" >
+
                         <GridViewColumn.CellTemplate>
-                            <DataTemplate>     
+                        
+                        <DataTemplate>
                                 
-                                   <TextBlock Grid.Row="0" Text="{Binding WordToDisplay.Value}" 
-                                              VerticalAlignment="Top"
+                                <TextBlock Grid.Row="0" Text="{Binding WordToDisplay.Value}" 
+                                              VerticalAlignment="Bottom"
                                               TextAlignment="Left" TextWrapping="NoWrap" />
-                                   
                                
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
@@ -95,6 +100,7 @@
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
+                    
                 </GridView>
             </ListView.View>
         </ListView>
