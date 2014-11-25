@@ -1,13 +1,8 @@
-﻿using FirstFloor.ModernUI.Presentation;
+﻿using System.Windows.Input;
+using FirstFloor.ModernUI.Presentation;
 using FirstFloor.ModernUI.Windows.Controls;
-using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Input;
 using WordsAsap.Entities;
 using WordsAsap.WordsServices;
 
@@ -46,7 +41,7 @@ namespace WordsAsap.Pages
             }
         }
 
-        public ICommand RemoveWordCommand
+        public RelayCommand RemoveWordCommand
         {
             get { return new RelayCommand(RemoveWord, CanRemoveWord); }
         }

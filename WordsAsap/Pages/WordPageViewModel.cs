@@ -1,9 +1,6 @@
 ﻿using FirstFloor.ModernUI.Presentation;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -47,18 +44,18 @@ namespace WordsAsap.Pages
             OnPropertyChanged("WordToLearn");
         }
 
-        public ICommand ShowTranslationCommand
+        public RelayCommand ShowTranslationCommand
         {
             get { return new RelayCommand((o) => { ShowTranslation = Visibility.Visible; OnPropertyChanged("ShowTranslation"); }); }
         }
 
 
-        public ICommand RightAnswer
+        public RelayCommand RightAnswer
         {
             get { return new RelayCommand(RightAnswerCommand, CanExecuteRightAnswer); }
         }
 
-        public ICommand WrongAnswer
+        public RelayCommand WrongAnswer
         {
             get { return new RelayCommand(WrongAnswerCommand, CanExecuteWrongAnswer); }
         }

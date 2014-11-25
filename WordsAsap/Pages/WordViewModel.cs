@@ -1,14 +1,8 @@
 ﻿using FirstFloor.ModernUI.Presentation;
 using FirstFloor.ModernUI.Windows.Controls;
-using Remotion.Linq.Collections;
-using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Input;
 using WordsAsap.Entities;
 using WordsAsap.WordsServices;
 
@@ -54,7 +48,7 @@ namespace WordsAsap.Pages
             }
         }
 
-        public ICommand ShowOtherTranslationsCommand
+        public RelayCommand ShowOtherTranslationsCommand
         {
             get
             {
@@ -71,7 +65,7 @@ namespace WordsAsap.Pages
             OnPropertyChanged("ShowFirstTranslation");
         }
 
-        public ICommand RemoveTranslationCommand
+        public RelayCommand RemoveTranslationCommand
         {
             get { return new RelayCommand(RemoveTranslation);}
         }
