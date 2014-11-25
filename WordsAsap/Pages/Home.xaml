@@ -6,57 +6,84 @@
              xmlns:local="clr-namespace:WordsAsap.Pages" 
              xmlns:mui="http://firstfloorsoftware.com/ModernUI"
              mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="300">
+             d:DesignHeight="300" d:DesignWidth="300" >
     <UserControl.DataContext>
         <local:HomeViewModel/>
     </UserControl.DataContext>
     <UserControl.Resources>
         <BooleanToVisibilityConverter x:Key="VisibilityConverter" />
     </UserControl.Resources>
-    <Grid Style="{StaticResource ContentRoot}">
-        <ScrollViewer>
-            <StackPanel MinWidth="200">
-                <TextBlock Text="New word" />
-                <TextBox Text="{Binding NewWord}" />
-                <StackPanel Orientation="Horizontal">
-                    <TextBlock Text="Translations" VerticalAlignment="Center" Margin="2"/>
-                    <mui:ModernButton VerticalAlignment="Center" Padding="1" Margin="1" Content="[add]" 
+    <Grid Style="{StaticResource ContentRoot}" >
+        <ScrollViewer >
+            <Grid >
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="5" />
+                    <ColumnDefinition Width="95" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="10" />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="10" />
+                    <RowDefinition Height="25" />
+                    <RowDefinition Height="Auto" MinHeight="25" />
+                    <RowDefinition Height="30" />
+                    <RowDefinition Height="45" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+                
+                    <TextBlock Grid.Row="1" Grid.Column="1" 
+                               Margin ="2"   HorizontalAlignment="Right" VerticalAlignment="Center" TextAlignment="Right"
+                               Text="New word "/>
+                <TextBox Name="test"  Grid.Row="1" Grid.Column="2"  Padding="3,0,0,0" Margin="0" Text="{Binding NewWord}"  
+                          
+                          />                    
+
+                <TextBlock  Grid.Row="2" Grid.Column="1"
+                            Margin="2,4,4,2" VerticalAlignment="Top" HorizontalAlignment="Right" TextAlignment="Right" Padding="0,0,2,0"
+                            
+                            Text="Translations "                             
+                             />
+                <ListView  Grid.Row="2" Grid.Column="2"  ItemsSource="{Binding Translations}" x:Name="lstv" >
+                    <ItemsControl.ItemTemplate >
+                        <DataTemplate >
+                            <Grid >
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition />
+                                    <ColumnDefinition />
+                                </Grid.ColumnDefinitions>
+                                <TextBox Text="{Binding Translation}" 
+                                         >
+                                    <TextBox.InputBindings>
+                                        <KeyBinding Key="Enter" Command="{Binding RelativeSource={RelativeSource AncestorType=UserControl}, 
+                                            Path=DataContext.AddTranslationCommand}"/>
+                                        
+                                    </TextBox.InputBindings>
+                                </TextBox>
+
+                                <mui:ModernButton Grid.Column="1" Padding="1" Margin="1" Content="[remove]" 
+                                                  Command="{Binding ElementName=lstv, Path=DataContext.RemoveTranslationCommand}"
+                                                          CommandParameter="{Binding}"
+                                                  IconData="F1 M 26.9166,22.1667L 37.9999,33.25L 49.0832,22.1668L 53.8332,26.9168L 42.7499,38L 53.8332,49.0834L 49.0833,53.8334L 37.9999,42.75L 26.9166,53.8334L 22.1666,49.0833L 33.25,38L 22.1667,26.9167L 26.9166,22.1667 Z " 
+                                                   />
+                            </Grid>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                    </ListView>
+
+
+                <mui:ModernButton  Grid.Row="3" Grid.Column="2" 
+                        VerticalAlignment="Top"  HorizontalAlignment="Left" Padding="1" Margin="1" Content="[add]" 
                                       Command="{Binding AddTranslationCommand}"
                                       IconData="F1 M 35,19L 41,19L 41,35L 57,35L 57,41L 41,41L 41,57L 35,57L 35,41L 19,41L 19,35L 35,35L 35,19 Z" 
                                        />
-                </StackPanel>
-                
-                <ListView ItemsSource="{Binding Translations}" x:Name="lstv">
-                    <ItemsControl.ItemTemplate>
-                    <DataTemplate>
-                        <Grid>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition/>
-                                <ColumnDefinition/>
-                            </Grid.ColumnDefinitions>
-                            <TextBox Text="{Binding Translation}"/>
-                            
-                            <mui:ModernButton Grid.Column="1" Padding="1" Margin="1" Content="[remove]"
-                                      Command="{Binding ElementName=lstv, Path=DataContext.RemoveTranslationCommand}"
-                                              CommandParameter="{Binding}"
-                                      IconData="F1 M 26.9166,22.1667L 37.9999,33.25L 49.0832,22.1668L 53.8332,26.9168L 42.7499,38L 53.8332,49.0834L 49.0833,53.8334L 37.9999,42.75L 26.9166,53.8334L 22.1666,49.0833L 33.25,38L 22.1667,26.9167L 26.9166,22.1667 Z " 
-                                       />
-                        </Grid>
-                       
-                    </DataTemplate>
-                        </ItemsControl.ItemTemplate>
-                </ListView>
-                
-                <StackPanel Orientation="Horizontal" >
-                <mui:ModernButton Padding="10" Margin="10" Content="save word" 
+
+                <mui:ModernButton  Grid.Row="4" Grid.Column="1" 
+                        Padding="1" Margin="1" VerticalAlignment="Top" HorizontalAlignment="Center"
+                                      Content="save word" 
                                       Command="{Binding SaveWordCommand}"
-                                      IconData="F1 M 20.5833,20.5833L 55.4167,20.5833L 55.4167,55.4167L 45.9167,55.4167L 45.9167,44.3333L 30.0833,44.3333L 30.0833,55.4167L 20.5833,55.4167L 20.5833,20.5833 Z M 33.25,55.4167L 33.25,50.6667L 39.5833,50.6667L 39.5833,55.4167L 33.25,55.4167 Z M 26.9167,23.75L 26.9167,33.25L 49.0833,33.25L 49.0833,23.75L 26.9167,23.75 Z" 
+                                      IconData="F1 M 20.5833,20.5833L 55.4167,20.5833L 55.4167,55.4167L 45.9167,55.4167L 45.9167,44.3333L 30.0833,44.3333L 30.0833,55.4167L 20.5833,55.4167L 20.5833,20.5833 Z M 33.25,55.4167L 33.25,50.6667L 39.5833,50.6667L 39.5833,55.4167L 33.25,55.4167 Z M 26.9167,23.75L 26.9167,33.25L 49.0833,33.25L 49.0833,23.75L 26.9167,23.75 Z" HorizontalContentAlignment="Right" 
                                        />
-                
-                </StackPanel>
-
-
-            </StackPanel>
+            </Grid>
         </ScrollViewer>
     </Grid>
 </UserControl>

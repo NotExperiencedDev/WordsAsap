@@ -11,43 +11,29 @@ namespace WordsAsap.Pages
     public class DictionaryViewModel: NotifyPropertyChanged
     {
          private IWordsCollectionService _wordsCollectionService;
-        private WordViewModel _selectedWord;       
-       
+        
         public DictionaryViewModel()
         {
             _wordsCollectionService = WordsCollectionServiceFactory.CreateWordsCollectionService(SettingsServiceFactory.GetWordsAsapSettings());
             WordsCollection = new ObservableCollection<WordViewModel>();
-             var collection = _wordsCollectionService.GetData<Word>();
-            if(collection != null)
+            LoadWordsCollection();
+        }
+
+        private void LoadWordsCollection()
+        {
+            WordsCollection.Clear();
+            var collection = _wordsCollectionService.GetData<Word>();
+            if (collection != null)
                 foreach (var item in collection)
                     WordsCollection.Add(new WordViewModel { WordToDisplay = item });
         }
 
         public ObservableCollection<WordViewModel> WordsCollection { get; set; }
-        
-
-        public WordViewModel SelectedWord
-        {
-            set
-            {
-                if (_selectedWord == value)
-                    return;
-                _selectedWord = value;
-                OnPropertyChanged("SelectedWord");
-            }
-            get
-            {
-                return _selectedWord;
-            }
-        }
 
         public RelayCommand RemoveWordCommand
         {
             get { return new RelayCommand(RemoveWord, CanRemoveWord); }
         }
-
-
-       
 
         private bool CanRemoveWord(object o)
         {
@@ -66,10 +52,7 @@ namespace WordsAsap.Pages
 
             _wordsCollectionService.Remove<Word>(word.WordToDisplay);
 
-            WordsCollection.Remove(word);
-            
+            WordsCollection.Remove(word);            
         }
-
-
     }
 }
