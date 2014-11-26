@@ -1,6 +1,7 @@
 ﻿using FirstFloor.ModernUI.Presentation;
 using FirstFloor.ModernUI.Windows.Controls;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows;
 using WordsAsap.Entities;
@@ -11,9 +12,10 @@ namespace WordsAsap.Pages
     public class WordViewModel : NotifyPropertyChanged
     {      
         private IWordsCollectionService _wordsCollectionService;
+        Word _wordToDisplay;
         public WordViewModel(){
              _wordsCollectionService = WordsCollectionServiceFactory.CreateWordsCollectionService(SettingsServiceFactory.GetWordsAsapSettings());
-             
+             Translations = new ObservableCollection<Translation>();
         }
               
 
@@ -33,37 +35,46 @@ namespace WordsAsap.Pages
             }
         }
 
-        public Word WordToDisplay { get; set; }
-
-        public bool ShowOtherTranslations { get; set; }
-        public bool ShowFirstTranslation { get { return !ShowOtherTranslations; } }
-
-        public IList<Translation> Translations
+        public Word WordToDisplay
         {
-            get
+            get { return _wordToDisplay; }
+            set
             {
-                if (WordToDisplay == null)
-                    return null;
-                return WordToDisplay.Translations;
+                _wordToDisplay = value;
+                if (_wordToDisplay != null)
+                {
+                    Translations.Clear();
+                    foreach (var item in _wordToDisplay.Translations)
+                        Translations.Add(item);
+                }
             }
         }
 
-        public RelayCommand ShowOtherTranslationsCommand
+        //public bool ShowOtherTranslations { get; set; }
+        //public bool ShowFirstTranslation { get { return !ShowOtherTranslations; } }
+
+        public ObservableCollection<Translation> Translations
         {
-            get
-            {
-                return new RelayCommand(ShowOtherTranslationsManager);
+            get;
+            set;
+        }
+
+        //public RelayCommand ShowOtherTranslationsCommand
+        //{
+        //    get
+        //    {
+        //        return new RelayCommand(ShowOtherTranslationsManager);
                
-            }
-        }
+        //    }
+        //}
 
 
-        private void ShowOtherTranslationsManager(object o)
-        {
-            ShowOtherTranslations = !ShowOtherTranslations;
-            OnPropertyChanged("ShowOtherTranslations");
-            OnPropertyChanged("ShowFirstTranslation");
-        }
+        //private void ShowOtherTranslationsManager(object o)
+        //{
+        //    ShowOtherTranslations = !ShowOtherTranslations;
+        //    OnPropertyChanged("ShowOtherTranslations");
+        //    OnPropertyChanged("ShowFirstTranslation");
+        //}
 
         public RelayCommand RemoveTranslationCommand
         {
@@ -83,11 +94,11 @@ namespace WordsAsap.Pages
             WordToDisplay.Translations.Remove(translation);
             _wordsCollectionService.Update<Word>(WordToDisplay);
             //hack: cannot figure it out how to refresh the view right now
-            ShowOtherTranslations = !ShowOtherTranslations;
-            OnPropertyChanged("ShowOtherTranslations");
-            ShowOtherTranslations = !ShowOtherTranslations;
-            OnPropertyChanged("ShowOtherTranslations");
-            OnPropertyChanged("ShowFirstTranslation");
+            //ShowOtherTranslations = !ShowOtherTranslations;
+            //OnPropertyChanged("ShowOtherTranslations");
+            //ShowOtherTranslations = !ShowOtherTranslations;
+            //OnPropertyChanged("ShowOtherTranslations");
+            WordToDisplay = WordToDisplay;
         }
        
     }

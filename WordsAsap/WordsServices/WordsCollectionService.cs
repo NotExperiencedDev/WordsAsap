@@ -20,6 +20,8 @@ namespace WordsAsap.WordsServices
         private static WordsCollectionService _wordsCollectionService;
         private ISession _session;
 
+        public event EventHandler WordsCollectionChanged;
+
         private WordsCollectionService()
         {
 
@@ -114,10 +116,8 @@ namespace WordsAsap.WordsServices
                         _session.SaveOrUpdate(w);
                     }
                    
-                    // save both stores, this saves everything else via cascading
-                   
-
                     transaction.Commit();
+                    OnWordsCollectionChanged();
                 }
             
         }
@@ -151,6 +151,12 @@ namespace WordsAsap.WordsServices
         {
             if (_session != null)
                 _session.Close();
+        }
+
+
+        private void OnWordsCollectionChanged(){
+            if (WordsCollectionChanged != null)
+                WordsCollectionChanged(this, new EventArgs());
         }
     }
 }

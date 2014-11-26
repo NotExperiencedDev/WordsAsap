@@ -14,8 +14,14 @@ namespace WordsAsap.Pages
         
         public DictionaryViewModel()
         {
-            _wordsCollectionService = WordsCollectionServiceFactory.CreateWordsCollectionService(SettingsServiceFactory.GetWordsAsapSettings());
+            _wordsCollectionService = WordsCollectionServiceFactory.CreateWordsCollectionService(SettingsServiceFactory.GetWordsAsapSettings());            
             WordsCollection = new ObservableCollection<WordViewModel>();
+            LoadWordsCollection();
+            _wordsCollectionService.WordsCollectionChanged += WordsCollectionService_WordsCollectionChanged;
+        }
+
+        void WordsCollectionService_WordsCollectionChanged(object sender, System.EventArgs e)
+        {
             LoadWordsCollection();
         }
 

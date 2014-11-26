@@ -20,11 +20,35 @@ namespace WordsAsap.Pages
         {
             _wordsCollectionService = WordsCollectionServiceFactory.CreateWordsCollectionService(SettingsServiceFactory.GetWordsAsapSettings());
             Translations = new ObservableCollection<TranslationItem>();
-            Translations.Add(new TranslationItem { Translation = string.Empty });
+            AddTranslation(null);
         }
 
-       
-        public ICommand AddTranslationCommand
+        public RelayCommand NewWordCommand
+        {
+            get { return new RelayCommand(NewWordCommandExec); }
+        }
+
+        private void NewWordCommandExec(object obj)
+        {
+            if (!string.IsNullOrWhiteSpace(NewWord))
+            {
+                SimpleExpression e = Restrictions.Eq("Value", NewWord);
+                var reply = _wordsCollectionService.GetData<Word>(e);  
+                if((reply == null || reply.Count == 0) && HasTranslation())
+                {
+                    var r = ModernDialog.ShowMessage("word not saved do yoou want to save it?", "save or update word", MessageBoxButton.YesNo);
+                    if (r == MessageBoxResult.Yes)
+                        SaveWord(null);
+                }
+                Translations.Clear();                
+                NewWord = string.Empty;
+                AddTranslation(null);
+                OnPropertyChanged("NewWord");
+            }
+              
+        }
+
+        public RelayCommand AddTranslationCommand
         {
             get { return new RelayCommand(AddTranslation); }
         }
@@ -34,7 +58,7 @@ namespace WordsAsap.Pages
             Translations.Add(new TranslationItem());
         }
 
-        public ICommand RemoveTranslationCommand
+        public RelayCommand RemoveTranslationCommand
         {
             get { return new RelayCommand(RemoveTranslation); }
         }
@@ -46,17 +70,28 @@ namespace WordsAsap.Pages
                 Translations.Remove(t);
         }
 
-        public ICommand SaveWordCommand
+        public RelayCommand SaveWordCommand
         {
-            get { return new RelayCommand(SaveWord); }
+            get { return new RelayCommand(SaveWord, (o) => { return !string.IsNullOrWhiteSpace(NewWord) && HasTranslation(); }); }
         }
-       
 
+        private bool HasTranslation()
+        {
+            if (Translations == null || Translations.Count < 1)
+                return false;
+           
+            foreach (var item in Translations)
+                if (!string.IsNullOrWhiteSpace(item.Translation))
+                    return true;
+            return false;
+        }
 
         private void SaveWord(object o)
         {
             foreach (var t in Translations)
             {
+                if (string.IsNullOrWhiteSpace(t.Translation))
+                    continue;
                 _wordsCollectionService.AddWord(NewWord, t.Translation);
             }
            
@@ -64,7 +99,6 @@ namespace WordsAsap.Pages
             var reply = _wordsCollectionService.GetData<Word>(e);            
 
             ModernDialog.ShowMessage("word updated", "save or update word", MessageBoxButton.OK);
-
            
         }
         
