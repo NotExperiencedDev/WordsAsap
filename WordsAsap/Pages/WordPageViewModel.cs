@@ -3,6 +3,7 @@ using System;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
 using System.Windows.Input;
 using WordsAsap.Entities;
 using WordsAsap.WordsServices;
@@ -72,6 +73,12 @@ namespace WordsAsap.Pages
             var window = Window.GetWindow(page);
             if (window != null)
                 window.Close();
+            else if(page.Parent != null)
+            {
+                var popup = page.Parent as Popup;
+                if (popup != null)
+                    popup.IsOpen = false;
+            }
         }
 
         private void RightAnswerCommand(object obj)

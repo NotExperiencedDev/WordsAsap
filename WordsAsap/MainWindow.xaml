@@ -7,7 +7,7 @@
         ContentSource="/Pages/Home.xaml" Icon="acorn-7-16.ico"
                   
            Closing="OnClose" StateChanged="OnStateChanged" IsVisibleChanged="OnIsVisibleChanged"       
-                  
+         xmlns:tb="http://www.hardcodet.net/taskbar"          
                   >
 
     
@@ -30,4 +30,5 @@
         <mui:Link DisplayName="help" Source="/Pages/HelpPage.xaml" />
         <mui:Link DisplayName="about" Source="/Pages/About.xaml" />
     </mui:ModernWindow.TitleLinks>
+   
 </mui:ModernWindow>

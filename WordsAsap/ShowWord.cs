@@ -76,11 +76,7 @@ namespace WordsAsap
             }
             else
             {
-                var w = GetWordToLearn.WordToLearn.GetNextWord();
-                var description = string.Empty;
-                foreach(var t in w.Translations)
-                    description += t.Value +"\n";
-                NotifyIcon.SystryIcon.ShowBaloonTip(10000, w.Value, description );
+                NotifyIcon.SystryIcon.ShowBaloonTip( );
             }
             _timer.Enabled = true;
         }       

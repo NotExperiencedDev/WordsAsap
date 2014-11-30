@@ -14,13 +14,14 @@ namespace WordsAsap
         {
             InitializeComponent();
             NotifyIcon.SystryIcon.Click += NotifyIcon_Click;
+            
           
             _showWord = new ShowWord(Properties.Settings.Default.WordDialogShowInterval, Dispatcher);
         }
 
         private void OnClose(object sender, CancelEventArgs args)
         {
-            NotifyIcon.SystryIcon.Dispose();
+           
         }
 
         private void OnStateChanged(object sender, EventArgs args)
@@ -29,7 +30,7 @@ namespace WordsAsap
             {
                 Hide();
                 NotifyIcon.SystryIcon.ShowBaloonTip(
-                    1700, 
+                    1700,
                     ApplicationInfo.TitleFunc(),
                     string.Format("The {0} has been minimised. Click the tray icon to show it back.", ApplicationInfo.TitleFunc())
                     );
