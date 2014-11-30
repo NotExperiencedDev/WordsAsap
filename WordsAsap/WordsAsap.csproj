@@ -104,18 +104,18 @@
     <Compile Include="crt.xaml.cs">
       <DependentUpon>crt.xaml</DependentUpon>
     </Compile>
+    <Compile Include="NotifyIcon.cs" />
     <Compile Include="Pages\DictionaryPage.xaml.cs">
       <DependentUpon>DictionaryPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Pages\DictionaryViewModel.cs" />
     <Compile Include="Pages\WordPageViewModel.cs" />
     <Compile Include="Pages\WordViewModel.cs" />
+    <Compile Include="WordsServices\GetWordToLearn.cs" />
     <Compile Include="WordsServices\WordsCollectionService.cs" />
     <Compile Include="Entities\Translation.cs" />
     <Compile Include="Entities\Word.cs" />
     <Compile Include="Entities\WordStatistics.cs" />
-    <Compile Include="WordsServices\IWordsCollectionService.cs" />
-    <Compile Include="WordsServices\IWordsCollectionServiceSettings.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
     </Compile>

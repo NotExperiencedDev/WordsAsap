@@ -11,14 +11,14 @@ namespace WordsAsap.Pages
 {
     public class HomeViewModel : NotifyPropertyChanged    
     {
-        private IWordsCollectionService _wordsCollectionService;
+        private WordsCollectionService _wordsCollectionService;
         
         public string NewWord { get; set; }
         public ObservableCollection<TranslationItem> Translations { get; set; }
        
         public HomeViewModel()
         {
-            _wordsCollectionService = WordsCollectionServiceFactory.CreateWordsCollectionService(SettingsServiceFactory.GetWordsAsapSettings());
+            _wordsCollectionService = WordsCollectionService.CreateWordsCollectionService(WordsSettings.GetWordsAsapSettings());
             Translations = new ObservableCollection<TranslationItem>();
             AddTranslation(null);
         }
@@ -99,7 +99,7 @@ namespace WordsAsap.Pages
             var reply = _wordsCollectionService.GetData<Word>(e);            
 
             ModernDialog.ShowMessage("word updated", "save or update word", MessageBoxButton.OK);
-           
+            NewWordCommandExec(null);
         }
         
     }

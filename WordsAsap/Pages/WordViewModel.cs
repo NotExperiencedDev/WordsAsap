@@ -10,14 +10,13 @@ using WordsAsap.WordsServices;
 namespace WordsAsap.Pages
 {
     public class WordViewModel : NotifyPropertyChanged
-    {      
-        private IWordsCollectionService _wordsCollectionService;
+    {
+        private WordsCollectionService _wordsCollectionService;
         Word _wordToDisplay;
         public WordViewModel(){
-             _wordsCollectionService = WordsCollectionServiceFactory.CreateWordsCollectionService(SettingsServiceFactory.GetWordsAsapSettings());
+            _wordsCollectionService = WordsCollectionService.CreateWordsCollectionService(WordsSettings.GetWordsAsapSettings());
              Translations = new ObservableCollection<Translation>();
-        }
-              
+        }              
 
         public virtual string FirstTranslation
         {
@@ -50,31 +49,11 @@ namespace WordsAsap.Pages
             }
         }
 
-        //public bool ShowOtherTranslations { get; set; }
-        //public bool ShowFirstTranslation { get { return !ShowOtherTranslations; } }
-
         public ObservableCollection<Translation> Translations
         {
             get;
             set;
         }
-
-        //public RelayCommand ShowOtherTranslationsCommand
-        //{
-        //    get
-        //    {
-        //        return new RelayCommand(ShowOtherTranslationsManager);
-               
-        //    }
-        //}
-
-
-        //private void ShowOtherTranslationsManager(object o)
-        //{
-        //    ShowOtherTranslations = !ShowOtherTranslations;
-        //    OnPropertyChanged("ShowOtherTranslations");
-        //    OnPropertyChanged("ShowFirstTranslation");
-        //}
 
         public RelayCommand RemoveTranslationCommand
         {
@@ -93,11 +72,6 @@ namespace WordsAsap.Pages
 
             WordToDisplay.Translations.Remove(translation);
             _wordsCollectionService.Update<Word>(WordToDisplay);
-            //hack: cannot figure it out how to refresh the view right now
-            //ShowOtherTranslations = !ShowOtherTranslations;
-            //OnPropertyChanged("ShowOtherTranslations");
-            //ShowOtherTranslations = !ShowOtherTranslations;
-            //OnPropertyChanged("ShowOtherTranslations");
             WordToDisplay = WordToDisplay;
         }
        

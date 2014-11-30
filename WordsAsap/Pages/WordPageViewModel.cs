@@ -13,8 +13,8 @@ namespace WordsAsap.Pages
     {
 
         private Random _random;
-        private IWordsCollectionService _wordsCollectionService;
-
+        private WordsCollectionService _wordsCollectionService;
+        private int _maxNumberOfWordDisplays;
 
         public Word WordToLearn { get; set; }
 
@@ -23,24 +23,14 @@ namespace WordsAsap.Pages
             ShowTranslation = Visibility.Collapsed;
             OnPropertyChanged("ShowTranslation");
             _random = new Random();
-            _wordsCollectionService = WordsCollectionServiceFactory.CreateWordsCollectionService(SettingsServiceFactory.GetWordsAsapSettings());
-            GetWordToShow();
+            _wordsCollectionService = WordsCollectionService.CreateWordsCollectionService(WordsSettings.GetWordsAsapSettings());
+            _maxNumberOfWordDisplays = WordsSettings.GetWordsAsapSettings().MaxNumberOfWordDisplays;
+            GetWordToShow();            
         }
 
         private void GetWordToShow()
         {
-            var words = _wordsCollectionService.GetData<Word>();
-            if (words == null || words.Count < 1)
-                return;
-            
-            
-            var selection = _random.Next(0, words.Count > 5 ? 4: words.Count - 1);
-            WordToLearn = words
-                .OrderBy(x => x.CreationDate)
-                .ThenBy(x=>x.Statistics.WrongAnswers)
-                .ThenBy(x=>x.Statistics.LastDisplayTime)
-                .ThenByDescending(x=>x.Statistics.NumberOfDisplays)
-                .ToArray()[selection];
+            WordToLearn = GetWordToLearn.WordToLearn.GetNextWord();
             OnPropertyChanged("WordToLearn");
         }
 

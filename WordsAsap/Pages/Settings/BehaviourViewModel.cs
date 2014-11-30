@@ -15,16 +15,20 @@ namespace WordsAsap.Pages.Settings
     public class BehaviourViewModel
         : NotifyPropertyChanged
     {
-        IWordsCollectionSettingsService _settings;
+        WordsSettings _settings;
         public BehaviourViewModel()
         {
-            _settings = SettingsServiceFactory.GetWordsAsapSettings();
+            _settings = WordsSettings.GetWordsAsapSettings();
             WordDialogShowInterval = _settings.WordDialogShowInterval;
             WordsCollectionStorage = _settings.CollectionStorage;
+            MaxNumberOfWordsDisplays = _settings.MaxNumberOfWordDisplays;
+            ShowWordInPopupDialog = _settings.ShowWordInPopupDialog;
         }
 
         private int _wordDialogShowInterval;
         private string _wordsCollectionStorageFile;
+        private int _maxNumberOfWordsDisplay;
+        private bool _showWordInPopupDialog;
 
         public int WordDialogShowInterval
         {
@@ -46,19 +50,49 @@ namespace WordsAsap.Pages.Settings
             }
         }
 
-      
-        public ICommand UpCommand
+        public int MaxNumberOfWordsDisplays
+        {
+            get {  return _maxNumberOfWordsDisplay;  }
+            set
+            {
+                _maxNumberOfWordsDisplay = value;
+                OnPropertyChanged("MaxNumberOfWordsDisplays");
+            }
+        }
+
+        public bool ShowWordInPopupDialog
+        {
+            get { return _showWordInPopupDialog; }
+            set
+            {
+                _showWordInPopupDialog = value;
+                OnPropertyChanged("ShowWordInPopupDialog");
+            }
+        }
+
+
+        public RelayCommand UpShowIntervalCommand
         {
             get { return new RelayCommand((o) => { WordDialogShowInterval++; }); }
         }
 
-        public ICommand DownCommand
+        public RelayCommand DownShowIntervalCommand
         {
-            get { return new RelayCommand((o) => { WordDialogShowInterval--; }, (o1) => { return WordDialogShowInterval > 1; }); }
+            get { return new RelayCommand((o) => { WordDialogShowInterval--; }, (o) => { return WordDialogShowInterval > 2; }); }
         }
-             
 
-        public ICommand SaveSettingsCommand
+        public RelayCommand UpMaxWordShowCommand
+        {
+            get { return new RelayCommand((o) => { MaxNumberOfWordsDisplays++; }); }
+        }
+
+        public RelayCommand DownMaxWordShowCommand
+        {
+            get { return new RelayCommand((o) => { MaxNumberOfWordsDisplays--; }, (o) => { return MaxNumberOfWordsDisplays > 4; }); }
+        }
+
+
+        public RelayCommand SaveSettingsCommand
         {
             get { return new RelayCommand(SaveSettings); }
         }
@@ -67,6 +101,8 @@ namespace WordsAsap.Pages.Settings
         {
             _settings.WordDialogShowInterval = WordDialogShowInterval;
             _settings.CollectionStorage = WordsCollectionStorage;
+            _settings.ShowWordInPopupDialog = ShowWordInPopupDialog;
+            _settings.MaxNumberOfWordDisplays = MaxNumberOfWordsDisplays;
             ModernDialog.ShowMessage("settings saved", "save settings", MessageBoxButton.OK);
         }
     }

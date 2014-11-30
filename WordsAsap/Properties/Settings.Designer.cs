@@ -81,5 +81,29 @@ namespace WordsAsap.Properties {
                 this["WordsCollectionStorage"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("20")]
+        public int MaxNumberOfWordDisplays {
+            get {
+                return ((int)(this["MaxNumberOfWordDisplays"]));
+            }
+            set {
+                this["MaxNumberOfWordDisplays"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool ShowWordInPopupDialog {
+            get {
+                return ((bool)(this["ShowWordInPopupDialog"]));
+            }
+            set {
+                this["ShowWordInPopupDialog"] = value;
+            }
+        }
     }
 }

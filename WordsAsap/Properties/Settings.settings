@@ -17,5 +17,11 @@
     <Setting Name="WordsCollectionStorage" Type="System.String" Scope="User">
       <Value Profile="(Default)">WordsCollection.db3</Value>
     </Setting>
+    <Setting Name="MaxNumberOfWordDisplays" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">20</Value>
+    </Setting>
+    <Setting Name="ShowWordInPopupDialog" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

@@ -6,32 +6,21 @@ namespace WordsAsap
 {
     
     public partial class MainWindow
-    {
-        private System.Windows.Forms.NotifyIcon _notifyIcon;
+    {        
         private WindowState _storedWindowState;
         private readonly ShowWord _showWord;
 
         public MainWindow()
         {
             InitializeComponent();
-            _notifyIcon = new System.Windows.Forms.NotifyIcon
-            {
-                BalloonTipText =
-                    string.Format("The {0} has been minimised. Click the tray icon to show it back.",
-                        ApplicationInfo.TitleFunc()),
-                BalloonTipTitle = ApplicationInfo.TitleFunc(),
-                Text = ApplicationInfo.TitleFunc(),
-                Icon = new System.Drawing.Icon("acorn-7-16.ico")
-            };
-            _notifyIcon.Click += NotifyIcon_Click;
+            NotifyIcon.SystryIcon.Click += NotifyIcon_Click;
           
             _showWord = new ShowWord(Properties.Settings.Default.WordDialogShowInterval, Dispatcher);
         }
 
         private void OnClose(object sender, CancelEventArgs args)
         {
-            _notifyIcon.Dispose();
-            _notifyIcon = null;
+            NotifyIcon.SystryIcon.Dispose();
         }
 
         private void OnStateChanged(object sender, EventArgs args)
@@ -39,8 +28,11 @@ namespace WordsAsap
             if (WindowState == WindowState.Minimized)
             {
                 Hide();
-                if (_notifyIcon != null)
-                    _notifyIcon.ShowBalloonTip(2000);
+                NotifyIcon.SystryIcon.ShowBaloonTip(
+                    1700, 
+                    ApplicationInfo.TitleFunc(),
+                    string.Format("The {0} has been minimised. Click the tray icon to show it back.", ApplicationInfo.TitleFunc())
+                    );
                 _showWord.Resume();
             }
             else
@@ -68,8 +60,7 @@ namespace WordsAsap
 
         private void ShowTrayIcon(bool show)
         {
-            if (_notifyIcon != null)
-                _notifyIcon.Visible = show;
+            NotifyIcon.SystryIcon.Show = show;
         }
     }
 }

@@ -14,7 +14,7 @@ using WordsAsap.Entities;
 
 namespace WordsAsap.WordsServices
 {
-    public class WordsCollectionService: IWordsCollectionService, IDisposable
+    public class WordsCollectionService:  IDisposable
     {
         private string _databaseFileName;
         private static WordsCollectionService _wordsCollectionService;
@@ -60,7 +60,7 @@ namespace WordsAsap.WordsServices
               .Create(false, true);
         }
 
-        public static IWordsCollectionService CreateWordsCollectionService(IWordsCollectionSettingsService settings)
+        public static WordsCollectionService CreateWordsCollectionService(WordsSettings settings)
         {
             if (_wordsCollectionService != null && string.Equals(_wordsCollectionService._databaseFileName, settings.CollectionStorage))
                 return _wordsCollectionService;

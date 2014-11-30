@@ -7,20 +7,20 @@ using WordsAsap.WordsServices;
 
 namespace WordsAsap
 {
-    public class WordsSettings:IWordsCollectionSettingsService
+    public class WordsSettings
     {
-        private static IWordsCollectionSettingsService _wordsCollectionServiceSettings;
+        private static WordsSettings _wordsSettings;
 
         private WordsSettings()
         {
 
         }
 
-        public static IWordsCollectionSettingsService GetWordsAsapSettings()
+        public static WordsSettings GetWordsAsapSettings()
         {
-            if(_wordsCollectionServiceSettings == null)               
-                _wordsCollectionServiceSettings = new WordsSettings();
-            return _wordsCollectionServiceSettings;
+            if(_wordsSettings == null)               
+                _wordsSettings = new WordsSettings();
+            return _wordsSettings;
         }
 
         public string CollectionStorage
@@ -48,5 +48,32 @@ namespace WordsAsap
                 Properties.Settings.Default.Save();
             }
         }
+
+        public int MaxNumberOfWordDisplays 
+        {
+            get
+            {
+                return Properties.Settings.Default.MaxNumberOfWordDisplays;
+            }
+            set
+            {
+                Properties.Settings.Default.MaxNumberOfWordDisplays = value;
+                Properties.Settings.Default.Save();
+            }
+        }
+
+        public bool ShowWordInPopupDialog 
+        {
+            get
+            {
+                return Properties.Settings.Default.ShowWordInPopupDialog;
+            }
+            set
+            {
+                Properties.Settings.Default.ShowWordInPopupDialog = value;
+                Properties.Settings.Default.Save();
+            }
+        }
+
     }
 }

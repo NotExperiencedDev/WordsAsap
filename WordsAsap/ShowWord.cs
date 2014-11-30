@@ -15,7 +15,7 @@ namespace WordsAsap
         private bool _paused;
         private WordDialog _wordDialog;
         private Random _random;
-        private IWordsCollectionService _wordsCollectionService;
+        private WordsCollectionService _wordsCollectionService;
                
         public ShowWord(int intervalInMinutes, Dispatcher context)
         {
@@ -28,7 +28,7 @@ namespace WordsAsap
             _timer = new Timer { Enabled = false, Interval = interval };
             _timer.Elapsed += OnElapsed;
             _random = new Random();
-            _wordsCollectionService = WordsCollectionServiceFactory.CreateWordsCollectionService(SettingsServiceFactory.GetWordsAsapSettings());
+            _wordsCollectionService = WordsCollectionService.CreateWordsCollectionService(WordsSettings.GetWordsAsapSettings());
         }
 
         public void Resume()
@@ -65,12 +65,23 @@ namespace WordsAsap
 
         private void ShowDialog()
         {
-            if(_wordDialog != null)
+            if (WordsSettings.GetWordsAsapSettings().ShowWordInPopupDialog)
+            {
+                if (_wordDialog != null)
                     _wordDialog.Close();
-                
-            _wordDialog = new WordDialog();
-            
-            _wordDialog.ShowDialog();
+
+                _wordDialog = new WordDialog();
+
+                _wordDialog.ShowDialog();
+            }
+            else
+            {
+                var w = GetWordToLearn.WordToLearn.GetNextWord();
+                var description = string.Empty;
+                foreach(var t in w.Translations)
+                    description += t.Value +"\n";
+                NotifyIcon.SystryIcon.ShowBaloonTip(10000, w.Value, description );
+            }
             _timer.Enabled = true;
         }       
     }

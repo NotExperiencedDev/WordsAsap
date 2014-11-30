@@ -10,11 +10,11 @@ namespace WordsAsap.Pages
 {
     public class DictionaryViewModel: NotifyPropertyChanged
     {
-         private IWordsCollectionService _wordsCollectionService;
+         private WordsCollectionService _wordsCollectionService;
         
         public DictionaryViewModel()
         {
-            _wordsCollectionService = WordsCollectionServiceFactory.CreateWordsCollectionService(SettingsServiceFactory.GetWordsAsapSettings());            
+            _wordsCollectionService = WordsCollectionService.CreateWordsCollectionService(WordsSettings.GetWordsAsapSettings());            
             WordsCollection = new ObservableCollection<WordViewModel>();
             LoadWordsCollection();
             _wordsCollectionService.WordsCollectionChanged += WordsCollectionService_WordsCollectionChanged;
