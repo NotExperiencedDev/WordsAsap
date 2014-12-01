@@ -21,7 +21,7 @@ namespace WordsAsap.Pages
 
         public WordPageViewModel()
         {
-            ShowTranslation = Visibility.Collapsed;
+            ShowTranslation = false;
             OnPropertyChanged("ShowTranslation");
             _random = new Random();
             _wordsCollectionService = WordsCollectionService.CreateWordsCollectionService(WordsSettings.GetWordsAsapSettings());
@@ -37,7 +37,7 @@ namespace WordsAsap.Pages
 
         public RelayCommand ShowTranslationCommand
         {
-            get { return new RelayCommand((o) => { ShowTranslation = Visibility.Visible; OnPropertyChanged("ShowTranslation"); }); }
+            get { return new RelayCommand((o) => { ShowTranslation = !ShowTranslation; OnPropertyChanged("ShowTranslation"); }); }
         }
 
 
@@ -105,6 +105,6 @@ namespace WordsAsap.Pages
             _wordsCollectionService.Update<WordStatistics>(statistics);
         }
 
-        public Visibility ShowTranslation { get; set; }
+        public bool ShowTranslation { get; set; }
     }
 }

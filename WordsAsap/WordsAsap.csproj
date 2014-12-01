@@ -104,9 +104,6 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Converters\VisibilityToBooleanColapsedConverter.cs" />
-    <Compile Include="crt.xaml.cs">
-      <DependentUpon>crt.xaml</DependentUpon>
-    </Compile>
     <Compile Include="NotifyIcon.cs" />
     <Compile Include="Pages\DictionaryPage.xaml.cs">
       <DependentUpon>DictionaryPage.xaml</DependentUpon>
@@ -145,10 +142,6 @@
     </Compile>
     <Compile Include="ShowWord.cs" />
     <Compile Include="WordsSettings.cs" />
-    <Page Include="crt.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

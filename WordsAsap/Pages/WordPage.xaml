@@ -8,15 +8,18 @@
              mc:Ignorable="d" 
              d:DesignHeight="250" d:DesignWidth="250">
     <UserControl.DataContext>
-        <local:WordPageViewModel/>
+        <local:WordPageViewModel/>        
     </UserControl.DataContext>
+    <UserControl.Resources>
+        <BooleanToVisibilityConverter x:Key="VisibilityConverter" />
+    </UserControl.Resources>
     <Grid Style="{StaticResource ContentRoot}">
         <ScrollViewer>
             <StackPanel MinWidth="200">
 
                 <TextBlock Text="{Binding WordToLearn.Value}" Margin="3"/>
 
-                <ListView ItemsSource="{Binding WordToLearn.Translations}" Visibility="{Binding ShowTranslation}" Margin="3">
+                <ListView ItemsSource="{Binding WordToLearn.Translations}" Visibility="{Binding ShowTranslation, Converter={StaticResource VisibilityConverter}}" Margin="3" x:Name="lstvInternal">
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
                             <Grid Margin="0,0,0,5">
@@ -29,10 +32,25 @@
                     </ItemsControl.ItemTemplate>
                 </ListView>
 
-                <mui:ModernButton Padding="10" Margin="20" Content="show translation" 
-                                      Command="{Binding ShowTranslationCommand}"
-                                      IconData="F1 M 37.8516,39.5833L 52.1016,24.9375L 52.1016,35.2292L 37.8516,50.2708L 23.6016,35.2292L 23.6016,24.9375L 37.8516,39.5833 Z" 
-                                       />
+                <mui:ModernButton Padding="10" Margin="20" 
+                                      Command="{Binding ShowTranslationCommand}">
+                                      <!--IconData="F1 M 37.8516,39.5833L 52.1016,24.9375L 52.1016,35.2292L 37.8516,50.2708L 23.6016,35.2292L 23.6016,24.9375L 37.8516,39.5833 Z"-->
+                    <mui:ModernButton.Style>
+                        <Style TargetType="mui:ModernButton">
+                            <Setter Property="IconData" Value="F1 M 37.8516,39.5833L 52.1016,24.9375L 52.1016,35.2292L 37.8516,50.2708L 23.6016,35.2292L 23.6016,24.9375L 37.8516,39.5833 Z" />
+                            <Setter Property="Content" Value="show translation"/>
+                            <Style.Triggers>
+                                <MultiDataTrigger>
+                                    <MultiDataTrigger.Conditions>
+                                        <Condition Binding="{Binding ElementName=lstvInternal, Path=Visibility}" Value="Visible" />
+                                    </MultiDataTrigger.Conditions>
+                                    <Setter Property="IconData" Value="F1 M 37.8516,35.625L 34.6849,38.7917L 23.6016,50.2708L 23.6016,39.9792L 37.8516,24.9375L 52.1016,39.9792L 52.1016,50.2708L 41.0182,38.7917L 37.8516,35.625 Z" />
+                                    <Setter Property="Content" Value="hide translation"/>
+                                </MultiDataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </mui:ModernButton.Style>
+                </mui:ModernButton>
                 <StackPanel Margin="2" Orientation="Horizontal">
                 <mui:ModernButton Padding="10" Margin="20" Content="wrong"  CommandParameter="{Binding ElementName=WordPage1}"
                                       Command="{Binding WrongAnswer}"

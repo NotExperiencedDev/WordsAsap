@@ -16,9 +16,11 @@ namespace WordsAsap
         private WordDialog _wordDialog;
         private Random _random;
         private WordsCollectionService _wordsCollectionService;
+        private object _locker;
                
         public ShowWord(int intervalInMinutes, Dispatcher context)
         {
+            _locker = new object();
             var interval = intervalInMinutes * 60 * 1000;
             if (System.Diagnostics.Debugger.IsAttached)
                 interval = 10 * 1000;
@@ -33,28 +35,37 @@ namespace WordsAsap
 
         public void Resume()
         {
-            _paused = false;
-            _timer.Enabled = true;
+            lock (_locker)
+            {
+                _paused = false;
+                _timer.Enabled = true;
+            }
         }
 
         public void Pause()
         {
-            _paused = true;
-            if (_timer.Enabled)
-                _timer.Enabled = false;
+            lock (_locker)
+            {
+                _paused = true;            
+                if (_timer.Enabled)
+                    _timer.Enabled = false;
+            }
             if(_wordDialog != null && (_wordDialog.IsActive || _wordDialog.IsVisible))
                 _wordDialog.Close();
         }
 
         private void OnElapsed(object sender, ElapsedEventArgs e)
         {
-            if (_paused)
+            lock (_locker)
             {
-                if (_timer.Enabled)
-                    _timer.Enabled = false;
-                return;
+                if (_paused)
+                {
+                    if (_timer.Enabled)
+                        _timer.Enabled = false;
+                    return;
+                }
+                _timer.Enabled = false;
             }
-            _timer.Enabled = false;
             Execute();
         }
 
@@ -73,12 +84,22 @@ namespace WordsAsap
                 _wordDialog = new WordDialog();
 
                 _wordDialog.ShowDialog();
+                lock(_locker)
+                    _timer.Enabled = true;
             }
             else
             {
                 NotifyIcon.SystryIcon.ShowBaloonTip( );
+                NotifyIcon.SystryIcon.BalloonClosed += OnBallonClosed;
             }
-            _timer.Enabled = true;
-        }       
+            
+        }
+
+        private void OnBallonClosed(object sender, EventArgs args)
+        {
+            NotifyIcon.SystryIcon.BalloonClosed -= OnBallonClosed;
+            lock(_locker)
+                _timer.Enabled = true;
+        }
     }
 }
