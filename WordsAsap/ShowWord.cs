@@ -21,9 +21,13 @@ namespace WordsAsap
         public ShowWord(int intervalInMinutes, Dispatcher context)
         {
             _locker = new object();
+           
             var interval = intervalInMinutes * 60 * 1000;
             if (System.Diagnostics.Debugger.IsAttached)
                 interval = 10 * 1000;
+
+            if (interval < 1)
+                interval = 10 * 60 * 1000;
 
             _context = context;
             _showDialog = ShowDialog;

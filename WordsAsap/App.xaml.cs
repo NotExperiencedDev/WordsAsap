@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
@@ -17,11 +18,19 @@ namespace WordsAsap
     {
         public void OnStartup(object sender, StartupEventArgs e)
         {
-            var mainWindow = new MainWindow();
-            mainWindow.Title = ApplicationInfo.TitleFunc();
-            mainWindow.IsTitleVisible = true;
-            LoadSettings();
-            mainWindow.Show();
+            try
+            {
+                var mainWindow = new MainWindow();
+
+                mainWindow.Title = ApplicationInfo.TitleFunc();
+                mainWindow.IsTitleVisible = true;
+                LoadSettings();
+                mainWindow.Show();
+            }
+            catch (Exception ex)
+            {
+                File.WriteAllText("wordasapfirstlog.txt", ex.ToString());
+            }
         }       
 
         private void LoadSettings()

@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+	<Product Id="*" Name="WordsAsap" Language="1033" Version="1.0.0.0" Manufacturer="YKarchU" UpgradeCode="b3ad447b-dfd7-45a5-9b68-51e9a9be2944">
+		<Package InstallerVersion="200" Compressed="yes" InstallScope="perMachine" />
+
+		<MajorUpgrade DowngradeErrorMessage="A newer version of [ProductName] is already installed." />
+		<MediaTemplate />
+
+		<Feature Id="ProductFeature" Title="WordsAsap" Level="1">
+			<ComponentGroupRef Id="ProductComponents" />
+		</Feature>
+	</Product>
+
+	<Fragment>
+		<Directory Id="TARGETDIR" Name="SourceDir">
+			<Directory Id="ProgramFilesFolder">
+				<Directory Id="INSTALLFOLDER" Name="WordsAsap" />
+			</Directory>
+		</Directory>
+	</Fragment>
+
+	<Fragment>
+		<ComponentGroup Id="ProductComponents" Directory="INSTALLFOLDER">
+			<!-- TODO: Remove the comments around this Component element and the ComponentRef below in order to add resources to this installer. -->
+			 <!--<Component Id="ProductComponent" Guid="26AAA7B8-B94A-4640-9B10-9566D847379C"> 
+				   <File Id="WordsAsap" Name="WordsAsap.exe" Source="$(var.WordsAsap.TargetDir)WordsAsap.exe" Vital="yes" KeyPath="no"  />
+       
+			 </Component>--> 
+    
+   <Component Id="WordAsap101" Guid="18dba638-436a-4508-96de-b8f4a61bac5f"> 
+ <File Id="WordsAsap1001" Name="acorn-7-16.ico" Source="$(var.WordsAsap.TargetDir)acorn-7-16.ico" Vital="yes" KeyPath="no"  />
+</Component>
+ <Component Id="WordAsap102" Guid="6751c7a0-5883-4a39-91d3-477d37a495d7"> 
+ <File Id="WordsAsap1002" Name="Common.Logging.dll" Source="$(var.WordsAsap.TargetDir)Common.Logging.dll" Vital="yes" KeyPath="no"  />
+</Component>
+ <Component Id="WordAsap103" Guid="84260a21-e2ee-4aba-8e63-9b24301a38db"> 
+ <File Id="WordsAsap1003" Name="Common.Logging.pdb" Source="$(var.WordsAsap.TargetDir)Common.Logging.pdb" Vital="yes" KeyPath="no"  />
+</Component>
+ <Component Id="WordAsap104" Guid="12be1cea-e307-4abd-bdce-5be706fbff82"> 
+ <File Id="WordsAsap1004" Name="Common.Logging.xml" Source="$(var.WordsAsap.TargetDir)Common.Logging.xml" Vital="yes" KeyPath="no"  />
+</Component>
+ <Component Id="WordAsap105" Guid="673b773b-0ac3-475f-b2a1-087a0d2b63c6"> 
+ <File Id="WordsAsap1005" Name="FirstFloor.ModernUI.dll" Source="$(var.WordsAsap.TargetDir)FirstFloor.ModernUI.dll" Vital="yes" KeyPath="no"  />
+</Component>
+ <Component Id="WordAsap106" Guid="6ea245a3-b0b9-4157-a248-bf7a068dd5c4"> 
+ <File Id="WordsAsap1006" Name="FirstFloor.ModernUI.xml" Source="$(var.WordsAsap.TargetDir)FirstFloor.ModernUI.xml" Vital="yes" KeyPath="no"  />
+</Component>
+ <Component Id="WordAsap107" Guid="b4d53d8d-c9b8-46f3-90c5-a1eb12d30c7e"> 
+ <File Id="WordsAsap1007" Name="FluentNHibernate.dll" Source="$(var.WordsAsap.TargetDir)FluentNHibernate.dll" Vital="yes" KeyPath="no"  />
+</Component>
+ <Component Id="WordAsap108" Guid="a91c26b2-25c7-4c62-841b-d9b227b77255"> 
+ <File Id="WordsAsap1008" Name="FluentNHibernate.xml" Source="$(var.WordsAsap.TargetDir)FluentNHibernate.xml" Vital="yes" KeyPath="no"  />
+</Component>
+ <Component Id="WordAsap109" Guid="7b2a6ddb-64c9-41a0-8c0c-7c5b8fe5bfa0"> 
+ <File Id="WordsAsap1009" Name="Hardcodet.Wpf.TaskbarNotification.dll" Source="$(var.WordsAsap.TargetDir)Hardcodet.Wpf.TaskbarNotification.dll" Vital="yes" KeyPath="no"  />
+</Component>
+ <Component Id="WordAsap110" Guid="5b18ac89-678d-479c-a9eb-0e957d23febe"> 
+ <File Id="WordsAsap1010" Name="Hardcodet.Wpf.TaskbarNotification.pdb" Source="$(var.WordsAsap.TargetDir)Hardcodet.Wpf.TaskbarNotification.pdb" Vital="yes" KeyPath="no"  />
+</Component>
+ <Component Id="WordAsap111" Guid="16d962c8-df52-40c5-9db9-d2e311b86534"> 
+ <File Id="WordsAsap1011" Name="Hardcodet.Wpf.TaskbarNotification.xml" Source="$(var.WordsAsap.TargetDir)Hardcodet.Wpf.TaskbarNotification.xml" Vital="yes" KeyPath="no"  />
+</Component>
+ <Component Id="WordAsap112" Guid="fac8cd42-7f21-4d77-a893-e7718b053c39"> 
+ <File Id="WordsAsap1012" Name="Iesi.Collections.dll" Source="$(var.WordsAsap.TargetDir)Iesi.Collections.dll" Vital="yes" KeyPath="no"  />
+</Component>
+ <Component Id="WordAsap113" Guid="56a631e0-7843-4d9c-a72a-e20fa6f3f49c"> 
+ <File Id="WordsAsap1013" Name="Iesi.Collections.xml" Source="$(var.WordsAsap.TargetDir)Iesi.Collections.xml" Vital="yes" KeyPath="no"  />
+</Component>
+ <Component Id="WordAsap114" Guid="812edaf3-47cc-4f87-9b6f-ca341bc5c9f2"> 
+ <File Id="WordsAsap1014" Name="Microsoft.Expression.Markup.dll" Source="$(var.WordsAsap.TargetDir)Microsoft.Expression.Markup.dll" Vital="yes" KeyPath="no"  />
+</Component>
+ <Component Id="WordAsap115" Guid="987bfa24-f516-4bbe-a6ac-01d9c4775b2b"> 
+ <File Id="WordsAsap1015" Name="Microsoft.Expression.Utility.dll" Source="$(var.WordsAsap.TargetDir)Microsoft.Expression.Utility.dll" Vital="yes" KeyPath="no"  />
+</Component>
+ <Component Id="WordAsap116" Guid="be83e817-b8c5-4446-b65d-eaf38c9ad5a2"> 
+ <File Id="WordsAsap1016" Name="NHibernate.dll" Source="$(var.WordsAsap.TargetDir)NHibernate.dll" Vital="yes" KeyPath="no"  />
+</Component>
+ <Component Id="WordAsap117" Guid="7c0da09a-5c9b-4a1b-9afc-6143d143ce43"> 
+ <File Id="WordsAsap1017" Name="NHibernate.xml" Source="$(var.WordsAsap.TargetDir)NHibernate.xml" Vital="yes" KeyPath="no"  />
+</Component>
+ <Component Id="WordAsap118" Guid="81ed96be-f268-4570-8731-30c5b99180d9"> 
+ <File Id="WordsAsap1018" Name="System.Data.SQLite.dll" Source="$(var.WordsAsap.TargetDir)System.Data.SQLite.dll" Vital="yes" KeyPath="no"  />
+</Component>
+ <Component Id="WordAsap119" Guid="746143c3-142d-4bc1-a2b4-ea41cc082946"> 
+ <File Id="WordsAsap1019" Name="System.Data.SQLite.xml" Source="$(var.WordsAsap.TargetDir)System.Data.SQLite.xml" Vital="yes" KeyPath="no"  />
+</Component>
+ <Component Id="WordAsap120" Guid="4a6997fe-1717-4868-98f4-10e977d38ba2"> 
+ <File Id="WordsAsap1020" Name="WordsAsap.application" Source="$(var.WordsAsap.TargetDir)WordsAsap.application" Vital="yes" KeyPath="no"  />
+</Component>
+ <Component Id="WordAsap121" Guid="a98890a1-c5d7-47b9-b360-7a2364df7593"> 
+ <File Id="WordsAsap1021" Name="WordsAsap.exe" Source="$(var.WordsAsap.TargetDir)WordsAsap.exe" Vital="yes" KeyPath="no"  />
+</Component>
+ <Component Id="WordAsap122" Guid="24307f08-5ce0-4c8b-a54d-a5d40d547838"> 
+ <File Id="WordsAsap1022" Name="WordsAsap.exe.config" Source="$(var.WordsAsap.TargetDir)WordsAsap.exe.config" Vital="yes" KeyPath="no"  />
+</Component>
+ <Component Id="WordAsap123" Guid="0759208d-f5f3-4f31-90f9-1cfeed9f54b0"> 
+ <File Id="WordsAsap1023" Name="WordsAsap.exe.manifest" Source="$(var.WordsAsap.TargetDir)WordsAsap.exe.manifest" Vital="yes" KeyPath="no"  />
+</Component>
+ <Component Id="WordAsap124" Guid="e285b348-4346-44f9-8e45-713c084bfd07"> 
+ <File Id="WordsAsap1024" Name="WordsAsap.pdb" Source="$(var.WordsAsap.TargetDir)WordsAsap.pdb" Vital="yes" KeyPath="no"  />
+</Component>
+ <Component Id="WordAsap125" Guid="01c00abb-9a88-40bb-a736-b32fff38865d"> 
+ <File Id="WordsAsap1025" Name="WordsAsap.vshost.exe" Source="$(var.WordsAsap.TargetDir)WordsAsap.vshost.exe" Vital="yes" KeyPath="no"  />
+</Component>
+
+    
+  
+		</ComponentGroup>
+	</Fragment>
+</Wix>
