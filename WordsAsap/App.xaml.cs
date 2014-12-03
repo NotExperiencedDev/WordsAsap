@@ -8,6 +8,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Media;
+using WordsAsap.WordsServices;
 
 namespace WordsAsap
 {
@@ -29,7 +30,8 @@ namespace WordsAsap
             }
             catch (Exception ex)
             {
-                File.WriteAllText("wordasapfirstlog.txt", ex.ToString());
+                DefaultMessageService.MessageService.ShowErrorMessage("WordsAsap Error", ex.ToString());
+                //TODO: add log
             }
         }       
 

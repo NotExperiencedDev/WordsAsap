@@ -6,27 +6,26 @@ using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 using System.Windows.Input;
 using WordsAsap.Entities;
+using WordsAsap.Pages.ViewModels;
 using WordsAsap.WordsServices;
 
 namespace WordsAsap.Pages
 {
-    public class WordPageViewModel:NotifyPropertyChanged
+    public class WordPageViewModel:BaseViewModel
     {
 
         private Random _random;
-        private WordsCollectionService _wordsCollectionService;
         private int _maxNumberOfWordDisplays;
 
         public Word WordToLearn { get; set; }
-
-        public WordPageViewModel()
+        
+        protected override void InitializeModel()
         {
             ShowTranslation = false;
             OnPropertyChanged("ShowTranslation");
             _random = new Random();
-            _wordsCollectionService = WordsCollectionService.CreateWordsCollectionService(WordsSettings.GetWordsAsapSettings());
             _maxNumberOfWordDisplays = WordsSettings.GetWordsAsapSettings().MaxNumberOfWordDisplays;
-            GetWordToShow();            
+            GetWordToShow();  
         }
 
         private void GetWordToShow()
@@ -102,7 +101,7 @@ namespace WordsAsap.Pages
 
         private void SaveStatistics(WordStatistics statistics)
         {
-            _wordsCollectionService.Update<WordStatistics>(statistics);
+            WordsService.Update<WordStatistics>(statistics);
         }
 
         public bool ShowTranslation { get; set; }

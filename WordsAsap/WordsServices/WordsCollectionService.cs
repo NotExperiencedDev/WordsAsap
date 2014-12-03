@@ -6,6 +6,7 @@ using NHibernate.Criterion;
 using NHibernate.Tool.hbm2ddl;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -50,16 +51,30 @@ namespace WordsAsap.WordsServices
 
         private void BuildSchema(Configuration config)
         {
-            // delete the existing db on each run
-            if (File.Exists(_databaseFileName))
+            var directory = Path.Combine(new string[] { System.Environment.GetFolderPath(System.Environment.SpecialFolder.MyDocuments), ApplicationInfo.ProductFunc() });
+            var dbFilePath = Path.Combine(new string[] {directory, _databaseFileName });
+#if DEBUG
+            dbFilePath = _databaseFileName;
+#endif
+            if (File.Exists(dbFilePath))
                 return;
+
+            if (!Directory.Exists(directory))
+                Directory.CreateDirectory(directory);
 
             // this NHibernate tool takes a configuration (with mapping info in)
             // and exports a database schema from it
-            new SchemaExport(config)
-              .Create(false, true);
+            try
+            {
+                new SchemaExport(config)
+                  .Create(false, true);
+            }
+            catch (Exception e)
+            {
+                File.AppendAllText(directory + "//alskdfj.txt", e.ToString());
+            }
         }
-
+        
         public static WordsCollectionService CreateWordsCollectionService(WordsSettings settings)
         {
             if (_wordsCollectionService != null && string.Equals(_wordsCollectionService._databaseFileName, settings.CollectionStorage))

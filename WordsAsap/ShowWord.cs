@@ -34,7 +34,16 @@ namespace WordsAsap
             _timer = new Timer { Enabled = false, Interval = interval };
             _timer.Elapsed += OnElapsed;
             _random = new Random();
-            _wordsCollectionService = WordsCollectionService.CreateWordsCollectionService(WordsSettings.GetWordsAsapSettings());
+            //TODO: refactor, handle correctly
+            try
+            {
+                _wordsCollectionService = WordsCollectionService.CreateWordsCollectionService(WordsSettings.GetWordsAsapSettings());
+            }
+            catch (Exception e)
+            {
+                DefaultMessageService.MessageService.ShowErrorMessage("WordsAsap Error", e.ToString());
+                //TODO: add log
+            }
         }
 
         public void Resume()

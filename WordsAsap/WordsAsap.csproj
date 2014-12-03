@@ -136,9 +136,12 @@
     <Compile Include="Pages\DictionaryPage.xaml.cs">
       <DependentUpon>DictionaryPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Pages\DictionaryViewModel.cs" />
-    <Compile Include="Pages\WordPageViewModel.cs" />
-    <Compile Include="Pages\WordViewModel.cs" />
+    <Compile Include="Pages\ViewModels\BaseViewModel.cs" />
+    <Compile Include="Pages\ViewModels\DictionaryViewModel.cs" />
+    <Compile Include="Pages\ViewModels\IMessagesService.cs" />
+    <Compile Include="Pages\ViewModels\WordPageViewModel.cs" />
+    <Compile Include="Pages\ViewModels\WordViewModel.cs" />
+    <Compile Include="WordsServices\DefaultMessageService.cs" />
     <Compile Include="WordsServices\GetWordToLearn.cs" />
     <Compile Include="WordsServices\WordsCollectionService.cs" />
     <Compile Include="Entities\Translation.cs" />
@@ -150,7 +153,7 @@
     <Compile Include="Mappings\TranslationMap.cs" />
     <Compile Include="Mappings\WordMap.cs" />
     <Compile Include="Mappings\WordStatisticsMap.cs" />
-    <Compile Include="Pages\HomeViewModel.cs" />
+    <Compile Include="Pages\ViewModels\HomeViewModel.cs" />
     <Compile Include="Pages\Settings\BehaviourViewModel.cs" />
     <Compile Include="Pages\Settings\Behaviour.xaml.cs">
       <DependentUpon>Behaviour.xaml</DependentUpon>

@@ -5,20 +5,18 @@ using System.Collections.ObjectModel;
 using System.Windows;
 using System.Windows.Input;
 using WordsAsap.Entities;
+using WordsAsap.Pages.ViewModels;
 using WordsAsap.WordsServices;
 
 namespace WordsAsap.Pages
 {
-    public class HomeViewModel : NotifyPropertyChanged    
-    {
-        private WordsCollectionService _wordsCollectionService;
-        
+    public class HomeViewModel : BaseViewModel    
+    {        
         public string NewWord { get; set; }
         public ObservableCollection<TranslationItem> Translations { get; set; }
        
-        public HomeViewModel()
+        protected override void InitializeModel()
         {
-            _wordsCollectionService = WordsCollectionService.CreateWordsCollectionService(WordsSettings.GetWordsAsapSettings());
             Translations = new ObservableCollection<TranslationItem>();
             AddTranslation(null);
         }
@@ -33,7 +31,7 @@ namespace WordsAsap.Pages
             if (!string.IsNullOrWhiteSpace(NewWord))
             {
                 SimpleExpression e = Restrictions.Eq("Value", NewWord);
-                var reply = _wordsCollectionService.GetData<Word>(e);  
+                var reply = WordsService.GetData<Word>(e);  
                 if((reply == null || reply.Count == 0) && HasTranslation())
                 {
                     var r = ModernDialog.ShowMessage("word not saved do yoou want to save it?", "save or update word", MessageBoxButton.YesNo);
@@ -92,11 +90,11 @@ namespace WordsAsap.Pages
             {
                 if (string.IsNullOrWhiteSpace(t.Translation))
                     continue;
-                _wordsCollectionService.AddWord(NewWord, t.Translation);
+                WordsService.AddWord(NewWord, t.Translation);
             }
            
             SimpleExpression e = Restrictions.Eq("Value", NewWord);
-            var reply = _wordsCollectionService.GetData<Word>(e);            
+            var reply = WordsService.GetData<Word>(e);            
 
             ModernDialog.ShowMessage("word updated", "save or update word", MessageBoxButton.OK);
             NewWordCommandExec(null);

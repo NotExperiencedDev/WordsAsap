@@ -5,19 +5,17 @@ using System.Collections.ObjectModel;
 using System.Windows;
 using WordsAsap.Entities;
 using WordsAsap.WordsServices;
+using WordsAsap.Pages.ViewModels;
 
 namespace WordsAsap.Pages
 {
-    public class DictionaryViewModel: NotifyPropertyChanged
-    {
-         private WordsCollectionService _wordsCollectionService;
-        
-        public DictionaryViewModel()
+    public class DictionaryViewModel : BaseViewModel
+    {  
+        protected override void InitializeModel()
         {
-            _wordsCollectionService = WordsCollectionService.CreateWordsCollectionService(WordsSettings.GetWordsAsapSettings());            
             WordsCollection = new ObservableCollection<WordViewModel>();
             LoadWordsCollection();
-            _wordsCollectionService.WordsCollectionChanged += WordsCollectionService_WordsCollectionChanged;
+            WordsService.WordsCollectionChanged += WordsCollectionService_WordsCollectionChanged;
         }
 
         void WordsCollectionService_WordsCollectionChanged(object sender, System.EventArgs e)
@@ -28,7 +26,7 @@ namespace WordsAsap.Pages
         private void LoadWordsCollection()
         {
             WordsCollection.Clear();
-            var collection = _wordsCollectionService.GetData<Word>();
+            var collection = WordsService.GetData<Word>();
             if (collection != null)
                 foreach (var item in collection)
                     WordsCollection.Add(new WordViewModel { WordToDisplay = item });
@@ -43,7 +41,7 @@ namespace WordsAsap.Pages
 
         private bool CanRemoveWord(object o)
         {
-            return  _wordsCollectionService != null;
+            return WordsService != null;
         }
 
         private void RemoveWord(object o)
@@ -56,7 +54,7 @@ namespace WordsAsap.Pages
             if (r == MessageBoxResult.No)
                 return;
 
-            _wordsCollectionService.Remove<Word>(word.WordToDisplay);
+            WordsService.Remove<Word>(word.WordToDisplay);
 
             WordsCollection.Remove(word);            
         }
