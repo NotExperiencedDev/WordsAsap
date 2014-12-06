@@ -14,7 +14,7 @@
     <Setting Name="WordDialogShowInterval" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">0</Value>
     </Setting>
-    <Setting Name="WordsCollectionStorage" Type="System.String" Scope="User">
+    <Setting Name="WordsCollectionStorageFile" Type="System.String" Scope="User">
       <Value Profile="(Default)">WordsCollection.db3</Value>
     </Setting>
     <Setting Name="MaxNumberOfWordDisplays" Type="System.Int32" Scope="User">
@@ -22,6 +22,9 @@
     </Setting>
     <Setting Name="ShowWordInPopupDialog" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="WordsCollectionStorageFolder" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
     </Setting>
   </Settings>
 </SettingsFile>

@@ -12,7 +12,12 @@
 		<Feature Id="ProductFeature" Title="WordsAsap" Level="1">
 			<ComponentGroupRef Id="ProductComponents" />
       <ComponentGroupRef Id="ProductComponents2" />
+      <ComponentGroupRef Id="ProductComponents3"/>
 		</Feature>
+  
+   
+
+  
 	</Product>
 
 	<Fragment>
@@ -27,6 +32,10 @@
       <Directory Id="ProgramMenuFolder">
         <Directory Id="MyShortcutsDir"  Name="WordsAsap" />        
       </Directory>
+      
+    <Directory Id="PersonalFolder">
+      <Directory Id="DbDefaultPlacement" Name="WordsAsap"/>
+    </Directory>
       
 		</Directory>
 	</Fragment>
@@ -116,5 +125,22 @@
         <File Id="WordsAsap1025" Name="SQLite.Interop.dll" Source="$(var.WordsAsap.TargetDir)\x86\SQLite.Interop.dll" Vital="yes" KeyPath="no"  />
       </Component>
     </ComponentGroup>
+  
+    <ComponentGroup Id="ProductComponents3" Directory="DbDefaultPlacement">
+      <Component Id="WordAsap179" Guid="ACA1C1C5-DEFF-4A93-887A-6D1132BB35AD">
+        <RegistryKey Root="HKCU"  Key="Software\WordsAsapn\Uninstall">
+            <RegistryValue Value="WordsAsap"  Type="string"  KeyPath="yes" />
+          </RegistryKey> 
+    
+         <CreateFolder>
+                 <Permission GenericAll="yes" Read="yes" ReadAttributes="yes" CreateChild="yes" Delete="yes" DeleteChild="yes" WriteAttributes="yes" User="Everyone" />
+               </CreateFolder>
+               
+               <RemoveFolder Id='RemoveDbDir' Directory='DbDefaultPlacement' On='uninstall' />
+      </Component>
+    </ComponentGroup>
+  
 	</Fragment>
+
+
 </Wix>

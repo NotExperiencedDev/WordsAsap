@@ -20,13 +20,15 @@ namespace WordsAsap.Pages.Settings
         {
             _settings = WordsSettings.GetWordsAsapSettings();
             WordDialogShowInterval = _settings.WordDialogShowInterval;
-            WordsCollectionStorage = _settings.CollectionStorage;
+            WordsCollectionStorageFile = _settings.CollectionStorageFile;
+            WordsCollectionStorageLocation = _settings.CollectionStorageFolder;
             MaxNumberOfWordsDisplays = _settings.MaxNumberOfWordDisplays;
             ShowWordInPopupDialog = _settings.ShowWordInPopupDialog;
         }
 
         private int _wordDialogShowInterval;
         private string _wordsCollectionStorageFile;
+        private string _wordsCollectionStorageLocation;
         private int _maxNumberOfWordsDisplay;
         private bool _showWordInPopupDialog;
 
@@ -40,13 +42,23 @@ namespace WordsAsap.Pages.Settings
             }
         }
 
-        public string WordsCollectionStorage
+        public string WordsCollectionStorageFile
         {
             get { return _wordsCollectionStorageFile; }
             set 
             { 
                 _wordsCollectionStorageFile = value; 
-                OnPropertyChanged("WordsCollectionStorage"); 
+                OnPropertyChanged("WordsCollectionStorageFile"); 
+            }
+        }
+
+        public string WordsCollectionStorageLocation
+        {
+            get { return _wordsCollectionStorageLocation; }
+            set
+            {
+                _wordsCollectionStorageLocation = value;
+                OnPropertyChanged("WordsCollectionStorageLocation");
             }
         }
 
@@ -100,7 +112,9 @@ namespace WordsAsap.Pages.Settings
         private void SaveSettings(object o)
         {
             _settings.WordDialogShowInterval = WordDialogShowInterval;
-            _settings.CollectionStorage = WordsCollectionStorage;
+            _settings.CollectionStorageFile = WordsCollectionStorageFile;
+            _settings.CollectionStorageFolder = WordsCollectionStorageLocation;
+
             _settings.ShowWordInPopupDialog = ShowWordInPopupDialog;
             _settings.MaxNumberOfWordDisplays = MaxNumberOfWordsDisplays;
             ModernDialog.ShowMessage("settings saved", "save settings", MessageBoxButton.OK);

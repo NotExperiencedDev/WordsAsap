@@ -73,12 +73,12 @@ namespace WordsAsap.Properties {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("WordsCollection.db3")]
-        public string WordsCollectionStorage {
+        public string WordsCollectionStorageFile {
             get {
-                return ((string)(this["WordsCollectionStorage"]));
+                return ((string)(this["WordsCollectionStorageFile"]));
             }
             set {
-                this["WordsCollectionStorage"] = value;
+                this["WordsCollectionStorageFile"] = value;
             }
         }
         
@@ -103,6 +103,18 @@ namespace WordsAsap.Properties {
             }
             set {
                 this["ShowWordInPopupDialog"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string WordsCollectionStorageFolder {
+            get {
+                return ((string)(this["WordsCollectionStorageFolder"]));
+            }
+            set {
+                this["WordsCollectionStorageFolder"] = value;
             }
         }
     }

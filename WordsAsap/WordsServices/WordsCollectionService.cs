@@ -17,7 +17,7 @@ namespace WordsAsap.WordsServices
 {
     public class WordsCollectionService:  IDisposable
     {
-        private string _databaseFileName;
+        private string _databaseFile;
         private static WordsCollectionService _wordsCollectionService;
         private ISession _session;
 
@@ -28,9 +28,9 @@ namespace WordsAsap.WordsServices
 
         }
 
-        private WordsCollectionService(string dbFileName)
+        private WordsCollectionService(string dbFolder, string dbFileName)
         {
-            _databaseFileName = dbFileName;
+            _databaseFile = Path.Combine(dbFolder, dbFileName);
             var sessionFactory = CreateSessionFactory();
             _session = sessionFactory.OpenSession();
         }
@@ -41,7 +41,7 @@ namespace WordsAsap.WordsServices
             return Fluently.Configure()
               .Database(
                 SQLiteConfiguration.Standard
-                  .UsingFile(_databaseFileName)
+                  .UsingFile(_databaseFile)
               )
               .Mappings(m =>
                 m.FluentMappings.AddFromAssemblyOf<WordsAsap.App>())
@@ -51,14 +51,10 @@ namespace WordsAsap.WordsServices
 
         private void BuildSchema(Configuration config)
         {
-            var directory = Path.Combine(new string[] { System.Environment.GetFolderPath(System.Environment.SpecialFolder.MyDocuments), ApplicationInfo.ProductFunc() });
-            var dbFilePath = Path.Combine(new string[] {directory, _databaseFileName });
-#if DEBUG
-            dbFilePath = _databaseFileName;
-#endif
-            if (File.Exists(dbFilePath))
+           
+            if (File.Exists(_databaseFile))
                 return;
-
+            var directory = Path.GetDirectoryName(_databaseFile);
             if (!Directory.Exists(directory))
                 Directory.CreateDirectory(directory);
 
@@ -70,16 +66,22 @@ namespace WordsAsap.WordsServices
                   .Create(false, true);
             }
             catch (Exception e)
-            {
-                File.AppendAllText(directory + "//alskdfj.txt", e.ToString());
+            {                
+                File.AppendAllText("Logs//CreateDBlog.txt", e.ToString());
             }
         }
         
         public static WordsCollectionService CreateWordsCollectionService(WordsSettings settings)
         {
-            if (_wordsCollectionService != null && string.Equals(_wordsCollectionService._databaseFileName, settings.CollectionStorage))
+            if (_wordsCollectionService != null && string.Equals( _wordsCollectionService._databaseFile, Path.Combine(settings.CollectionStorageFolder, settings.CollectionStorageFile)))
                 return _wordsCollectionService;
-            _wordsCollectionService = new WordsCollectionService(settings.CollectionStorage);
+            if (_wordsCollectionService != null)
+            {
+                 _wordsCollectionService.Dispose();
+                 _wordsCollectionService = null;
+             }
+
+            _wordsCollectionService = new WordsCollectionService(settings.CollectionStorageFolder, settings.CollectionStorageFile);
             return _wordsCollectionService;
         }
 
