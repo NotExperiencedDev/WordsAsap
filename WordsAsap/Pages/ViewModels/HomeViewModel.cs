@@ -93,7 +93,7 @@ namespace WordsAsap.Pages
                 WordsService.AddWord(NewWord, t.Translation);
             }
            
-            SimpleExpression e = Restrictions.Eq("Value", NewWord);
+            SimpleExpression e = Restrictions.Eq("Value", NewWord.ToLower());
             var reply = WordsService.GetData<Word>(e);            
 
             ModernDialog.ShowMessage("word updated", "save or update word", MessageBoxButton.OK);

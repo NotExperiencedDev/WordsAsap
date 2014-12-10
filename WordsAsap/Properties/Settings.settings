@@ -12,7 +12,7 @@
       <Value Profile="(Default)">Large</Value>
     </Setting>
     <Setting Name="WordDialogShowInterval" Type="System.Int32" Scope="User">
-      <Value Profile="(Default)">0</Value>
+      <Value Profile="(Default)">15</Value>
     </Setting>
     <Setting Name="WordsCollectionStorageFile" Type="System.String" Scope="User">
       <Value Profile="(Default)">WordsCollection.db3</Value>

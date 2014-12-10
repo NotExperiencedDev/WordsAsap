@@ -23,6 +23,10 @@ namespace WordsAsap.Pages
         public WordPage()
         {
             InitializeComponent();
+            if (!WordsSettings.GetWordsAsapSettings().ShowWordInPopupDialog)
+            {
+                Background = Brushes.Beige;
+            }
         }
     }
 }

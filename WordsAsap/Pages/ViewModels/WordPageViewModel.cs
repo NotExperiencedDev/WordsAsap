@@ -65,19 +65,19 @@ namespace WordsAsap.Pages
 
         private void TryCloseWindow(object obj)
         {
-            var page = obj as UserControl;
-            if (page == null)
-                return;
-
-            var window = Window.GetWindow(page);
-            if (window != null)
-                window.Close();
-            else if(page.Parent != null)
+            if (WordsSettings.GetWordsAsapSettings().ShowWordInPopupDialog)
             {
-                var popup = page.Parent as Popup;
-                if (popup != null)
-                    popup.IsOpen = false;
+                var page = obj as UserControl;
+                if (page == null)
+                    return;
+
+                var window = Window.GetWindow(page);
+                if (window != null)
+                    window.Close();
             }
+            else 
+                 NotifyIcon.SystryIcon.CloseBalloon();
+            
         }
 
         private void RightAnswerCommand(object obj)

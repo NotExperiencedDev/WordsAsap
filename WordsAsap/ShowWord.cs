@@ -17,6 +17,11 @@ namespace WordsAsap
         private Random _random;
         private WordsCollectionService _wordsCollectionService;
         private object _locker;
+        double _top = double.NaN; 
+        double _left = double.NaN;
+        double _height = double.NaN; 
+        double _width = double.NaN;
+
                
         public ShowWord(int intervalInMinutes, Dispatcher context)
         {
@@ -91,14 +96,7 @@ namespace WordsAsap
         {
             if (WordsSettings.GetWordsAsapSettings().ShowWordInPopupDialog)
             {
-                if (_wordDialog != null)
-                    _wordDialog.Close();
-
-                _wordDialog = new WordDialog();
-
-                _wordDialog.ShowDialog();
-                lock(_locker)
-                    _timer.Enabled = true;
+                ShowPopuDialog();
             }
             else
             {
@@ -108,6 +106,31 @@ namespace WordsAsap
             
         }
 
+        private void ShowPopuDialog()
+        {
+            if (_wordDialog != null)
+                _wordDialog.Close();
+
+            _wordDialog = new WordDialog();
+            _wordDialog.Topmost = true;
+            _wordDialog.Focusable = false;
+            if (double.IsNaN(_top))
+                _wordDialog.WindowStartupLocation = System.Windows.WindowStartupLocation.CenterScreen;
+            else
+            {
+                _wordDialog.WindowStartupLocation = System.Windows.WindowStartupLocation.Manual;
+                _wordDialog.Top = _top; _wordDialog.Left = _left;
+                _wordDialog.Height = _height; _wordDialog.Width = _width;
+            }
+            _wordDialog.ShowDialog();
+            _top = _wordDialog.Top;
+            _left = _wordDialog.Left;
+            _height = _wordDialog.ActualHeight;
+            _width = _wordDialog.ActualWidth;
+            lock (_locker)
+                _timer.Enabled = true;
+        }
+      
         private void OnBallonClosed(object sender, EventArgs args)
         {
             NotifyIcon.SystryIcon.BalloonClosed -= OnBallonClosed;

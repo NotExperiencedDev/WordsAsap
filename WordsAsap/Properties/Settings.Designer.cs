@@ -60,7 +60,7 @@ namespace WordsAsap.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        [global::System.Configuration.DefaultSettingValueAttribute("15")]
         public int WordDialogShowInterval {
             get {
                 return ((int)(this["WordDialogShowInterval"]));

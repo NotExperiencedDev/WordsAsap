@@ -12,7 +12,7 @@ namespace WordsAsap.Pages.ViewModels
     {
         private WordsCollectionService _wordsCollectionService;
         
-
+       
         public BaseViewModel()
         {
             ViewModelInit();
