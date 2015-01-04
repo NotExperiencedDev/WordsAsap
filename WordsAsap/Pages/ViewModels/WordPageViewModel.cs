@@ -24,7 +24,7 @@ namespace WordsAsap.Pages
             ShowTranslation = false;
             OnPropertyChanged("ShowTranslation");
             _random = new Random();
-            _maxNumberOfWordDisplays = WordsSettings.GetWordsAsapSettings().MaxNumberOfWordDisplays;
+            _maxNumberOfWordDisplays = WordsSettings.WordsAsapSettings.MaxNumberOfWordDisplays;
             GetWordToShow();  
         }
 
@@ -63,9 +63,10 @@ namespace WordsAsap.Pages
             TryCloseWindow(obj);
         }
 
+        //TODO: redo it - shouldn't care about the host/view
         private void TryCloseWindow(object obj)
         {
-            if (WordsSettings.GetWordsAsapSettings().ShowWordInPopupDialog)
+            if (WordsSettings.WordsAsapSettings.ShowWordInPopupDialog)
             {
                 var page = obj as UserControl;
                 if (page == null)

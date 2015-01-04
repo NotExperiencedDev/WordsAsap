@@ -1,4 +1,5 @@
-﻿using System;
+﻿using FirstFloor.ModernUI.Presentation;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -23,9 +24,26 @@ namespace WordsAsap.Pages
         public WordPage()
         {
             InitializeComponent();
-            if (!WordsSettings.GetWordsAsapSettings().ShowWordInPopupDialog)
+            if (!WordsSettings.WordsAsapSettings.ShowWordInPopupDialog)
             {
-                Background = Brushes.Beige;
+
+                LinearGradientBrush myLinearGradientBrush =
+    new LinearGradientBrush();
+                myLinearGradientBrush.StartPoint = new Point(0, 0);
+                myLinearGradientBrush.EndPoint = new Point(1, 1);
+                myLinearGradientBrush.GradientStops.Add(
+                    new GradientStop(AppearanceManager.Current.AccentColor, 0.0));
+                myLinearGradientBrush.GradientStops.Add(
+                    new GradientStop(Colors.WhiteSmoke, 0.25));
+                myLinearGradientBrush.GradientStops.Add(
+                    new GradientStop(AppearanceManager.Current.AccentColor, 0.75));
+                myLinearGradientBrush.GradientStops.Add(
+                    new GradientStop(Colors.WhiteSmoke, 1.0));
+
+                // Use the brush to paint the rectangle.
+                Background = myLinearGradientBrush;
+                Background.Opacity = WordsSettings.WordsAsapSettings.BalloonTipTransparency;
+
             }
         }
     }

@@ -8,58 +8,105 @@
              mc:Ignorable="d"
              d:DesignHeight="300" d:DesignWidth="300"
              >
+    <UserControl.Resources>
+        <BooleanToVisibilityConverter x:Key="VisibilityConverter" />
+    </UserControl.Resources>
     <UserControl.DataContext>
         <local:BehaviourViewModel/>
     </UserControl.DataContext>
-    <Grid>
-
-        <StackPanel x:Name="Panel" MinWidth="150">
-            <TextBlock Text="BEHAVIOUR" Style="{StaticResource Heading2}" Margin="0,0,0,8"  />
-            <StackPanel Orientation="Horizontal" Margin="10">
-                <TextBlock  VerticalAlignment="Center" Margin="2,0,5,0">
-                    <Run Text="time interval for word dialog:" />
-                      <LineBreak />
-                    <Run Text="[in minutes]"   FontWeight="Bold"/>
-                </TextBlock>
-                <TextBox Width="40" Height="22" Padding="1" Text="{Binding WordDialogShowInterval}" BorderThickness="0" TextAlignment="Right"/>
-                <StackPanel>
-                    <mui:ModernButton Command="{Binding UpShowIntervalCommand}"                                        
-                                      IconData="F1 M 37.8516,35.625L 34.6849,38.7917L 23.6016,50.2708L 23.6016,39.9792L 37.8516,24.9375L 52.1016,39.9792L 52.1016,50.2708L 41.0182,38.7917L 37.8516,35.625 Z" />
-                    <mui:ModernButton Command="{Binding DownShowIntervalCommand}" 
-                                      IconData="F1 M 37.8516,39.5833L 52.1016,24.9375L 52.1016,35.2292L 37.8516,50.2708L 23.6016,35.2292L 23.6016,24.9375L 37.8516,39.5833 Z "/>
-                </StackPanel>                
-            </StackPanel>
-            <StackPanel Orientation="Horizontal" Margin="10">
-                <TextBlock Text="words collection file:"  VerticalAlignment="Center"/>
-                <TextBox Width="Auto" Height="22" Padding="1" Text="{Binding WordsCollectionStorageFile}" BorderThickness="0" TextAlignment="Center"/>
-            </StackPanel>
-
-            <StackPanel Orientation="Horizontal" Margin="10">
-                <TextBlock Text="words collection folder:" VerticalAlignment="Center"/>
-                <TextBox Width="Auto" Height="22" Padding="1" Text="{Binding WordsCollectionStorageLocation}" BorderThickness="0" TextAlignment="Center"/>
-            </StackPanel>
-
-            <StackPanel Orientation="Horizontal" Margin="10">
-                <TextBlock Text="max number of word diplays:" FontFamily="Segoe UI Light" VerticalAlignment="Center"/>
-                <TextBox Width="Auto" Height="22" Padding="1" Text="{Binding MaxNumberOfWordsDisplays}" BorderThickness="0" TextAlignment="Center"/>
-                <StackPanel>
-                    <mui:ModernButton Command="{Binding UpMaxWordShowCommand}"  
-                                      CommandParameter="MaxNumberOfWordsDisplays"
-                                      IconData="F1 M 37.8516,35.625L 34.6849,38.7917L 23.6016,50.2708L 23.6016,39.9792L 37.8516,24.9375L 52.1016,39.9792L 52.1016,50.2708L 41.0182,38.7917L 37.8516,35.625 Z" />
-                    <mui:ModernButton Command="{Binding DownMaxWordShowCommand}" 
-                                      IconData="F1 M 37.8516,39.5833L 52.1016,24.9375L 52.1016,35.2292L 37.8516,50.2708L 23.6016,35.2292L 23.6016,24.9375L 37.8516,39.5833 Z "/>
-                </StackPanel>
-            </StackPanel>
-
-            <StackPanel Orientation="Horizontal" Margin="10">
-                <TextBlock Text="show word in popup dialog" FontFamily="Segoe UI Light" VerticalAlignment="Center"/>
-                <CheckBox Width="Auto" Height="22" Padding="1" IsChecked="{Binding ShowWordInPopupDialog}"/>
-            </StackPanel>
-
-            <mui:ModernButton Padding="10" Margin="20" Content="save settings" 
+    <ScrollViewer >
+        <DockPanel>
+            <mui:ModernButton DockPanel.Dock="Bottom" Padding="10" Margin="20" Content="save settings" MinHeight="25"
                                       Command="{Binding SaveSettingsCommand}"
                                       IconData="F1 M 20.5833,20.5833L 55.4167,20.5833L 55.4167,55.4167L 45.9167,55.4167L 45.9167,44.3333L 30.0833,44.3333L 30.0833,55.4167L 20.5833,55.4167L 20.5833,20.5833 Z M 33.25,55.4167L 33.25,50.6667L 39.5833,50.6667L 39.5833,55.4167L 33.25,55.4167 Z M 26.9167,23.75L 26.9167,33.25L 49.0833,33.25L 49.0833,23.75L 26.9167,23.75 Z" 
                                        />
-        </StackPanel>
-    </Grid>
+
+            <Grid>
+            
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+
+                <TextBlock Grid.Row="0" DockPanel.Dock="Top" Text="BEHAVIOUR" Style="{StaticResource Heading2}" Margin="2,2,2,8"  />
+                
+                <DockPanel Grid.Row="1">                
+                    
+                    <DockPanel DockPanel.Dock="Right" Width="25"/>
+                    
+                    <DockPanel DockPanel.Dock="Top" MinHeight="20"/>
+                    <DockPanel DockPanel.Dock="Top">
+                        <mui:BBCodeBlock DockPanel.Dock="Left"   BBCode="[b]time interval for word dialog:[/b]" VerticalAlignment="Center" TextAlignment="Right"/>
+                        <TextBox DockPanel.Dock="Left" MinWidth="30" Padding="1" Text="{Binding WordDialogShowInterval}" BorderThickness="0" TextAlignment="Right" VerticalAlignment="Center"/>
+                        <mui:BBCodeBlock DockPanel.Dock="Left"  BBCode="[b]in minutes[/b]" VerticalAlignment="Center" TextAlignment="Left"/>
+                        <StackPanel  DockPanel.Dock="Left">
+                            <mui:ModernButton Command="{Binding UpShowIntervalCommand}"                                        
+                                      IconData="F1 M 37.8516,35.625L 34.6849,38.7917L 23.6016,50.2708L 23.6016,39.9792L 37.8516,24.9375L 52.1016,39.9792L 52.1016,50.2708L 41.0182,38.7917L 37.8516,35.625 Z" />
+                            <mui:ModernButton Command="{Binding DownShowIntervalCommand}" 
+                                      IconData="F1 M 37.8516,39.5833L 52.1016,24.9375L 52.1016,35.2292L 37.8516,50.2708L 23.6016,35.2292L 23.6016,24.9375L 37.8516,39.5833 Z "/>
+                        </StackPanel>                        
+                    </DockPanel>
+
+                    <DockPanel DockPanel.Dock="Top" MinHeight="20"/>
+                    <DockPanel DockPanel.Dock="Top">
+                        <mui:ModernButton DockPanel.Dock="Top" Command="{Binding SelectStorageLocationCommand}" 
+                                      IconData="F1 M 19,50L 28,34L 63,34L 54,50L 19,50 Z M 19,28.0001L 35,28C 36,25 37.4999,24.0001 37.4999,24.0001L 48.75,24C 49.3023,24 50,24.6977 50,25.25L 50,28L 53.9999,28.0001L 53.9999,32L 27,32L 19,46.4L 19,28.0001 Z" />
+                        <DockPanel DockPanel.Dock="Left" Width="20"/>
+                        <mui:BBCodeBlock DockPanel.Dock="Left"   BBCode="[b]words collection file:[/b]" VerticalAlignment="Center" TextAlignment="Right"/>
+                        <TextBox Width="Auto" Height="22" Padding="1" Text="{Binding WordsCollectionStorageFile}" BorderThickness="0" TextAlignment="Left"/>
+                    </DockPanel>
+
+                    <DockPanel DockPanel.Dock="Top" MinHeight="20"/>
+                    <DockPanel DockPanel.Dock="Top">
+                        <DockPanel DockPanel.Dock="Left" Width="20"/>
+                        <mui:BBCodeBlock DockPanel.Dock="Left"   BBCode="[b]words collection folder:[/b]" VerticalAlignment="Center" TextAlignment="Right"/>
+                        <TextBox Width="Auto" Height="22" Padding="1" Text="{Binding WordsCollectionStorageLocation}" BorderThickness="0" TextAlignment="Left"/>
+                    </DockPanel>
+
+                    <DockPanel DockPanel.Dock="Top" MinHeight="20"/>
+                    <DockPanel DockPanel.Dock="Top">
+                        <mui:BBCodeBlock DockPanel.Dock="Left"   BBCode="[b]max number of word diplays:[/b]" VerticalAlignment="Center" TextAlignment="Right"/>
+                        <TextBox DockPanel.Dock="Left" MinWidth="30" Height="22" Padding="1" Text="{Binding MaxNumberOfWordsDisplays}" BorderThickness="0" TextAlignment="Right" VerticalAlignment="Center"/>
+                        <StackPanel DockPanel.Dock="Left">
+                            <mui:ModernButton Command="{Binding UpMaxWordShowCommand}"  
+                                      CommandParameter="MaxNumberOfWordsDisplays"
+                                      IconData="F1 M 37.8516,35.625L 34.6849,38.7917L 23.6016,50.2708L 23.6016,39.9792L 37.8516,24.9375L 52.1016,39.9792L 52.1016,50.2708L 41.0182,38.7917L 37.8516,35.625 Z" />
+                            <mui:ModernButton Command="{Binding DownMaxWordShowCommand}" 
+                                      IconData="F1 M 37.8516,39.5833L 52.1016,24.9375L 52.1016,35.2292L 37.8516,50.2708L 23.6016,35.2292L 23.6016,24.9375L 37.8516,39.5833 Z "/>
+                        </StackPanel>
+                    </DockPanel>
+
+                    <DockPanel DockPanel.Dock="Top" MinHeight="20"/>
+                    <DockPanel DockPanel.Dock="Top">
+                        <mui:BBCodeBlock DockPanel.Dock="Left"   BBCode="[b]show word in:[/b]" VerticalAlignment="Center" TextAlignment="Right"/>
+                        <ToggleButton DockPanel.Dock="Left" Width="Auto"  Height="22" Padding="1" Margin="5" Content="{Binding ShowWordInPopupOrDialog}" IsChecked="{Binding ShowWordInPopupDialog}"/>
+                        <DockPanel DockPanel.Dock="Right" Width="25"/>
+                    </DockPanel>
+
+                    <DockPanel DockPanel.Dock="Top" MinHeight="20"/>
+                    <DockPanel DockPanel.Dock="Top" Visibility="{Binding ShowWordInBalloonTip, Converter={StaticResource VisibilityConverter}}">
+                        <mui:BBCodeBlock DockPanel.Dock="Left"   BBCode="[b]ballon tip transparency:[/b]" VerticalAlignment="Center" TextAlignment="Right"/>
+                        <DockPanel DockPanel.Dock="Right" MinWidth="25"/>
+                        <TextBox DockPanel.Dock="Right" 
+                            Text="{Binding ElementName=ballooTipTransparencySlider, Path=Value, UpdateSourceTrigger=PropertyChanged}"                                      
+                                     TextAlignment="Right" 
+                                     VerticalAlignment="Center"
+                                     Width="40" />
+                            <Slider Name="ballooTipTransparencySlider" 
+                                Value="{Binding BalloonTipTransparency}"
+                                Minimum="{Binding MinimumTransparency}"
+                                Maximum="{Binding MaximumTransparency}"
+                                SmallChange="{Binding SmallChange}"
+                                LargeChange="{Binding LargeChange}"
+                                TickPlacement="BottomRight" 
+                                TickFrequency="0.01"
+                                IsSnapToTickEnabled="True"
+                                VerticalAlignment="Center"
+                        />
+                       
+                    </DockPanel>
+                </DockPanel>     
+        </Grid>
+        </DockPanel>
+    </ScrollViewer>
 </UserControl>

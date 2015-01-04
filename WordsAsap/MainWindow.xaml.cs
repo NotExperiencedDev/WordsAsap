@@ -16,7 +16,7 @@ namespace WordsAsap
             NotifyIcon.SystryIcon.Click += NotifyIcon_Click;
             
           
-            _showWord = new ShowWord(Properties.Settings.Default.WordDialogShowInterval, Dispatcher);
+            _showWord = new ShowWord(Dispatcher);
         }
 
         private void OnClose(object sender, CancelEventArgs args)

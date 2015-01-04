@@ -117,5 +117,17 @@ namespace WordsAsap.Properties {
                 this["WordsCollectionStorageFolder"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0.5")]
+        public double BalloonTipTransparency {
+            get {
+                return ((double)(this["BalloonTipTransparency"]));
+            }
+            set {
+                this["BalloonTipTransparency"] = value;
+            }
+        }
     }
 }

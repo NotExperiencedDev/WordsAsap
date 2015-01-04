@@ -8,6 +8,7 @@ namespace WordsAsap
 {
     public class ShowWord
     {
+        private const int MinimumShowInterval = 1; //in minutes
         public delegate void ShowDialogDelegate();
         private readonly ShowDialogDelegate _showDialog;
         private readonly Dispatcher _context;
@@ -23,16 +24,17 @@ namespace WordsAsap
         double _width = double.NaN;
 
                
-        public ShowWord(int intervalInMinutes, Dispatcher context)
+        public ShowWord( Dispatcher context)
         {
             _locker = new object();
-           
-            var interval = intervalInMinutes * 60 * 1000;
+            var intervalInMinutes = WordsSettings.WordsAsapSettings.WordDialogShowInterval;
+            var interval = GetMiliseconds(intervalInMinutes);           
+
+            if (interval < MinimumShowInterval)
+                interval = GetMiliseconds(MinimumShowInterval);
+
             if (System.Diagnostics.Debugger.IsAttached)
                 interval = 10 * 1000;
-
-            if (interval < 1)
-                interval = 10 * 60 * 1000;
 
             _context = context;
             _showDialog = ShowDialog;
@@ -42,13 +44,31 @@ namespace WordsAsap
             //TODO: refactor, handle correctly
             try
             {
-                _wordsCollectionService = WordsCollectionService.CreateWordsCollectionService(WordsSettings.GetWordsAsapSettings());
+                _wordsCollectionService = WordsCollectionService.CreateWordsCollectionService(WordsSettings.WordsAsapSettings);
             }
             catch (Exception e)
             {
                 DefaultMessageService.MessageService.ShowErrorMessage("WordsAsap Error", e.ToString());
                 //TODO: add log
             }
+            WordsSettings.SettingsChanged += WordsSettings_SettingsChanged;
+        }
+
+        private static int GetMiliseconds(int intervalInMinutes)
+        {
+            var interval = intervalInMinutes * 60 * 1000;
+            return interval;
+        }
+
+        void WordsSettings_SettingsChanged(object sender, EventArgs e)
+        {
+            var interval = GetMiliseconds(WordsSettings.WordsAsapSettings.WordDialogShowInterval);
+            if (_timer.Interval == interval)
+                return;
+            var wasEnabled = _timer.Enabled;
+            _timer.Enabled = false;
+            _timer.Interval = GetMiliseconds(WordsSettings.WordsAsapSettings.WordDialogShowInterval);
+            _timer.Enabled = wasEnabled;
         }
 
         public void Resume()
@@ -94,7 +114,7 @@ namespace WordsAsap
 
         private void ShowDialog()
         {
-            if (WordsSettings.GetWordsAsapSettings().ShowWordInPopupDialog)
+            if (WordsSettings.WordsAsapSettings.ShowWordInPopupDialog)
             {
                 ShowPopuDialog();
             }

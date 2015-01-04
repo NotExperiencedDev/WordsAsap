@@ -11,18 +11,24 @@ namespace WordsAsap
     public class WordsSettings
     {
         private static WordsSettings _wordsSettings;
+        public static event EventHandler SettingsChanged;
 
         private WordsSettings()
         {
 
         }
 
-        public static WordsSettings GetWordsAsapSettings()
+        public static WordsSettings WordsAsapSettings
         {
-            if(_wordsSettings == null)               
-                _wordsSettings = new WordsSettings();
-            return _wordsSettings;
+            get
+            {
+                if (_wordsSettings == null)
+                    _wordsSettings = new WordsSettings();
+                return _wordsSettings;
+            }
         }
+
+        public static string DefaultFileExtension { get { return "db3"; } }
 
         public string CollectionStorageFile
         {
@@ -33,10 +39,9 @@ namespace WordsAsap
             set
             {
                 Properties.Settings.Default.WordsCollectionStorageFile = value;
-                Properties.Settings.Default.Save();
+                SaveSettings();
             }
         }
-
 
         public string CollectionStorageFolder
         {
@@ -54,7 +59,7 @@ namespace WordsAsap
             set
             {
                 Properties.Settings.Default.WordsCollectionStorageFolder = value;
-                Properties.Settings.Default.Save();
+                SaveSettings();
             }
         }
 
@@ -67,7 +72,7 @@ namespace WordsAsap
             set
             {
                 Properties.Settings.Default.WordDialogShowInterval = value;
-                Properties.Settings.Default.Save();
+                SaveSettings();
             }
         }
 
@@ -80,7 +85,7 @@ namespace WordsAsap
             set
             {
                 Properties.Settings.Default.MaxNumberOfWordDisplays = value;
-                Properties.Settings.Default.Save();
+                SaveSettings();
             }
         }
 
@@ -93,9 +98,33 @@ namespace WordsAsap
             set
             {
                 Properties.Settings.Default.ShowWordInPopupDialog = value;
-                Properties.Settings.Default.Save();
+                SaveSettings();
             }
         }
 
+        public double BalloonTipTransparency
+        {
+            get
+            {
+                return Properties.Settings.Default.BalloonTipTransparency;
+            }
+            set
+            {
+                Properties.Settings.Default.BalloonTipTransparency = value;
+                SaveSettings();
+            }
+        }
+
+        private static void OnSettingsChanged()
+        {
+            if (SettingsChanged != null)
+                SettingsChanged(_wordsSettings, new EventArgs());
+        }
+
+        private static void SaveSettings()
+        {
+            Properties.Settings.Default.Save();
+            OnSettingsChanged();
+        }
     }
 }

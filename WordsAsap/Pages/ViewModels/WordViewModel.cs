@@ -14,7 +14,7 @@ namespace WordsAsap.Pages
         private WordsCollectionService _wordsCollectionService;
         Word _wordToDisplay;
         public WordViewModel(){
-            _wordsCollectionService = WordsCollectionService.CreateWordsCollectionService(WordsSettings.GetWordsAsapSettings());
+            _wordsCollectionService = WordsCollectionService.CreateWordsCollectionService(WordsSettings.WordsAsapSettings);
              Translations = new ObservableCollection<Translation>();
         }              
 

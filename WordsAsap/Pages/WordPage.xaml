@@ -15,6 +15,7 @@
     <UserControl.DataContext >
         <local:WordPageViewModel />
     </UserControl.DataContext>
+
     <Grid Style="{StaticResource ContentRoot}">
         <ScrollViewer>
             <StackPanel MinWidth="200">
@@ -68,4 +69,5 @@
 
         </ScrollViewer>
     </Grid>
+    
 </UserControl>

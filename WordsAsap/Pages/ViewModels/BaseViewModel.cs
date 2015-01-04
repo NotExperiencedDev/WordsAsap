@@ -22,7 +22,7 @@ namespace WordsAsap.Pages.ViewModels
         {
             try
             {
-                _wordsCollectionService = WordsCollectionService.CreateWordsCollectionService(WordsSettings.GetWordsAsapSettings());
+                _wordsCollectionService = WordsCollectionService.CreateWordsCollectionService(WordsSettings.WordsAsapSettings);
                 InitializeModel();
             }
             catch (Exception e)
