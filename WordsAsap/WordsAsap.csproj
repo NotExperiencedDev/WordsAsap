@@ -150,7 +150,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Converters\VisibilityToBooleanColapsedConverter.cs" />
-    <Compile Include="NotifyIcon.cs" />
+    <Compile Include="WordsServices\NotifyIcon.cs" />
     <Compile Include="Pages\DictionaryPage.xaml.cs">
       <DependentUpon>DictionaryPage.xaml</DependentUpon>
     </Compile>
@@ -189,8 +189,8 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resource.resx</DependentUpon>
     </Compile>
-    <Compile Include="ShowWord.cs" />
-    <Compile Include="WordsSettings.cs" />
+    <Compile Include="WordsServices\ShowWord.cs" />
+    <Compile Include="WordsServices\WordsSettings.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -211,7 +211,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Compile Include="ApplicationInfo.cs" />
+    <Compile Include="WordsServices\ApplicationInfo.cs" />
     <Compile Include="WordDialog.xaml.cs">
       <DependentUpon>WordDialog.xaml</DependentUpon>
       <SubType>Code</SubType>

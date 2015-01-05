@@ -1,5 +1,6 @@
 ﻿using FirstFloor.ModernUI.Presentation;
 using System;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
@@ -17,10 +18,11 @@ namespace WordsAsap.Pages
         private Random _random;
         private int _maxNumberOfWordDisplays;
 
-        public Word WordToLearn { get; set; }
+        
         
         protected override void InitializeModel()
         {
+            Translations = new ObservableCollection<string>();
             ShowTranslation = false;
             OnPropertyChanged("ShowTranslation");
             _random = new Random();
@@ -31,14 +33,53 @@ namespace WordsAsap.Pages
         private void GetWordToShow()
         {
             WordToLearn = GetWordToLearn.WordToLearn.GetNextWord();
-            OnPropertyChanged("WordToLearn");
+            if (WordToLearn == null)
+                return;
+
+            var wordTranslationDirection = _random.Next(1, 1000) < 501;
+            if(wordTranslationDirection)
+            {
+                WordToDisplay = WordToLearn.Value;
+                Translations.Clear();
+                foreach (var t in WordToLearn.Translations)
+                    Translations.Add(t.Value);
+            }
+            else
+            {
+                var numberOfTrnaslations = WordToLearn.Translations.Count;
+                var selectedTranslationNr = _random.Next(0, numberOfTrnaslations);
+                if (selectedTranslationNr > -1)
+                {
+                    var selectedTranslation = WordToLearn.Translations.ElementAt(selectedTranslationNr);
+                    if (selectedTranslation != null)
+                    { 
+                        WordToDisplay = selectedTranslation.Value;
+                        var otherTranslations = WordToLearn.Translations.Where(x => x.Id != selectedTranslation.Id);
+                        Translations.Clear();
+                        Translations.Add(WordToLearn.Value);
+                        foreach (var t in otherTranslations)
+                            Translations.Add(t.Value);
+                    }
+                }
+            }
+
+            OnPropertyChanged("WordToDisplay");
+        }
+
+        public Word WordToLearn { get; set; }
+
+        public string WordToDisplay { get; set; }
+
+        public ObservableCollection<string> Translations
+        {
+            get;
+            set;
         }
 
         public RelayCommand ShowTranslationCommand
         {
             get { return new RelayCommand((o) => { ShowTranslation = !ShowTranslation; OnPropertyChanged("ShowTranslation"); }); }
         }
-
 
         public RelayCommand RightAnswer
         {

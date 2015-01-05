@@ -20,16 +20,16 @@
         <ScrollViewer>
             <StackPanel MinWidth="200">
 
-                <mui:BBCodeBlock Text="{Binding WordToLearn.Value}" Margin="3"/>
+                <mui:BBCodeBlock Text="{Binding WordToDisplay}" Margin="3"/>
 
-                <ListView ItemsSource="{Binding WordToLearn.Translations}" Visibility="{Binding ShowTranslation, Converter={StaticResource VisibilityConverter}}" Margin="3" x:Name="lstvInternal">
+                <ListView ItemsSource="{Binding Translations}" Visibility="{Binding ShowTranslation, Converter={StaticResource VisibilityConverter}}" Margin="3" x:Name="lstvInternal">
                     <ListView.ItemTemplate>
                         <DataTemplate>
                             <Grid Margin="0,0,0,5">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="*" />
                                 </Grid.ColumnDefinitions>
-                                <TextBlock Text="{Binding Value}" />
+                                <TextBlock Text="{Binding}" />
                             </Grid>
                         </DataTemplate>
                     </ListView.ItemTemplate>
