@@ -26,17 +26,17 @@ namespace WordsAsap.Pages
             InitializeComponent();
             if (!WordsSettings.WordsAsapSettings.ShowWordInPopupDialog)
             {
-
-                LinearGradientBrush myLinearGradientBrush =
-    new LinearGradientBrush();
+                var colour = AppearanceManager.Current.AccentColor;
+                if (AppearanceManager.DarkThemeSource == AppearanceManager.Current.ThemeSource)
+                    colour = Colors.Black;
+                
+                LinearGradientBrush myLinearGradientBrush = new LinearGradientBrush();
                 myLinearGradientBrush.StartPoint = new Point(0, 0);
-                myLinearGradientBrush.EndPoint = new Point(1, 1);
+                myLinearGradientBrush.EndPoint = new Point(0, 1);
                 myLinearGradientBrush.GradientStops.Add(
-                    new GradientStop(AppearanceManager.Current.AccentColor, 0.0));
+                    new GradientStop(Colors.WhiteSmoke, 0.0));
                 myLinearGradientBrush.GradientStops.Add(
-                    new GradientStop(Colors.WhiteSmoke, 0.25));
-                myLinearGradientBrush.GradientStops.Add(
-                    new GradientStop(AppearanceManager.Current.AccentColor, 0.75));
+                    new GradientStop(colour, 0.75));
                 myLinearGradientBrush.GradientStops.Add(
                     new GradientStop(Colors.WhiteSmoke, 1.0));
 

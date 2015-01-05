@@ -20,7 +20,7 @@
         <ScrollViewer>
             <StackPanel MinWidth="200">
 
-                <TextBlock Text="{Binding WordToLearn.Value}" Margin="3"/>
+                <mui:BBCodeBlock Text="{Binding WordToLearn.Value}" Margin="3"/>
 
                 <ListView ItemsSource="{Binding WordToLearn.Translations}" Visibility="{Binding ShowTranslation, Converter={StaticResource VisibilityConverter}}" Margin="3" x:Name="lstvInternal">
                     <ListView.ItemTemplate>

@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using WordsAsap.WordsServices;
 
 namespace WordsAsap.Pages.ViewModels
@@ -22,6 +23,8 @@ namespace WordsAsap.Pages.ViewModels
         {
             try
             {
+                if (IsInDesignMode)
+                    return;
                 _wordsCollectionService = WordsCollectionService.CreateWordsCollectionService(WordsSettings.WordsAsapSettings);
                 InitializeModel();
             }
@@ -31,6 +34,15 @@ namespace WordsAsap.Pages.ViewModels
                     MessagesService.ShowErrorMessage("WordsAsap Error", e.ToString());
                 DefaultMessageService.MessageService.ShowErrorMessage("WordsAsap Error", e.ToString());
                 //TODO: log
+            }
+        }
+
+        public static bool IsInDesignMode
+        {
+            get
+            {
+                var dependencyObject = new DependencyObject();
+                return System.ComponentModel.DesignerProperties.GetIsInDesignMode(dependencyObject);
             }
         }
 

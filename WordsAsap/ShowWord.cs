@@ -31,10 +31,7 @@ namespace WordsAsap
             var interval = GetMiliseconds(intervalInMinutes);           
 
             if (interval < MinimumShowInterval)
-                interval = GetMiliseconds(MinimumShowInterval);
-
-            if (System.Diagnostics.Debugger.IsAttached)
-                interval = 10 * 1000;
+                interval = GetMiliseconds(MinimumShowInterval);           
 
             _context = context;
             _showDialog = ShowDialog;
@@ -57,6 +54,10 @@ namespace WordsAsap
         private static int GetMiliseconds(int intervalInMinutes)
         {
             var interval = intervalInMinutes * 60 * 1000;
+
+            if (System.Diagnostics.Debugger.IsAttached)
+                interval = 10 * 1000;
+
             return interval;
         }
 
