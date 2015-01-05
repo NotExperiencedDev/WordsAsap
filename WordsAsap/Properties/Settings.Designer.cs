@@ -129,5 +129,53 @@ namespace WordsAsap.Properties {
                 this["BalloonTipTransparency"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public double DialogPositionTop {
+            get {
+                return ((double)(this["DialogPositionTop"]));
+            }
+            set {
+                this["DialogPositionTop"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public double DialogPositionLeft {
+            get {
+                return ((double)(this["DialogPositionLeft"]));
+            }
+            set {
+                this["DialogPositionLeft"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public double DialogSizeHeight {
+            get {
+                return ((double)(this["DialogSizeHeight"]));
+            }
+            set {
+                this["DialogSizeHeight"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public double DialogSizeWidth {
+            get {
+                return ((double)(this["DialogSizeWidth"]));
+            }
+            set {
+                this["DialogSizeWidth"] = value;
+            }
+        }
     }
 }

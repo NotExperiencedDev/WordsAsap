@@ -18,12 +18,7 @@ namespace WordsAsap
         private Random _random;
         private WordsCollectionService _wordsCollectionService;
         private object _locker;
-        double _top = double.NaN; 
-        double _left = double.NaN;
-        double _height = double.NaN; 
-        double _width = double.NaN;
-
-               
+                     
         public ShowWord( Dispatcher context)
         {
             _locker = new object();
@@ -135,19 +130,21 @@ namespace WordsAsap
             _wordDialog = new WordDialog();
             _wordDialog.Topmost = true;
             _wordDialog.Focusable = false;
-            if (double.IsNaN(_top))
+            if (double.IsNaN(WordsSettings.WordsAsapSettings.DialogSizeHeight) || WordsSettings.WordsAsapSettings.DialogSizeHeight == 0.0)
                 _wordDialog.WindowStartupLocation = System.Windows.WindowStartupLocation.CenterScreen;
             else
             {
                 _wordDialog.WindowStartupLocation = System.Windows.WindowStartupLocation.Manual;
-                _wordDialog.Top = _top; _wordDialog.Left = _left;
-                _wordDialog.Height = _height; _wordDialog.Width = _width;
+                _wordDialog.Top = WordsSettings.WordsAsapSettings.DialogPositionTop;
+                _wordDialog.Left = WordsSettings.WordsAsapSettings.DialogPositionLeft;
+                _wordDialog.Height = WordsSettings.WordsAsapSettings.DialogSizeHeight;
+                _wordDialog.Width = WordsSettings.WordsAsapSettings.DialogSizeWidth;
             }
             _wordDialog.ShowDialog();
-            _top = _wordDialog.Top;
-            _left = _wordDialog.Left;
-            _height = _wordDialog.ActualHeight;
-            _width = _wordDialog.ActualWidth;
+            WordsSettings.WordsAsapSettings.DialogPositionTop = _wordDialog.Top;
+            WordsSettings.WordsAsapSettings.DialogPositionLeft = _wordDialog.Left;
+            WordsSettings.WordsAsapSettings.DialogSizeHeight = _wordDialog.ActualHeight;
+            WordsSettings.WordsAsapSettings.DialogSizeWidth = _wordDialog.ActualWidth;
             lock (_locker)
                 _timer.Enabled = true;
         }

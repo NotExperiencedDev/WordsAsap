@@ -183,6 +183,72 @@ namespace WordsAsap
         }
 
 
+        public double DialogPositionTop
+        {
+            get
+            {
+                return Properties.Settings.Default.DialogPositionTop;
+            }
+            set
+            {
+                if (Properties.Settings.Default.DialogPositionTop != value)
+                {
+                    Properties.Settings.Default.DialogPositionTop = value;
+                    SaveSettings();
+                }
+            }
+        }
+
+
+        public double DialogPositionLeft
+        {
+            get
+            {
+                return Properties.Settings.Default.DialogPositionLeft;
+            }
+            set
+            {
+                if (Properties.Settings.Default.DialogPositionLeft != value)
+                {
+                    Properties.Settings.Default.DialogPositionLeft = value;
+                    SaveSettings();
+                }
+            }
+        }
+
+        public double DialogSizeHeight
+        {
+            get
+            {
+                return Properties.Settings.Default.DialogSizeHeight;
+            }
+            set
+            {
+                if (Properties.Settings.Default.DialogSizeHeight != value)
+                {
+                    Properties.Settings.Default.DialogSizeHeight = value;
+                    SaveSettings();
+                }
+            }
+        }
+
+        public double DialogSizeWidth
+        {
+            get
+            {
+                return Properties.Settings.Default.DialogSizeWidth;
+            }
+            set
+            {
+                if (Properties.Settings.Default.DialogSizeWidth != value)
+                {
+                    Properties.Settings.Default.DialogSizeWidth = value;
+                    SaveSettings();
+                }
+            }
+        }
+
+
 
         private static void OnSettingsChanged()
         {
