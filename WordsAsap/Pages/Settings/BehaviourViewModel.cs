@@ -28,16 +28,14 @@ namespace WordsAsap.Pages.Settings
             WordsCollectionStorageFile = _settings.CollectionStorageFile;
             WordsCollectionStorageLocation = _settings.CollectionStorageFolder;
             MaxNumberOfWordsDisplays = _settings.MaxNumberOfWordDisplays;
-            ShowWordInPopupDialog = _settings.ShowWordInPopupDialog;
-            BalloonTipTransparency = _settings.BalloonTipTransparency;
+           
         }
 
         private int _wordDialogShowInterval;
         private string _wordsCollectionStorageFile;
         private string _wordsCollectionStorageLocation;
         private int _maxNumberOfWordsDisplay;
-        private bool _showWordInPopupDialog;
-        private double _balloonTipTransparency;
+      
 
         public int WordDialogShowInterval
         {
@@ -77,48 +75,7 @@ namespace WordsAsap.Pages.Settings
                 _maxNumberOfWordsDisplay = value;
                 OnPropertyChanged("MaxNumberOfWordsDisplays");
             }
-        }
-
-        public bool ShowWordInPopupDialog
-        {
-            get { return _showWordInPopupDialog; }
-            set
-            {
-                _showWordInPopupDialog = value;
-                OnPropertyChanged("ShowWordInPopupDialog");
-                OnPropertyChanged("ShowWordInBalloonTip");
-                OnPropertyChanged("ShowWordInPopupOrDialog");
-            }
-        }
-
-        public bool ShowWordInBalloonTip
-        {
-            get { return !ShowWordInPopupDialog; }
-        }
-        public string ShowWordInPopupOrDialog
-        {
-            get 
-            {
-                if (ShowWordInPopupDialog)                   
-                 return "Popup dialog";
-                return "Balloon tip";
-            }
-        }
-
-        public double MinimumTransparency { get { return 0.05; } }
-        public double MaximumTransparency { get { return 1.0; } }
-        public double SmallChange { get { return 0.05; } }
-        public double LargeChange { get { return 0.2; } }
-
-        public double BalloonTipTransparency
-        {
-            get { return _balloonTipTransparency; }
-            set 
-            { 
-                _balloonTipTransparency = value;
-                OnPropertyChanged("BalloonTipTransparency");
-            }
-        }
+        }      
 
         public RelayCommand UpShowIntervalCommand
         {
@@ -156,9 +113,9 @@ namespace WordsAsap.Pages.Settings
             _settings.CollectionStorageFile = WordsCollectionStorageFile;
             _settings.CollectionStorageFolder = WordsCollectionStorageLocation;
 
-            _settings.ShowWordInPopupDialog = ShowWordInPopupDialog;
+            
             _settings.MaxNumberOfWordDisplays = MaxNumberOfWordsDisplays;
-            _settings.BalloonTipTransparency = BalloonTipTransparency;
+           
 
             ModernDialog.ShowMessage("settings saved", "save settings", MessageBoxButton.OK);
         }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using FirstFloor.ModernUI.Presentation;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -38,8 +39,11 @@ namespace WordsAsap
             }
             set
             {
-                Properties.Settings.Default.WordsCollectionStorageFile = value;
-                SaveSettings();
+                if (Properties.Settings.Default.WordsCollectionStorageFile != value)
+                {
+                    Properties.Settings.Default.WordsCollectionStorageFile = value;
+                    SaveSettings();
+                }
             }
         }
 
@@ -58,8 +62,11 @@ namespace WordsAsap
             }
             set
             {
-                Properties.Settings.Default.WordsCollectionStorageFolder = value;
-                SaveSettings();
+                if (Properties.Settings.Default.WordsCollectionStorageFolder != value)
+                {
+                    Properties.Settings.Default.WordsCollectionStorageFolder = value;
+                    SaveSettings();
+                }
             }
         }
 
@@ -71,8 +78,11 @@ namespace WordsAsap
             }
             set
             {
-                Properties.Settings.Default.WordDialogShowInterval = value;
-                SaveSettings();
+                if (Properties.Settings.Default.WordDialogShowInterval != value)
+                {
+                    Properties.Settings.Default.WordDialogShowInterval = value;
+                    SaveSettings();
+                }
             }
         }
 
@@ -84,8 +94,11 @@ namespace WordsAsap
             }
             set
             {
-                Properties.Settings.Default.MaxNumberOfWordDisplays = value;
-                SaveSettings();
+                if (Properties.Settings.Default.MaxNumberOfWordDisplays != value)
+                {
+                    Properties.Settings.Default.MaxNumberOfWordDisplays = value;
+                    SaveSettings();
+                }
             }
         }
 
@@ -97,8 +110,11 @@ namespace WordsAsap
             }
             set
             {
-                Properties.Settings.Default.ShowWordInPopupDialog = value;
-                SaveSettings();
+                if (Properties.Settings.Default.ShowWordInPopupDialog != value)
+                {
+                    Properties.Settings.Default.ShowWordInPopupDialog = value;
+                    SaveSettings();
+                }
             }
         }
 
@@ -110,10 +126,63 @@ namespace WordsAsap
             }
             set
             {
-                Properties.Settings.Default.BalloonTipTransparency = value;
-                SaveSettings();
+                if (Properties.Settings.Default.BalloonTipTransparency != value)
+                {
+                    Properties.Settings.Default.BalloonTipTransparency = value;
+                    SaveSettings();
+                }
             }
         }
+
+        public string AccentColor
+        {
+            get
+            {
+                return Properties.Settings.Default.AccentColor;
+            }
+            set
+            {
+                if (Properties.Settings.Default.AccentColor != value)
+                {
+                    Properties.Settings.Default.AccentColor = value;
+                    SaveSettings();
+                }
+            }
+        }
+
+        public Uri ThemeSource
+        {
+            get
+            {
+                return Properties.Settings.Default.ThemeSource;
+            }
+            set
+            {
+                if (Properties.Settings.Default.ThemeSource != value)
+                {
+                    Properties.Settings.Default.ThemeSource = value;
+                    SaveSettings();
+                }
+            }
+        }
+
+        public FontSize SelectedFontSize
+        {
+            get
+            {
+                return Properties.Settings.Default.SelectedFontSize;
+            }
+            set
+            {
+                if (value != Properties.Settings.Default.SelectedFontSize)
+                {
+                    Properties.Settings.Default.SelectedFontSize = value;
+                    SaveSettings();
+                }
+            }
+        }
+
+
 
         private static void OnSettingsChanged()
         {

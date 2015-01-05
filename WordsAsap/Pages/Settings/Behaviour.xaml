@@ -77,34 +77,7 @@
                     </DockPanel>
 
                     <DockPanel DockPanel.Dock="Top" MinHeight="20"/>
-                    <DockPanel DockPanel.Dock="Top">
-                        <mui:BBCodeBlock DockPanel.Dock="Left"   BBCode="[b]show word in:[/b]" VerticalAlignment="Center" TextAlignment="Right"/>
-                        <ToggleButton DockPanel.Dock="Left" Width="Auto"  Height="22" Padding="1" Margin="5" Content="{Binding ShowWordInPopupOrDialog}" IsChecked="{Binding ShowWordInPopupDialog}"/>
-                        <DockPanel DockPanel.Dock="Right" Width="25"/>
-                    </DockPanel>
-
-                    <DockPanel DockPanel.Dock="Top" MinHeight="20"/>
-                    <DockPanel DockPanel.Dock="Top" Visibility="{Binding ShowWordInBalloonTip, Converter={StaticResource VisibilityConverter}}">
-                        <mui:BBCodeBlock DockPanel.Dock="Left"   BBCode="[b]ballon tip transparency:[/b]" VerticalAlignment="Center" TextAlignment="Right"/>
-                        <DockPanel DockPanel.Dock="Right" MinWidth="25"/>
-                        <TextBox DockPanel.Dock="Right" 
-                            Text="{Binding ElementName=ballooTipTransparencySlider, Path=Value, UpdateSourceTrigger=PropertyChanged}"                                      
-                                     TextAlignment="Right" 
-                                     VerticalAlignment="Center"
-                                     Width="40" />
-                            <Slider Name="ballooTipTransparencySlider" 
-                                Value="{Binding BalloonTipTransparency}"
-                                Minimum="{Binding MinimumTransparency}"
-                                Maximum="{Binding MaximumTransparency}"
-                                SmallChange="{Binding SmallChange}"
-                                LargeChange="{Binding LargeChange}"
-                                TickPlacement="BottomRight" 
-                                TickFrequency="0.01"
-                                IsSnapToTickEnabled="True"
-                                VerticalAlignment="Center"
-                        />
-                       
-                    </DockPanel>
+                    
                 </DockPanel>     
         </Grid>
         </DockPanel>

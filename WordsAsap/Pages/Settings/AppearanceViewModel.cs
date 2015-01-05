@@ -1,6 +1,8 @@
 ﻿using FirstFloor.ModernUI.Presentation;
+using FirstFloor.ModernUI.Windows.Controls;
 using System.ComponentModel;
 using System.Linq;
+using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media;
 
@@ -54,6 +56,10 @@ namespace WordsAsap.Pages.Settings
             SyncThemeAndColor();
 
             AppearanceManager.Current.PropertyChanged += OnAppearanceManagerPropertyChanged;
+
+            ShowWordInPopupDialog = WordsSettings.WordsAsapSettings.ShowWordInPopupDialog;
+            BalloonTipTransparency = WordsSettings.WordsAsapSettings.BalloonTipTransparency;
+
         }
 
         private void SyncThemeAndColor()
@@ -134,10 +140,65 @@ namespace WordsAsap.Pages.Settings
             }
         }
 
-      
-        public ICommand SaveSettings
+
+        public RelayCommand SaveSettingsCommand
         {
-            get { return new SaveSettingsCommnand(); }
+            get { return new RelayCommand(SaveSettings); }
+        }
+
+        private void SaveSettings(object o)
+        {
+            WordsSettings.WordsAsapSettings.AccentColor = AppearanceManager.Current.AccentColor.ToString();
+            WordsSettings.WordsAsapSettings.ThemeSource = AppearanceManager.Current.ThemeSource;
+            WordsSettings.WordsAsapSettings.SelectedFontSize = AppearanceManager.Current.FontSize;
+            WordsSettings.WordsAsapSettings.ShowWordInPopupDialog = ShowWordInPopupDialog;
+            WordsSettings.WordsAsapSettings.BalloonTipTransparency = BalloonTipTransparency;
+
+            ModernDialog.ShowMessage("settings saved", "save settings", MessageBoxButton.OK);
+        }
+
+        private bool _showWordInPopupDialog;
+        private double _balloonTipTransparency;
+
+        public bool ShowWordInPopupDialog
+        {
+            get { return _showWordInPopupDialog; }
+            set
+            {
+                _showWordInPopupDialog = value;
+                OnPropertyChanged("ShowWordInPopupDialog");
+                OnPropertyChanged("ShowWordInBalloonTip");
+                OnPropertyChanged("ShowWordInPopupOrDialog");
+            }
+        }
+
+        public bool ShowWordInBalloonTip
+        {
+            get { return !ShowWordInPopupDialog; }
+        }
+        public string ShowWordInPopupOrDialog
+        {
+            get
+            {
+                if (ShowWordInPopupDialog)
+                    return "Popup dialog";
+                return "Balloon tip";
+            }
+        }
+
+        public double MinimumTransparency { get { return 0.05; } }
+        public double MaximumTransparency { get { return 1.0; } }
+        public double SmallChange { get { return 0.05; } }
+        public double LargeChange { get { return 0.2; } }
+
+        public double BalloonTipTransparency
+        {
+            get { return _balloonTipTransparency; }
+            set
+            {
+                _balloonTipTransparency = value;
+                OnPropertyChanged("BalloonTipTransparency");
+            }
         }
     }
       
