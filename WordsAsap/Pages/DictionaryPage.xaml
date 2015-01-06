@@ -6,6 +6,7 @@
              xmlns:local="clr-namespace:WordsAsap.Pages" 
              xmlns:mui="http://firstfloorsoftware.com/ModernUI"
              xmlns:entities="clr-namespace:WordsAsap.Entities"
+             xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
              xmlns:converters="clr-namespace:WordsAsap.Converters"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300"
@@ -70,8 +71,18 @@
     </UserControl.Resources>
     
     <Grid>
-
-        <DataGrid Name="personaldictionary"
+        <DockPanel>
+            <StackPanel DockPanel.Dock="Top" Orientation="Horizontal">
+                <Label Content="Search: "/>
+                <TextBox Width="250" Text="{Binding SearchText}" Name="searchBox" >
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="TextChanged">
+                            <i:InvokeCommandAction Command="{Binding SearchCommand, Mode=OneWay}" CommandParameter="{Binding ElementName=searchBox, Path=Text}"/>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </TextBox>
+            </StackPanel>
+            <DataGrid Name="personaldictionary"
                   AutoGenerateColumns="False"
                   ItemsSource="{Binding WordsCollection}"
                   CanUserAddRows="False"
@@ -128,5 +139,6 @@
             </DataGrid.RowDetailsTemplate>
 
         </DataGrid>
+        </DockPanel>
     </Grid>
 </UserControl>

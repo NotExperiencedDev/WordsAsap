@@ -23,20 +23,30 @@ namespace WordsAsap.Pages
             LoadWordsCollection();
         }
 
-        private void LoadWordsCollection()
+        private void LoadWordsCollection(NHibernate.Criterion.ICriterion expression = null)
         {
             WordsCollection.Clear();
-            var collection = WordsService.GetData<Word>();
+            var collection = WordsService.GetData<Word>(expression);
             if (collection != null)
+            {
+                WordsCollection.Clear();
                 foreach (var item in collection)
                     WordsCollection.Add(new WordViewModel { WordToDisplay = item });
+            }
         }
 
         public ObservableCollection<WordViewModel> WordsCollection { get; set; }
 
+        public string SearchText { get; set; }
+
         public RelayCommand RemoveWordCommand
         {
             get { return new RelayCommand(RemoveWord, CanRemoveWord); }
+        }
+
+        public RelayCommand SearchCommand
+        {
+            get { return new RelayCommand(SearchWord); }
         }
 
         private bool CanRemoveWord(object o)
@@ -57,6 +67,18 @@ namespace WordsAsap.Pages
             WordsService.Remove<Word>(word.WordToDisplay);
 
             WordsCollection.Remove(word);            
+        }
+
+        private void SearchWord(object o)
+        {
+            var searchText = o as string;
+            if (string.IsNullOrWhiteSpace(searchText))
+            {
+                LoadWordsCollection();
+                return;
+            }
+            var sql = NHibernate.Criterion.Expression.Sql("lower({alias}.Value) like lower(?)", string.Format("%{0}%",searchText), NHibernate.NHibernateUtil.String);
+            LoadWordsCollection(sql);
         }
     }
 }
