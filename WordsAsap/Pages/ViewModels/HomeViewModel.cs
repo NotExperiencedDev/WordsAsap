@@ -30,8 +30,8 @@ namespace WordsAsap.Pages
         {
             if (!string.IsNullOrWhiteSpace(NewWord))
             {
-                SimpleExpression e = Restrictions.Eq("Value", NewWord);
-                var reply = WordsService.GetData<Word>(e);  
+                var sql = NHibernate.Criterion.Expression.Sql("lower({alias}.Value) = lower(?)", NewWord, NHibernate.NHibernateUtil.String);
+                var reply = WordsService.GetData<Word>(sql);  
                 if((reply == null || reply.Count == 0) && HasTranslation())
                 {
                     var r = ModernDialog.ShowMessage("word not saved do yoou want to save it?", "save or update word", MessageBoxButton.YesNo);
@@ -91,11 +91,7 @@ namespace WordsAsap.Pages
                 if (string.IsNullOrWhiteSpace(t.Translation))
                     continue;
                 WordsService.AddWord(NewWord, t.Translation);
-            }
-           
-            SimpleExpression e = Restrictions.Eq("Value", NewWord.ToLower());
-            var reply = WordsService.GetData<Word>(e);            
-
+            }       
             ModernDialog.ShowMessage("word updated", "save or update word", MessageBoxButton.OK);
             NewWordCommandExec(null);
         }

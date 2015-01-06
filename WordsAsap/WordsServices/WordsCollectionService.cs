@@ -105,8 +105,8 @@ namespace WordsAsap.WordsServices
            
                 using (var transaction = _session.BeginTransaction())
                 {
-                   
-                    var words = GetData<Word>().Where(x => x.Value.ToLower() == word.ToLower());
+                    var sql = NHibernate.Criterion.Expression.Sql("lower({alias}.Value) = lower(?)", word, NHibernate.NHibernateUtil.String);
+                    var words = GetData<Word>(sql); 
                     if (words != null && words.Count() > 0)
                     {
                         var t = new Translation();
@@ -122,7 +122,7 @@ namespace WordsAsap.WordsServices
                     {
                         var w = new Word();
                         w.CreationDate = DateTime.UtcNow;
-                        w.Value = word.ToLower();
+                        w.Value = word;
                         var t = new Translation();
                         t.Value = translation;
                         var s = new WordStatistics();
