@@ -6,6 +6,9 @@ using System.Windows;
 using WordsAsap.Entities;
 using WordsAsap.WordsServices;
 using WordsAsap.Pages.ViewModels;
+using System.Threading.Tasks;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace WordsAsap.Pages
 {
@@ -23,16 +26,40 @@ namespace WordsAsap.Pages
             LoadWordsCollection();
         }
 
-        private void LoadWordsCollection(NHibernate.Criterion.ICriterion expression = null)
+
+        //TODO: use nhibernate join
+        private async void LoadWordsCollection(NHibernate.Criterion.ICriterion expression = null)
         {
+            var allWords = new List<Word>();
             WordsCollection.Clear();
-            var collection = WordsService.GetData<Word>(expression);
+            var collection = await WordsService.GetDataAsync<Word>(expression);
             if (collection != null)
             {
-                WordsCollection.Clear();
                 foreach (var item in collection)
-                    WordsCollection.Add(new WordViewModel { WordToDisplay = item });
+                    if(!allWords.Exists(x=>x.Id == item.Id))
+                        allWords.Add(item);
             }
+            foreach (var item in allWords)
+                WordsCollection.Add(new WordViewModel { WordToDisplay = item });
+            var alreadyAdded = allWords.Count;
+            //only in case of searching it does matter
+            if (expression != null)
+            {
+                var collection2 = await WordsService.GetDataAsync<Translation>(expression);
+                if (collection2 != null)
+                {
+                    
+                    foreach (var item in collection2)
+                        foreach (var w in item.WordsStoredIn)
+                            if (!allWords.Exists(x => x.Id == w.Id))
+                                allWords.Add(w);
+                    
+                }
+            }
+
+            foreach (var item in allWords.Skip(alreadyAdded))
+                WordsCollection.Add(new WordViewModel { WordToDisplay = item });
+            allWords = null;
         }
 
         public ObservableCollection<WordViewModel> WordsCollection { get; set; }

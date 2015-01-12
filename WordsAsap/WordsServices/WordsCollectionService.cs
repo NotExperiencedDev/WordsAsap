@@ -94,6 +94,14 @@ namespace WordsAsap.WordsServices
             return criteria.List<T>();            
         }
 
+        public Task<IList<T>> GetDataAsync<T>(ICriterion expression = null) where T : class
+        {
+            var criteria = _session.CreateCriteria<T>();
+            if (expression != null)
+                criteria = criteria.Add(expression);
+            return Task.FromResult<IList<T>>( criteria.List<T>());        
+        }
+
         public void AddWord(string word, string translation)
         {
             if (string.IsNullOrWhiteSpace(word))
@@ -117,6 +125,8 @@ namespace WordsAsap.WordsServices
                             _session.SaveOrUpdate(word1);
                         }
                         _session.SaveOrUpdate(t);
+                        _session.Flush();
+                        _session.Refresh(t);
                     }
                     else
                     {
@@ -131,9 +141,12 @@ namespace WordsAsap.WordsServices
                       
                         w.Translations.Add(t);
                         _session.SaveOrUpdate(w);
+                        _session.Flush();
+                        _session.Refresh(t);
                     }
                    
                     transaction.Commit();
+                    
                     OnWordsCollectionChanged();
                 }
             
@@ -146,8 +159,11 @@ namespace WordsAsap.WordsServices
             using (var transaction = _session.BeginTransaction())
             {
                 _session.SaveOrUpdate(entity);
+               
                 transaction.Commit();
+                
                 _session.Flush();
+                _session.Refresh(entity);
             }
         }
 
@@ -158,8 +174,10 @@ namespace WordsAsap.WordsServices
 
             using (var transaction = _session.BeginTransaction())
             {
-                _session.Delete(entity);
+               _session.Delete(entity);
+                
                 transaction.Commit();
+         
                 _session.Flush();
             }
         }
