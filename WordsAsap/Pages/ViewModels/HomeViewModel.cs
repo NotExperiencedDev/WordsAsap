@@ -4,6 +4,7 @@ using NHibernate.Criterion;
 using System.Collections.ObjectModel;
 using System.Windows;
 using System.Windows.Input;
+using WordsAsap.Dialogs;
 using WordsAsap.Entities;
 using WordsAsap.Pages.ViewModels;
 using WordsAsap.WordsServices;
@@ -34,7 +35,7 @@ namespace WordsAsap.Pages
                 var reply = WordsService.GetData<Word>(sql);  
                 if((reply == null || reply.Count == 0) && HasTranslation())
                 {
-                    var r = ModernDialog.ShowMessage("word not saved do yoou want to save it?", "save or update word", MessageBoxButton.YesNo);
+                    var r = ModernDialog.ShowMessage("word not saved do you want to save it?", "save or update word", MessageBoxButton.YesNo);
                     if (r == MessageBoxResult.Yes)
                         SaveWord(null);
                 }
@@ -91,8 +92,13 @@ namespace WordsAsap.Pages
                 if (string.IsNullOrWhiteSpace(t.Translation))
                     continue;
                 WordsService.AddWord(NewWord, t.Translation);
-            }       
-            ModernDialog.ShowMessage("word updated", "save or update word", MessageBoxButton.OK);
+            }
+            if (WordsSettings.WordsAsapSettings.AddWordConfirmation)
+            {
+                //ModernDialog.ShowMessage("word updated", "save or update word", MessageBoxButton.OK);
+                var confirmDialog = new SaveWordConfirmationDialog("save or update word");
+                confirmDialog.ShowDialog();
+            }
             NewWordCommandExec(null);
         }
         

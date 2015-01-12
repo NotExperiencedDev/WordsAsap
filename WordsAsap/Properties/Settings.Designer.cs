@@ -177,5 +177,29 @@ namespace WordsAsap.Properties {
                 this["DialogSizeWidth"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool BalloonTipGradientOff {
+            get {
+                return ((bool)(this["BalloonTipGradientOff"]));
+            }
+            set {
+                this["BalloonTipGradientOff"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool AddWordConfirmation {
+            get {
+                return ((bool)(this["AddWordConfirmation"]));
+            }
+            set {
+                this["AddWordConfirmation"] = value;
+            }
+        }
     }
 }

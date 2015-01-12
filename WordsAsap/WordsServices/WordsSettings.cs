@@ -134,6 +134,22 @@ namespace WordsAsap
             }
         }
 
+        public bool BalloonTipGradientOff
+        {
+            get
+            {
+                return Properties.Settings.Default.BalloonTipGradientOff;
+            }
+            set
+            {
+                if (Properties.Settings.Default.BalloonTipGradientOff != value)
+                {
+                    Properties.Settings.Default.BalloonTipGradientOff = value;
+                    SaveSettings();
+                }
+            }
+        }
+
         public string AccentColor
         {
             get
@@ -243,6 +259,23 @@ namespace WordsAsap
                 if (Properties.Settings.Default.DialogSizeWidth != value)
                 {
                     Properties.Settings.Default.DialogSizeWidth = value;
+                    SaveSettings();
+                }
+            }
+        }
+
+
+        public bool AddWordConfirmation
+        {
+            get
+            {
+                return Properties.Settings.Default.AddWordConfirmation;
+            }
+            set
+            {
+                if (Properties.Settings.Default.AddWordConfirmation != value)
+                {
+                    Properties.Settings.Default.AddWordConfirmation = value;
                     SaveSettings();
                 }
             }

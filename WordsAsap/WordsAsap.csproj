@@ -150,7 +150,11 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Converters\ThemeToFontColorConverter.cs" />
     <Compile Include="Converters\VisibilityToBooleanColapsedConverter.cs" />
+    <Compile Include="Dialogs\SaveWordConfirmationDialog.xaml.cs">
+      <DependentUpon>SaveWordConfirmationDialog.xaml</DependentUpon>
+    </Compile>
     <Compile Include="WordsServices\NotifyIcon.cs" />
     <Compile Include="Pages\DictionaryPage.xaml.cs">
       <DependentUpon>DictionaryPage.xaml</DependentUpon>
@@ -192,6 +196,10 @@
     </Compile>
     <Compile Include="WordsServices\ShowWord.cs" />
     <Compile Include="WordsServices\WordsSettings.cs" />
+    <Page Include="Dialogs\SaveWordConfirmationDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

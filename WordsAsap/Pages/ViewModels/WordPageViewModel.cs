@@ -6,6 +6,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 using System.Windows.Input;
+using System.Windows.Media;
 using WordsAsap.Entities;
 using WordsAsap.Pages.ViewModels;
 using WordsAsap.WordsServices;
@@ -64,7 +65,7 @@ namespace WordsAsap.Pages
             }
 
             OnPropertyChanged("WordToDisplay");
-        }
+        }      
 
         public Word WordToLearn { get; set; }
 
@@ -147,5 +148,26 @@ namespace WordsAsap.Pages
         }
 
         public bool ShowTranslation { get; set; }
+
+        public SolidColorBrush FontColor
+        {
+            get
+            {
+                if (AppearanceManager.DarkThemeSource == AppearanceManager.Current.ThemeSource)
+                    return new SolidColorBrush( Colors.White);
+
+                return new SolidColorBrush( Colors.Black);
+            }
+        }
+
+        public int FontSize
+        {
+            get
+            {
+                if( AppearanceManager.Current.FontSize == FirstFloor.ModernUI.Presentation.FontSize.Large)
+                    return 16;
+                return 12;
+            }
+        }
     }
 }

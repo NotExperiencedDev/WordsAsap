@@ -39,41 +39,53 @@ namespace WordsAsap.Pages.Settings
 
         public int WordDialogShowInterval
         {
-            get { return _wordDialogShowInterval; }
+            get { return _settings.WordDialogShowInterval; }
             set
             {
-                _wordDialogShowInterval = value;
-                OnPropertyChanged("WordDialogShowInterval");
+                if (_settings.WordDialogShowInterval != value)
+                {
+                    _settings.WordDialogShowInterval = value;
+                    OnPropertyChanged("WordDialogShowInterval");
+                }
             }
         }
 
         public string WordsCollectionStorageFile
         {
-            get { return _wordsCollectionStorageFile; }
+            get { return _settings.CollectionStorageFile; }
             set 
-            { 
-                _wordsCollectionStorageFile = value; 
-                OnPropertyChanged("WordsCollectionStorageFile"); 
+            {
+                if (_settings.CollectionStorageFile != value)
+                {
+                    _settings.CollectionStorageFile = value;
+                    OnPropertyChanged("WordsCollectionStorageFile");
+                }
             }
         }
 
         public string WordsCollectionStorageLocation
         {
-            get { return _wordsCollectionStorageLocation; }
+            get { return _settings.CollectionStorageFolder; }
             set
             {
-                _wordsCollectionStorageLocation = value;
-                OnPropertyChanged("WordsCollectionStorageLocation");
+                if (_settings.CollectionStorageFolder != value)
+                {
+                    _settings.CollectionStorageFolder = value;
+                    OnPropertyChanged("WordsCollectionStorageLocation");
+                }
             }
         }
 
         public int MaxNumberOfWordsDisplays
         {
-            get {  return _maxNumberOfWordsDisplay;  }
+            get { return _settings.MaxNumberOfWordDisplays; }
             set
             {
-                _maxNumberOfWordsDisplay = value;
-                OnPropertyChanged("MaxNumberOfWordsDisplays");
+                if (_settings.MaxNumberOfWordDisplays != value)
+                {
+                    _settings.MaxNumberOfWordDisplays = value;
+                    OnPropertyChanged("MaxNumberOfWordsDisplays");
+                }
             }
         }      
 
@@ -100,25 +112,7 @@ namespace WordsAsap.Pages.Settings
         public RelayCommand SelectStorageLocationCommand
         {
             get { return new RelayCommand(SelectStorageLocation); }
-        }
-
-        public RelayCommand SaveSettingsCommand
-        {
-            get { return new RelayCommand(SaveSettings); }
-        }
-
-        private void SaveSettings(object o)
-        {
-            _settings.WordDialogShowInterval = WordDialogShowInterval;
-            _settings.CollectionStorageFile = WordsCollectionStorageFile;
-            _settings.CollectionStorageFolder = WordsCollectionStorageLocation;
-
-            
-            _settings.MaxNumberOfWordDisplays = MaxNumberOfWordsDisplays;
-           
-
-            ModernDialog.ShowMessage("settings saved", "save settings", MessageBoxButton.OK);
-        }
+        }      
 
         private void SelectStorageLocation(object o)
         {

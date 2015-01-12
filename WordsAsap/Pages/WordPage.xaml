@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:mui="http://firstfloorsoftware.com/ModernUI"
               xmlns:local="clr-namespace:WordsAsap.Pages" 
-             xmlns:WordsAsap="clr-namespace:WordsAsap" x:Name="WordPage1" x:Class="WordsAsap.Pages.WordPage" 
+             xmlns:WordsAsap="clr-namespace:WordsAsap" xmlns:Settings="clr-namespace:WordsAsap.Pages.Settings" x:Name="WordPage1" x:Class="WordsAsap.Pages.WordPage" 
              mc:Ignorable="d" 
              d:DesignHeight="150" d:DesignWidth="150"
     >
@@ -20,16 +20,16 @@
         <ScrollViewer>
             <StackPanel MinWidth="200">
 
-                <mui:BBCodeBlock Text="{Binding WordToDisplay}" Margin="3"/>
+                <TextBlock Text="{Binding WordToDisplay}" Margin="3" Foreground="{Binding FontColor}" FontSize="{Binding FontSize}" />
 
-                <ListView ItemsSource="{Binding Translations}" Visibility="{Binding ShowTranslation, Converter={StaticResource VisibilityConverter}}" Margin="3" x:Name="lstvInternal">
+                <ListView ItemsSource="{Binding Translations}" Visibility="{Binding ShowTranslation, Converter={StaticResource VisibilityConverter}}" Margin="3" x:Name="lstvInternal" >
                     <ListView.ItemTemplate>
                         <DataTemplate>
                             <Grid Margin="0,0,0,5">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="*" />
                                 </Grid.ColumnDefinitions>
-                                <TextBlock Text="{Binding}" />
+                                <TextBlock Text="{Binding}" FontSize="{Binding FontSize}"/>
                             </Grid>
                         </DataTemplate>
                     </ListView.ItemTemplate>
@@ -69,5 +69,5 @@
 
         </ScrollViewer>
     </Grid>
-    
+
 </UserControl>
