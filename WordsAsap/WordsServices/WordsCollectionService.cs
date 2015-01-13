@@ -182,6 +182,15 @@ namespace WordsAsap.WordsServices
             }
         }
 
+        public void Refresh(object entity)
+        {
+            if (_session == null)
+                return;
+            if (entity == null)
+                return;
+            _session.Refresh(entity);
+        }
+
         public void Dispose()
         {
             if (_session != null)

@@ -72,6 +72,7 @@ namespace WordsAsap.Pages
 
             WordToDisplay.Translations.Remove(translation);
             _wordsCollectionService.Update<Word>(WordToDisplay);
+            _wordsCollectionService.Refresh(translation);
             WordToDisplay = WordToDisplay;
         }
        
