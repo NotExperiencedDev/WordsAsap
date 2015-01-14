@@ -1,13 +1,10 @@
 ﻿using FirstFloor.ModernUI.Presentation;
 using FirstFloor.ModernUI.Windows.Controls;
-using NHibernate.Criterion;
 using System.Collections.ObjectModel;
 using System.Windows;
-using System.Windows.Input;
 using WordsAsap.Dialogs;
 using WordsAsap.Entities;
 using WordsAsap.Pages.ViewModels;
-using WordsAsap.WordsServices;
 
 namespace WordsAsap.Pages
 {

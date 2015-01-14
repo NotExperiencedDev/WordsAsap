@@ -6,10 +6,8 @@ using NHibernate.Criterion;
 using NHibernate.Tool.hbm2ddl;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.IO;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using WordsAsap.Entities;
 

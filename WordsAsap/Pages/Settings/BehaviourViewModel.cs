@@ -1,12 +1,5 @@
 ﻿using FirstFloor.ModernUI.Presentation;
-using FirstFloor.ModernUI.Windows.Controls;
-using System.ComponentModel;
 using System.IO;
-using System.Linq;
-using System.Windows;
-using System.Windows.Input;
-using System.Windows.Media;
-using WordsAsap.WordsServices;
 
 namespace WordsAsap.Pages.Settings
 {
@@ -30,12 +23,6 @@ namespace WordsAsap.Pages.Settings
             MaxNumberOfWordsDisplays = _settings.MaxNumberOfWordDisplays;
            
         }
-
-        private int _wordDialogShowInterval;
-        private string _wordsCollectionStorageFile;
-        private string _wordsCollectionStorageLocation;
-        private int _maxNumberOfWordsDisplay;
-      
 
         public int WordDialogShowInterval
         {

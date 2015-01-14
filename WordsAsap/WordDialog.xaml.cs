@@ -1,8 +1,4 @@
-﻿using System;
-
-using System.Windows;
-
-using WordsAsap.Entities;
+﻿using WordsAsap.Entities;
 namespace WordsAsap
 {
     

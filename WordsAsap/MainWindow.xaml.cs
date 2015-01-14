@@ -15,7 +15,6 @@ namespace WordsAsap
             InitializeComponent();
             NotifyIcon.SystryIcon.Click += NotifyIcon_Click;
             
-          
             _showWord = new ShowWord(Dispatcher);
         }
 

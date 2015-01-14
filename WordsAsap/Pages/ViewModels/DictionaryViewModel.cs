@@ -1,12 +1,9 @@
-﻿using System.Windows.Input;
-using FirstFloor.ModernUI.Presentation;
+﻿using FirstFloor.ModernUI.Presentation;
 using FirstFloor.ModernUI.Windows.Controls;
 using System.Collections.ObjectModel;
 using System.Windows;
 using WordsAsap.Entities;
-using WordsAsap.WordsServices;
 using WordsAsap.Pages.ViewModels;
-using System.Threading.Tasks;
 using System.Collections.Generic;
 using System.Linq;
 

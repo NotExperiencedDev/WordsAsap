@@ -37,7 +37,6 @@
 
                 <mui:ModernButton Padding="10" Margin="20" 
 					Command="{Binding ShowTranslationCommand}">
-                    <!--IconData="F1 M 37.8516,39.5833L 52.1016,24.9375L 52.1016,35.2292L 37.8516,50.2708L 23.6016,35.2292L 23.6016,24.9375L 37.8516,39.5833 Z"-->
                     <mui:ModernButton.Style>
                         <Style TargetType="{x:Type mui:ModernButton}">
                             <Setter Property="IconData" Value="F1 M 37.8516,39.5833L 52.1016,24.9375L 52.1016,35.2292L 37.8516,50.2708L 23.6016,35.2292L 23.6016,24.9375L 37.8516,39.5833 Z" />

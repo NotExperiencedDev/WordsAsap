@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Windows.Forms;
-
-namespace WordsAsap.Pages.ViewModels
+﻿namespace WordsAsap.Pages.ViewModels
 {
     public interface IMessagesService
     {

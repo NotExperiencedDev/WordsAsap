@@ -1,9 +1,6 @@
 ﻿using FirstFloor.ModernUI.Presentation;
-using FirstFloor.ModernUI.Windows.Controls;
 using System.ComponentModel;
 using System.Linq;
-using System.Windows;
-using System.Windows.Input;
 using System.Windows.Media;
 
 namespace WordsAsap.Pages.Settings
