@@ -27,7 +27,7 @@
             <Grid Name="gr1"
                   FocusManager.IsFocusScope="True"
                   KeyboardNavigation.TabNavigation="Cycle"
-                  GotFocus="Gr1_OnGotFocus">
+                  >
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="5" />
                     <ColumnDefinition Width="95" />

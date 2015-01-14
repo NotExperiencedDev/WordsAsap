@@ -16,6 +16,8 @@
                           Source="/Pages/Home.xaml" />
                 <mui:Link DisplayName="dictionary"
                           Source="/Pages/DictionaryPage.xaml" />
+                <mui:Link DisplayName="settings"
+                          Source="/Pages/SettingsPage.xaml" />
             </mui:LinkGroup.Links>
         </mui:LinkGroup>
         <mui:LinkGroup DisplayName="settings"
@@ -27,9 +29,7 @@
         </mui:LinkGroup>
     </mui:ModernWindow.MenuLinkGroups>
 
-    <mui:ModernWindow.TitleLinks>
-        <mui:Link DisplayName="settings"
-                  Source="/Pages/SettingsPage.xaml" />
+    <mui:ModernWindow.TitleLinks>       
         <mui:Link DisplayName="help"
                   Source="/Pages/HelpPage.xaml" />
         <mui:Link DisplayName="about"
