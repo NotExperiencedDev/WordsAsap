@@ -68,7 +68,7 @@ namespace WordsAsap.Pages
 
         public RelayCommand SaveWordCommand
         {
-            get { return new RelayCommand(SaveWord, (o) => { return !string.IsNullOrWhiteSpace(NewWord) && HasTranslation(); }); }
+            get { return new RelayCommand(SaveWord, (o) => !string.IsNullOrWhiteSpace(NewWord) && HasTranslation()); }
         }
 
         private bool HasTranslation()
