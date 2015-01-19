@@ -10,7 +10,28 @@
         <ScrollViewer>
             <StackPanel MinWidth="200">
                 <TextBlock Text="HELP" Style="{StaticResource Heading2}" />
-                <TextBlock Text="TODO." />
+                <mui:BBCodeBlock BBCode="
+All is working at all thanks to:
+codeplex and github
+[url=https://mui.codeplex.com] modern ui codeplex [/url]
+[url=http://modernuiicons.com] modern ui icons [/url]
+[url=http://www.sqlite.org] sqlite [/url]
+[url=http://www.fluentnhibernate.org] fluent nhibernate [/url]
+[url=http://www.hardcodet.net/wpf-notifyicon] hardcodet notify icon [/url]
+[url=http://wixtoolset.org] wix tools [/url]
+[url=http://www.visualstudio.com/en-us/news/vs2013-community-vs.aspx] Visual Studio Community [/url]
+[url=https://www.nuget.org/] nuget package manager [/url]
+                                 
+Words come easy :)
+This is simple program which helps to learn new words in not user native language.
+The program, when minimized (the icon still present in systray bar) displays in regular (defined by user) 
+intervals (minutes) the dialog with randomly selected word from user words collection. Dialog can be 
+resized and repositioned, every next time the dialog will be open in last location with last size.
+Programm gives also to the user the means to edit his words collection (add, modify, remove a word). 
+The words collection is stored in single file in a location specified by user. There is no need to connect to internet, 
+although the file with user words collection can be stored on OneDrive or Google Drive which gives the user portability 
+(the program can be installed on several machines - e.g. work, home pc - and use the same words collection).                                 
+[b]More on project [url=http://wordsasap.codeplex.com/documentation]site[/url][/b]" TextWrapping="Wrap" />
             </StackPanel>
         </ScrollViewer>
     </Grid>

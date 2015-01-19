@@ -155,6 +155,7 @@
     <Compile Include="Dialogs\SaveWordConfirmationDialog.xaml.cs">
       <DependentUpon>SaveWordConfirmationDialog.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Pages\ViewModels\AboutViewModel.cs" />
     <Compile Include="WordsServices\NotifyIcon.cs" />
     <Compile Include="Pages\DictionaryPage.xaml.cs">
       <DependentUpon>DictionaryPage.xaml</DependentUpon>
