@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
 using WordsAsap.Entities;
 
@@ -6,10 +8,11 @@ namespace WordsAsap.WordsServices
 {
     public class GetWordToLearn
     {
-        private const int MinimumListOfWords = 6;
+        private const int MinimumListOfWords = 2;
         private Random _random;
         private WordsCollectionService _wordsCollectionService;
         private int _maxNumberOfWordDisplays;
+        private Queue<Word> _lastWords;
 
         private static GetWordToLearn _getWordToLearn;
 
@@ -26,6 +29,7 @@ namespace WordsAsap.WordsServices
         private GetWordToLearn()
         {
             _random = new Random();
+            _lastWords = new Queue<Word>();
             try
             {
                 _wordsCollectionService = WordsCollectionService.CreateWordsCollectionService(WordsSettings.WordsAsapSettings);
@@ -48,7 +52,7 @@ namespace WordsAsap.WordsServices
                            where w.Statistics.CorrectAnswers - w.Statistics.WrongAnswers > _maxNumberOfWordDisplays
                            orderby w.Statistics.LastDisplayTime ascending
                            select w;
-            var displayOldWord = _random.Next(1, 1000) > 500;
+            var displayOldWord = _random.Next(1, 10000) < 50;
             if (displayOldWord && oldWords.Count() > 0)          
                     return oldWords.FirstOrDefault();
             

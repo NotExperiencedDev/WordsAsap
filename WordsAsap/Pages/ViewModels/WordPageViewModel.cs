@@ -38,7 +38,7 @@ namespace WordsAsap.Pages
             var wordTranslationDirection = _random.Next(1, 1000) < 501;
             if(wordTranslationDirection)
             {
-                WordToDisplay = WordToLearn.Value;
+                SetWordToDisplay(WordToLearn.Value, WordToLearn.Statistics.CorrectAnswers, WordToLearn.Statistics.WrongAnswers);
                 Translations.Clear();
                 foreach (var t in WordToLearn.Translations)
                     Translations.Add(t.Value);
@@ -52,7 +52,7 @@ namespace WordsAsap.Pages
                     var selectedTranslation = WordToLearn.Translations.ElementAt(selectedTranslationNr);
                     if (selectedTranslation != null)
                     { 
-                        WordToDisplay = selectedTranslation.Value;
+                        SetWordToDisplay(selectedTranslation.Value, WordToLearn.Statistics.CorrectAnswers, WordToLearn.Statistics.WrongAnswers);
                         var otherTranslations = WordToLearn.Translations.Where(x => x.Id != selectedTranslation.Id);
                         Translations.Clear();
                         Translations.Add(WordToLearn.Value);
@@ -63,7 +63,13 @@ namespace WordsAsap.Pages
             }
 
             OnPropertyChanged("WordToDisplay");
-        }      
+        }
+
+        private void SetWordToDisplay(string wordToLearn, int correctA, int wrongA)
+        {
+            WordToDisplay = String.Format("{0} (Correct {1}|Wrong {2})", wordToLearn,
+               correctA, wrongA);
+        }
 
         public Word WordToLearn { get; set; }
 
