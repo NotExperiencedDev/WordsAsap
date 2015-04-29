@@ -22,8 +22,8 @@
                     Command="{Binding SaveWordCommand}" />           
     </UserControl.InputBindings>
 
-    <Grid   Style="{StaticResource ContentRoot}">
-        <ScrollViewer >
+    <Grid   Style="{StaticResource ContentRoot}" >
+        <ScrollViewer IsTabStop="False">
             <Grid Name="gr1"
                   FocusManager.IsFocusScope="True"
                   KeyboardNavigation.TabNavigation="Cycle"
@@ -50,8 +50,8 @@
 
                 <mui:ModernButton Grid.Row="1" Grid.Column="3" Padding="1" Margin="1" Content="[clear all]" 
                                                   Command="{Binding  NewWordCommand}"
-                                                  IconData="F1 M 26.9166,22.1667L 37.9999,33.25L 49.0832,22.1668L 53.8332,26.9168L 42.7499,38L 53.8332,49.0834L 49.0833,53.8334L 37.9999,42.75L 26.9166,53.8334L 22.1666,49.0833L 33.25,38L 22.1667,26.9167L 26.9166,22.1667 Z " 
-                                                   /> 
+                                                  IconData="F1 M 26.9166,22.1667L 37.9999,33.25L 49.0832,22.1668L 53.8332,26.9168L 42.7499,38L 53.8332,49.0834L 49.0833,53.8334L 37.9999,42.75L 26.9166,53.8334L 22.1666,49.0833L 33.25,38L 22.1667,26.9167L 26.9166,22.1667 Z "
+                                  TabIndex="4" /> 
                 
                 <TextBox Name="wordInput"  Grid.Row="1" Grid.Column="2"   Margin="6,2,1,1" 
                          TabIndex="0"

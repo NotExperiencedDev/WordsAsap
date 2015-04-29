@@ -1,4 +1,6 @@
-﻿using FirstFloor.ModernUI.Presentation;
+﻿using System.Linq;
+using System.Windows.Navigation;
+using FirstFloor.ModernUI.Presentation;
 using FirstFloor.ModernUI.Windows.Controls;
 using System.Collections.ObjectModel;
 using System.Windows;
@@ -21,7 +23,12 @@ namespace WordsAsap.Pages
 
         public RelayCommand NewWordCommand
         {
-            get { return new RelayCommand(NewWordCommandExec); }
+            get { return new RelayCommand(NewWordCommandExec, CanClear); }
+        }
+
+        private bool CanClear(object arg)
+        {
+            return !string.IsNullOrWhiteSpace(NewWord) || (Translations.Count > 0 && Translations.Any(x=>!string.IsNullOrWhiteSpace(x.Translation)));
         }
 
         private void NewWordCommandExec(object obj)
@@ -46,7 +53,7 @@ namespace WordsAsap.Pages
 
         public RelayCommand AddTranslationCommand
         {
-            get { return new RelayCommand(AddTranslation); }
+            get { return new RelayCommand(AddTranslation, o=>!string.IsNullOrWhiteSpace(NewWord)); }
         }
 
         private void AddTranslation(object obj)
@@ -75,11 +82,8 @@ namespace WordsAsap.Pages
         {
             if (Translations == null || Translations.Count < 1)
                 return false;
-           
-            foreach (var item in Translations)
-                if (!string.IsNullOrWhiteSpace(item.Translation))
-                    return true;
-            return false;
+
+            return Translations.Any(x=>!string.IsNullOrWhiteSpace(x.Translation));
         }
 
         private void SaveWord(object o)

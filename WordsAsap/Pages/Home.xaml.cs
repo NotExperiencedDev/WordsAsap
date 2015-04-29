@@ -42,5 +42,9 @@ namespace WordsAsap.Pages
             }
         }
 
+        private void UIElement_OnGotFocus(object sender, RoutedEventArgs e)
+        {
+           
+        }
     }
 }
