@@ -67,13 +67,19 @@ namespace WordsAsap.Pages
 
         private void SetWordToDisplay(string wordToLearn, int correctA, int wrongA)
         {
-            WordToDisplay = String.Format("{0} (Correct {1}|Wrong {2})", wordToLearn,
-               correctA, wrongA);
+            WordToDisplay = String.Format("{0}", wordToLearn);
+            NumberOfCorrect =   correctA;
+            NumberOfWrong = wrongA;
+            OnPropertyChanged("NumberOfCorrect");
+            OnPropertyChanged("NumberOfWrong");
         }
 
         public Word WordToLearn { get; set; }
 
         public string WordToDisplay { get; set; }
+
+        public int NumberOfCorrect { get; set; }
+        public int NumberOfWrong { get; set; }
 
         public ObservableCollection<string> Translations
         {
@@ -171,6 +177,18 @@ namespace WordsAsap.Pages
                 if( AppearanceManager.Current.FontSize == FirstFloor.ModernUI.Presentation.FontSize.Large)
                     return 16;
                 return 12;
+            }
+        }
+
+
+        public SolidColorBrush FillBursh
+        {
+            get
+            {
+                if (AppearanceManager.DarkThemeSource == AppearanceManager.Current.ThemeSource)
+                    return new SolidColorBrush(Colors.White);
+
+                return new SolidColorBrush(Colors.Black);
             }
         }
     }
