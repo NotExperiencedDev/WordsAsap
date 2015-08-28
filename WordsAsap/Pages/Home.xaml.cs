@@ -1,6 +1,7 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using FeserWard.Controls;
 
 namespace WordsAsap.Pages
 {
@@ -17,17 +18,17 @@ namespace WordsAsap.Pages
         private void Home_OnLoaded(object sender, RoutedEventArgs e)
         {
             var elementWithFocus = Keyboard.FocusedElement as UIElement;
-            if (elementWithFocus is TextBox)
+            if (elementWithFocus is Intellibox)
                 return;
 
             gr1.Focus();
             FocusNext();
         }
-
+        
         private void FocusNext()
         {
             var elementWithFocus = Keyboard.FocusedElement as UIElement;
-            if (elementWithFocus is TextBox)
+            if (elementWithFocus is Intellibox)
                 return;
 
             const FocusNavigationDirection focusDirection = FocusNavigationDirection.Next;

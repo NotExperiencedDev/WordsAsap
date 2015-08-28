@@ -5,6 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:WordsAsap.Pages" 
              xmlns:mui="http://firstfloorsoftware.com/ModernUI"
+             xmlns:controls="clr-namespace:FeserWard.Controls;assembly=Intellibox"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300" 
              Loaded="Home_OnLoaded"
@@ -52,12 +53,27 @@
                                                   Command="{Binding  NewWordCommand}"
                                                   IconData="F1 M 26.9166,22.1667L 37.9999,33.25L 49.0832,22.1668L 53.8332,26.9168L 42.7499,38L 53.8332,49.0834L 49.0833,53.8334L 37.9999,42.75L 26.9166,53.8334L 22.1666,49.0833L 33.25,38L 22.1667,26.9167L 26.9166,22.1667 Z "
                                   TabIndex="4" /> 
-                
-                <TextBox Name="wordInput"  Grid.Row="1" Grid.Column="2"   Margin="6,2,1,1" 
-                         TabIndex="0"
-                         Text="{Binding NewWord}"  
-                          TextAlignment="Left"
-                          />                    
+
+                <controls:Intellibox  Name="wordInput"
+                                      Grid.Row="1"
+                                      Grid.Column="2"
+                                      Margin="6,2,1,1"
+                                      TabIndex="0"
+                                      ResultsHeight="180"
+                                      ResultsWidth ="{Binding ElementName=wordInput,Path=ActualWidth}"
+                                     ExplicitlyIncludeColumns="True"
+                                      DisplayedValueBinding="{Binding Value}"
+                                      SelectedItem="{Binding SelectedWord}"
+                                      SelectedValueBinding="{Binding Value}"
+                                      SelectedValue = "{Binding NewWord}"
+                                     DataProvider="{Binding Path=LinqToEntitiesProvider}"
+                                     VerticalAlignment="Top"
+                                      >
+                    <controls:Intellibox.Columns>
+                        <controls:IntelliboxColumn DisplayMemberBinding="{Binding Value}"
+                                                   Header="Word" />
+                    </controls:Intellibox.Columns>
+                </controls:Intellibox>
 
                 <TextBlock  Grid.Row="2" Grid.Column="1"
                             Margin="2,4,4,2" VerticalAlignment="Top" HorizontalAlignment="Right" TextAlignment="Right" Padding="0,0,2,0"                            

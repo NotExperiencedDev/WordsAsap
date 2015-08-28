@@ -1,24 +1,72 @@
-﻿using System.Linq;
+﻿using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
 using System.Windows.Navigation;
 using FirstFloor.ModernUI.Presentation;
 using FirstFloor.ModernUI.Windows.Controls;
 using System.Collections.ObjectModel;
 using System.Windows;
+using FeserWard.Controls;
 using WordsAsap.Dialogs;
 using WordsAsap.Entities;
 using WordsAsap.Pages.ViewModels;
+using WordsAsap.WordsServices;
 
 namespace WordsAsap.Pages
 {
-    public class HomeViewModel : BaseViewModel    
-    {        
+    public class HomeViewModel : BaseViewModel  
+    {
+        private Word m_selectedWord;
         public string NewWord { get; set; }
+
         public ObservableCollection<TranslationItem> Translations { get; set; }
        
         protected override void InitializeModel()
         {
+            LinqToEntitiesProvider = new LinqToEntitiesResultsProvider(WordsService);
             Translations = new ObservableCollection<TranslationItem>();
             AddTranslation(null);
+        }
+
+        public IIntelliboxResultsProvider LinqToEntitiesProvider { get; private set; }
+
+        public Word SelectedWord
+        {
+            get { return m_selectedWord; }
+            set
+            {
+                m_selectedWord = value;
+                if (value == null)
+                {
+                    NewWordCommandExec(null);
+                    OnPropertyChanged("NewWord");
+                    return;
+                }
+                NewWord = m_selectedWord.Value;
+                if (m_selectedWord.Translations.Count > 0)
+                {
+                    ClearUnusedTranslationFields();
+                    AddTranslationsFromWord();
+                }
+                OnPropertyChanged("NewWord");
+            }
+        }
+
+        private void AddTranslationsFromWord()
+        {
+            foreach (var translation in m_selectedWord.Translations)
+            {
+                Translations.Add(new TranslationItem {Translation = translation.Value});
+            }
+        }
+
+        private void ClearUnusedTranslationFields()
+        {
+            if (Translations.Count <= 0) 
+                return;
+            var translationsToRemove = Translations.Where(x => string.IsNullOrWhiteSpace(x.Translation)).ToList();
+            foreach (var translationItem in translationsToRemove)
+                Translations.Remove(translationItem);
         }
 
         public RelayCommand NewWordCommand
@@ -45,8 +93,10 @@ namespace WordsAsap.Pages
                 }
                 Translations.Clear();                
                 NewWord = string.Empty;
+                m_selectedWord = null;
                 AddTranslation(null);
                 OnPropertyChanged("NewWord");
+                OnPropertyChanged("SelectedWord");
             }
               
         }
@@ -102,11 +152,34 @@ namespace WordsAsap.Pages
             }
             NewWordCommandExec(null);
         }
-        
     }
 
     public class TranslationItem
     {
         public string Translation { get; set; }
+    }
+
+
+    public class LinqToEntitiesResultsProvider: IIntelliboxResultsProvider
+    {
+        private readonly WordsCollectionService m_wordService;
+
+        public LinqToEntitiesResultsProvider(WordsCollectionService wordService)
+        {
+            m_wordService = wordService;
+        }
+
+        public System.Collections.IEnumerable DoSearch(string searchTerm, int maxResults, object extraInfo)
+        {
+            var sql = NHibernate.Criterion.Expression.Sql("lower({alias}.Value) like lower(?)", string.Format("%{0}%", searchTerm), NHibernate.NHibernateUtil.String);
+            var reply = m_wordService.GetData<Word>(sql);
+            if (reply == null || reply.Count == 0)
+            {
+                //return null;
+                return new List<Word>{new Word {Value = searchTerm}};
+            }
+            return reply.ToList();
+        }
+        
     }
 }
