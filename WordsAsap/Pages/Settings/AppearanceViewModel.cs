@@ -1,13 +1,6 @@
 ﻿using FirstFloor.ModernUI.Presentation;
-using FirstFloor.ModernUI.Windows.Controls;
-using System;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Input;
 using System.Windows.Media;
 
 namespace WordsAsap.Pages.Settings
@@ -60,6 +53,10 @@ namespace WordsAsap.Pages.Settings
             SyncThemeAndColor();
 
             AppearanceManager.Current.PropertyChanged += OnAppearanceManagerPropertyChanged;
+
+            ShowWordInPopupDialog = WordsSettings.WordsAsapSettings.ShowWordInPopupDialog;
+            BalloonTipTransparency = WordsSettings.WordsAsapSettings.BalloonTipTransparency;
+
         }
 
         private void SyncThemeAndColor()
@@ -106,6 +103,7 @@ namespace WordsAsap.Pages.Settings
 
                     // and update the actual theme
                     AppearanceManager.Current.ThemeSource = value.Source;
+                    WordsSettings.WordsAsapSettings.ThemeSource = AppearanceManager.Current.ThemeSource;
                 }
             }
         }
@@ -121,6 +119,7 @@ namespace WordsAsap.Pages.Settings
                     OnPropertyChanged("SelectedFontSize");
 
                     AppearanceManager.Current.FontSize = value == FontLarge ? FontSize.Large : FontSize.Small;
+                    WordsSettings.WordsAsapSettings.SelectedFontSize = AppearanceManager.Current.FontSize;
                 }
             }
         }
@@ -136,14 +135,82 @@ namespace WordsAsap.Pages.Settings
                     OnPropertyChanged("SelectedAccentColor");
 
                     AppearanceManager.Current.AccentColor = value;
+                    WordsSettings.WordsAsapSettings.AccentColor = AppearanceManager.Current.AccentColor.ToString();
+                }
+            }
+        }
+       
+        public bool ShowWordInPopupDialog
+        {
+            get { return WordsSettings.WordsAsapSettings.ShowWordInPopupDialog; }
+            set
+            {
+                if (WordsSettings.WordsAsapSettings.ShowWordInPopupDialog != value)
+                {
+                    WordsSettings.WordsAsapSettings.ShowWordInPopupDialog = value;
+                    OnPropertyChanged("ShowWordInPopupDialog");
+                    OnPropertyChanged("ShowWordInBalloonTip");
+                    OnPropertyChanged("ShowWordInPopupOrDialog");
                 }
             }
         }
 
-      
-        public ICommand SaveSettings
+        public bool ShowWordInBalloonTip
         {
-            get { return new SaveSettingsCommnand(); }
+            get { return !ShowWordInPopupDialog; }
+        }
+        public string ShowWordInPopupOrDialog
+        {
+            get
+            {
+                if (ShowWordInPopupDialog)
+                    return "Popup dialog";
+                return "Balloon tip";
+            }
+        }
+
+        public double MinimumTransparency { get { return 0.05; } }
+        public double MaximumTransparency { get { return 1.0; } }
+        public double SmallChange { get { return 0.05; } }
+        public double LargeChange { get { return 0.2; } }
+
+        public double BalloonTipTransparency
+        {
+            get { return WordsSettings.WordsAsapSettings.BalloonTipTransparency; }
+            set
+            {
+                if (WordsSettings.WordsAsapSettings.BalloonTipTransparency != value)
+                {
+                    WordsSettings.WordsAsapSettings.BalloonTipTransparency = value;
+                    OnPropertyChanged("BalloonTipTransparency");
+                }
+            }
+        }
+
+        public bool BalloonTipGradientOff
+        {
+            get { return WordsSettings.WordsAsapSettings.BalloonTipGradientOff; }
+            set
+            {
+                if (WordsSettings.WordsAsapSettings.BalloonTipGradientOff != value)
+                {
+                    WordsSettings.WordsAsapSettings.BalloonTipGradientOff = value;
+                    OnPropertyChanged("BalloonTipGradientOff");
+                }
+            }
+        }
+
+        public bool ShowAddWordConfirmationDialog
+        {
+            get { return WordsSettings.WordsAsapSettings.AddWordConfirmation; }
+            set
+            {
+                if (WordsSettings.WordsAsapSettings.AddWordConfirmation != value)
+                {
+                    WordsSettings.WordsAsapSettings.AddWordConfirmation = value;
+                    OnPropertyChanged("ShowAddWordConfirmationDialog");
+                }
+            }
         }
     }
       

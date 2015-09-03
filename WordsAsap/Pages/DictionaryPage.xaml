@@ -1,0 +1,144 @@
+﻿<UserControl x:Name="userControl" x:Class="WordsAsap.Pages.DictionaryPage"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:WordsAsap.Pages" 
+             xmlns:mui="http://firstfloorsoftware.com/ModernUI"
+             xmlns:entities="clr-namespace:WordsAsap.Entities"
+             xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
+             xmlns:converters="clr-namespace:WordsAsap.Converters"
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="300"
+             >
+    <UserControl.DataContext>
+        <local:DictionaryViewModel/>
+    </UserControl.DataContext>
+    <UserControl.Resources>
+      <DataTemplate x:Key="ExpandDetails">
+                <ToggleButton Name="ShowDetails"
+                              IsChecked="{Binding RelativeSource={RelativeSource AncestorType=DataGridRow}, 
+                                                  Path=DetailsVisibility, 
+                                                  Converter={converters:VisibilityToBooleanColapsedConverter}, 
+                                                  Mode=TwoWay}"
+                              Margin="4" />
+            </DataTemplate>
+
+        <Style TargetType="ToggleButton">
+            <Setter Property="Padding"
+                    Value="3" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="ToggleButton">
+                        <Grid>
+
+                            <ContentPresenter x:Name="contentPresenter"
+                                              Margin="{TemplateBinding Padding}"
+                                              HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                              VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                              Content="{TemplateBinding Content}"
+                                              ContentTemplate="{TemplateBinding ContentTemplate}" />
+                            <Path x:Name="DefaultPath"
+                                  VerticalAlignment="Top"
+                                  Data="M0,0 14,7 0,14 Z"
+                                  Fill="Gray"
+                                  Stretch="Fill"
+                                  Visibility="{Binding RelativeSource={RelativeSource AncestorType=ToggleButton}, 
+                                Path=IsChecked, 
+                                Converter={converters:BooleanToColapsedConverter}}"/>
+                            <Path x:Name="CheckedPath"
+                                  VerticalAlignment="Top"
+                                  Data="M0,0 14,0 7,14 Z"
+                                  Fill="LightGray"
+                                  Stretch="Fill"
+                                  Visibility="{Binding RelativeSource={RelativeSource AncestorType=ToggleButton}, 
+                                Path=IsChecked, 
+                                Converter={converters:BooleanToVisibilityConverter}}" />
+                        </Grid>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        
+        <DataTemplate x:Key="RemoveWord">
+            <mui:ModernButton Padding="1"
+                              Margin="1"
+                              IconData="F1 M 26.9166,22.1667L 37.9999,33.25L 49.0832,22.1668L 53.8332,26.9168L 42.7499,38L 53.8332,49.0834L 49.0833,53.8334L 37.9999,42.75L 26.9166,53.8334L 22.1666,49.0833L 33.25,38L 22.1667,26.9167L 26.9166,22.1667 Z "
+                              Command="{Binding RelativeSource={RelativeSource AncestorType=UserControl}, Path=DataContext.RemoveWordCommand}"
+                              CommandParameter="{Binding}" />
+        </DataTemplate>
+
+    </UserControl.Resources>
+    
+    <Grid>
+        <DockPanel>
+            <StackPanel DockPanel.Dock="Top" Orientation="Horizontal">
+                <Label Content="Search: "/>
+                <TextBox Width="250" Text="{Binding SearchText}" Name="searchBox" >
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="TextChanged">
+                            <i:InvokeCommandAction Command="{Binding SearchCommand, Mode=OneWay}" CommandParameter="{Binding ElementName=searchBox, Path=Text}"/>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </TextBox>
+            </StackPanel>
+            <DataGrid Name="personaldictionary"
+                  AutoGenerateColumns="False"
+                  ItemsSource="{Binding WordsCollection}"
+                  CanUserAddRows="False"
+                  CanUserDeleteRows="False"
+                  RowDetailsVisibilityMode="Collapsed">
+           <DataGrid.Columns>
+                <DataGridTemplateColumn Header=""
+                                        CellTemplate="{StaticResource ExpandDetails}"
+                                        Width="30"
+                                        CanUserResize="False"
+                                        CanUserReorder="False"
+                                        CanUserSort="False" />
+
+                <DataGridTextColumn Header="word" Binding="{Binding WordToDisplay.Value}"/>
+                <DataGridTextColumn Header="translations"
+                                    Binding="{Binding FirstTranslation}" />
+                <DataGridTextColumn Width="40" CanUserResize="False" CanUserReorder="False" CanUserSort="False"/>
+                <DataGridTemplateColumn Header="remove word"
+                                        CellTemplate="{StaticResource RemoveWord}"
+                                        CanUserResize="False"
+                                        CanUserReorder="False"
+                                        CanUserSort="False" />
+            </DataGrid.Columns>
+            <DataGrid.RowDetailsTemplate>
+                <DataTemplate DataType="entities:Word">
+                    <ListView x:Name="lstvInternal" 
+                              ItemsSource="{Binding Translations}"
+                              Padding="1,1,1,1">
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <Grid >
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="{Binding RelativeSource={RelativeSource AncestorType=DataGrid}, Path=Columns[0].ActualWidth}" />
+                                        <ColumnDefinition Width="{Binding RelativeSource={RelativeSource AncestorType=DataGrid}, Path=Columns[1].ActualWidth}" />
+                                        <ColumnDefinition Width="{Binding RelativeSource={RelativeSource AncestorType=DataGrid}, Path=Columns[2].ActualWidth}" />
+                                        <ColumnDefinition Width="{Binding RelativeSource={RelativeSource AncestorType=DataGrid}, Path=Columns[3].ActualWidth}" />
+                                        <ColumnDefinition Width="*" />
+                                    </Grid.ColumnDefinitions>
+
+                                    <TextBlock Text="{Binding Value}" Padding="3,0, 0, 0"
+                                               Grid.Column="2" />
+                                    <mui:ModernButton Padding="1"
+                                                      Margin="1"
+                                                      Grid.Column="3"
+                                                      IconData="F1 M 26.9166,22.1667L 37.9999,33.25L 49.0832,22.1668L 53.8332,26.9168L 42.7499,38L 53.8332,49.0834L 49.0833,53.8334L 37.9999,42.75L 26.9166,53.8334L 22.1666,49.0833L 33.25,38L 22.1667,26.9167L 26.9166,22.1667 Z "
+                                                      Command="{Binding ElementName=lstvInternal, Path=DataContext.RemoveTranslationCommand}"
+                                                      CommandParameter="{Binding}" />
+
+                                </Grid>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ListView>
+                </DataTemplate>
+            </DataGrid.RowDetailsTemplate>
+
+        </DataGrid>
+        </DockPanel>
+    </Grid>
+</UserControl>

@@ -10,7 +10,7 @@
         <mui:ModernTab Layout="List" SelectedSource="/Pages/Settings/Appearance.xaml">
             <mui:ModernTab.Links>
                 <mui:Link DisplayName="appearance" Source="/Pages/Settings/Appearance.xaml" />
-                <!--<mui:Link DisplayName="about" Source="/Pages/Settings/About.xaml" />-->
+                <mui:Link DisplayName="behaviour" Source="/Pages/Settings/Behaviour.xaml" />
             </mui:ModernTab.Links>
         </mui:ModernTab>
     </Grid>
