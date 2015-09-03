@@ -11,6 +11,7 @@ using WordsAsap.Dialogs;
 using WordsAsap.Entities;
 using WordsAsap.Pages.ViewModels;
 using WordsAsap.WordsServices;
+using System;
 
 namespace WordsAsap.Pages
 {
@@ -133,7 +134,7 @@ namespace WordsAsap.Pages
             if (Translations == null || Translations.Count < 1)
                 return false;
 
-            return Translations.Any(x=>!string.IsNullOrWhiteSpace(x.Translation));
+            return !Translations.Any(x=>string.IsNullOrWhiteSpace(x.Translation));
         }
 
         private void SaveWord(object o)
@@ -171,14 +172,22 @@ namespace WordsAsap.Pages
 
         public System.Collections.IEnumerable DoSearch(string searchTerm, int maxResults, object extraInfo)
         {
-            var sql = NHibernate.Criterion.Expression.Sql("lower({alias}.Value) like lower(?)", string.Format("%{0}%", searchTerm), NHibernate.NHibernateUtil.String);
-            var reply = m_wordService.GetData<Word>(sql);
-            if (reply == null || reply.Count == 0)
+            try
             {
-                //return null;
-                return new List<Word>{new Word {Value = searchTerm}};
+                var sql = NHibernate.Criterion.Expression.Sql("lower({alias}.Value) like lower(?)", string.Format("%{0}%", searchTerm), NHibernate.NHibernateUtil.String);
+                var reply = m_wordService.GetData<Word>(sql);
+                if (reply == null || reply.Count == 0)
+                {
+                    //return null;
+                    return new List<Word> { new Word { Value = searchTerm } };
+                }
+                return reply.ToList();
             }
-            return reply.ToList();
+            catch (Exception ex)
+            {              
+                DefaultMessageService.MessageService.ShowErrorMessage("WordsAsap Error", ex.ToString());
+                return null;
+            }
         }
         
     }

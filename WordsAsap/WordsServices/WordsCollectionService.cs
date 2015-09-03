@@ -115,32 +115,11 @@ namespace WordsAsap.WordsServices
                     var words = GetData<Word>(sql); 
                     if (words != null && words.Count() > 0)
                     {
-                        var t = new Translation();
-                        t.Value = translation;
-                        foreach (var word1 in words)
-                        {
-                            word1.Translations.Add(t);
-                            _session.SaveOrUpdate(word1);
-                        }
-                        _session.SaveOrUpdate(t);
-                        _session.Flush();
-                        _session.Refresh(t);
+                        AddNewTranslationToWord(translation, words);
                     }
                     else
                     {
-                        var w = new Word();
-                        w.CreationDate = DateTime.UtcNow;
-                        w.Value = word;
-                        var t = new Translation();
-                        t.Value = translation;
-                        var s = new WordStatistics();
-                        _session.SaveOrUpdate(s);
-                        w.Statistics = s;                       
-                      
-                        w.Translations.Add(t);
-                        _session.SaveOrUpdate(w);
-                        _session.Flush();
-                        _session.Refresh(t);
+                        AddNewWord(word, translation);
                     }
                    
                     transaction.Commit();
@@ -148,6 +127,44 @@ namespace WordsAsap.WordsServices
                     OnWordsCollectionChanged();
                 }
             
+        }
+
+        private void AddNewWord(string word, string translation)
+        {
+            var w = new Word();
+            w.CreationDate = DateTime.UtcNow;
+            w.Value = word;
+            var t = new Translation();
+            t.Value = translation;
+            var s = new WordStatistics();
+            _session.SaveOrUpdate(s);
+            w.Statistics = s;
+
+            w.Translations.Add(t);
+            _session.SaveOrUpdate(w);
+            _session.Flush();
+            _session.Refresh(t);
+        }
+
+        private void AddNewTranslationToWord(string translation, IList<Word> words)
+        {
+            var t = new Translation();
+            t.Value = translation;
+            var wasSuccess = false;
+            foreach (var word1 in words)
+            {
+                if(word1.Translations.Count > 0 && word1.Translations.Any(x=>string.Equals(x.Value, translation, StringComparison.InvariantCultureIgnoreCase)))
+                    continue;
+                wasSuccess = true;
+                word1.Translations.Add(t);
+                _session.SaveOrUpdate(word1);
+            }
+            if(wasSuccess)
+            {
+                _session.SaveOrUpdate(t);
+                _session.Flush();
+                _session.Refresh(t);
+            }
         }
 
         public void Update<T>(T entity) where T : class
